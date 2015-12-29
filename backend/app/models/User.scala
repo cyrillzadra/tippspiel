@@ -11,7 +11,7 @@ case class User(
   emailConfirmed: Boolean,
   active: Boolean)
 
-object User {
+object UserDao {
   import FakeDB.users
 
   def findById(id: Long): Future[Option[User]] = Future.successful {
@@ -38,8 +38,6 @@ object User {
   }
 
   def delete(id: Long): Future[Unit] = Future.successful {
-    FakeDB.folders.map(f => FakeDB.tasks.delete(_.folderId == f.id))
-    FakeDB.folders.delete(_.userId == id)
     users.delete(id)
   }
 

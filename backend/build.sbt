@@ -13,7 +13,8 @@ libraryDependencies ++= Seq(
   cache,
   ws,
   specs2 % Test,
-	"org.specs2" %% "specs2-matcher-extra" % "3.6" % Test
+	"org.specs2" %% "specs2-matcher-extra" % "3.6" % Test,
+  "com.typesafe.play" %% "play-slick" % "1.1.1"
 )
 
 resolvers += "scalaz-bintray" at "http://dl.bintray.com/scalaz/releases"

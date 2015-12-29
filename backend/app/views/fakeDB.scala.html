@@ -26,7 +26,7 @@
 		        <span class="icon-bar"></span>
 		        <span class="icon-bar"></span>
 		      </button>
-		      <a class="navbar-brand">Play-Api-Rest <small>Fake DB</small></a>
+		      <a class="navbar-brand">TippSpiel <small>Fake DB</small></a>
 		    </div>
 		    <div class="collapse navbar-collapse" id="navbar-collapse-1">
 		      <ul class="nav navbar-nav">
@@ -35,19 +35,9 @@
 		        <li><a href="#apikeys">Api Keys</a></li>
 		        <li><a href="#tokens">Auth Tokens</a></li>
 		        <li><a href="#users">Users</a></li>
-		        <li><a href="#folders">Folders</a></li>
-		        <li><a href="#tasks">Tasks</a></li>
 				<li><a href="#tournaments">Tournaments</a></li>
 				<li><a href="#Schedules">Schedules</a></li>
 		      </ul>
-					<div class="nav navbar-nav navbar-right">
-						<div id="github-buttons">
-							<iframe src="http://ghbtns.com/github-btn.html?user=adrianhurt&repo=play-api-rest-seed&type=watch&count=true"
-								allowtransparency="true" frameborder="0" scrolling="0" width="100" height="20"></iframe>
-							<iframe src="http://ghbtns.com/github-btn.html?user=adrianhurt&repo=play-api-rest-seed&type=fork&count=true"
-								allowtransparency="true" frameborder="0" scrolling="0" width="100" height="20"></iframe>
-						</div>
-					</div>
 		    </div>
 		  </div>
 		</nav>
@@ -82,45 +72,16 @@
 			<tbody>
 				@if(!FakeDB.users.isEmpty) {
 					@FakeDB.users.values.sortBy(_.id).map { user =>
-						@defining(FakeDB.folders.filter(_.userId == user.id).sortBy(_.order)) { folderList =>
-							@defining(folderList.map(f => FakeDB.tasks.count(_.folderId == f.id)).sum) { numTasksForUser =>
-								<tr>
-									<td rowspan="@numTasksForUser" class="text-center">@user.id</td>
-									<td rowspan="@numTasksForUser">@user.email</td>
-									<td rowspan="@numTasksForUser">@user.password</td>
-									<td rowspan="@numTasksForUser">@user.name</td>
-									<td rowspan="@numTasksForUser" class="text-center">@if(user.emailConfirmed){<span class="glyphicon glyphicon-ok-sign text-success"></span>}else{<span class="glyphicon glyphicon-exclamation-sign text-warning"></span>}</td>
-									<td rowspan="@numTasksForUser" class="text-center">@if(user.active){<span class="glyphicon glyphicon-ok text-success"></span>}else{<span class="glyphicon glyphicon-remove text-danger"></span>}</td>
-									@if(!folderList.isEmpty) {
-										@folderList.map { folder =>
-											@defining(FakeDB.tasks.filter(_.folderId == folder.id).sortBy(_.order)) { taskList =>
-												@defining(taskList.size) { numTasksForFolder =>
-													<td rowspan="@numTasksForFolder" class="text-center">@folder.order</td>
-													<td rowspan="@numTasksForFolder" class="text-center">@folder.id</td>
-													<td rowspan="@numTasksForFolder">@folder.name</td>
-													@if(!taskList.isEmpty) {
-														@taskList.map { task =>
-															<td class="text-center">@task.order</td>
-															<td class="text-center">@task.id</td>
-															<td>@task.text</td>
-															<td class="text-center">@task.deadline.map(displayDateTwoLines)</td>
-															<td class="text-center">@if(task.done){<span class="glyphicon glyphicon-ok"></span>}</td>
-															</tr></tr>
-														}
-													} else {
-														<td colspan="50" class="no-items">Without tasks</td>
-													}
-													</tr></tr>
-												}
-											}
-										}
-									} else {
-										<td colspan="50" class="no-items">Without folders</td>
-									}
-								</tr>
-							}
+							<tr>
+								<td class="text-center">@user.id</td>
+								<td>@user.email</td>
+								<td>@user.password</td>
+								<td>@user.name</td>
+								<td class="text-center">@if(user.emailConfirmed){<span class="glyphicon glyphicon-ok-sign text-success"></span>}else{<span class="glyphicon glyphicon-exclamation-sign text-warning"></span>}</td>
+								<td class="text-center">@if(user.active){<span class="glyphicon glyphicon-ok text-success"></span>}else{<span class="glyphicon glyphicon-remove text-danger"></span>}</td>
+								<td colspan="50" class="no-items">Without folders</td>
+							</tr>
 						}
-					}
 				} else {
 					<tr><td colspan="50" class="no-items">There is no user</td></tr>
 				}
@@ -260,70 +221,8 @@
 				}
 			</tbody>
 		</table>
-		
-		
-		<h1 id="folders">Folders</h1>
 
-		<table class="table table-bordered table-striped table-condensed">
-			<thead class="text-center">
-				<tr>
-					<th>Id</th>
-					<th>User id</th>
-					<th><abbr title="Order"><span class="glyphicon glyphicon-sort-by-order"></span></abbr></th>
-					<th>Name</th>
-				</tr>
-			</thead>
-			<tbody>				
-				@if(!FakeDB.folders.isEmpty) {
-					@FakeDB.folders.values.sortBy(_.id).map { folder =>
-						<tr>
-							<td class="text-center">@folder.id</td>
-							<td class="text-center">@folder.userId</td>
-							<td class="text-center">@folder.order</td>
-							<td>@folder.name</td>
-						</tr>
-					}
-				} else {
-					<tr><td colspan="50" class="no-items">There is no folder</td></tr>
-				}
-			</tbody>
-		</table>
-		
-		
-		<h1 id="tasks">Tasks</h1>
-
-		<table class="table table-bordered table-striped table-condensed">
-			<thead class="text-center">
-				<tr>
-					<th>Id</th>
-					<th>Folder id</th>
-					<th><abbr title="Order"><span class="glyphicon glyphicon-sort-by-order"></span></abbr></th>
-					<th>Text</th>
-					<th>Date</th>
-					<th>Deadline</th>
-					<th>Done</th>
-				</tr>
-			</thead>
-			<tbody>				
-				@if(!FakeDB.tasks.isEmpty) {
-					@FakeDB.tasks.values.sortBy(_.id).map { task =>
-						<tr>
-							<td class="text-center">@task.id</td>
-							<td class="text-center">@task.folderId</td>
-							<td class="text-center">@task.order</td>
-							<td>@task.text</td>
-							<td class="text-center">@displayDate(task.date)</td>
-							<td class="text-center">@task.deadline.map(displayDate)</td>
-							<td class="text-center">@if(task.done){<span class="glyphicon glyphicon-ok"></span>}</td>
-						</tr>
-					}
-				} else {
-					<tr><td colspan="50" class="no-items">There is no task</td></tr>
-				}
-			</tbody>
-		</table>
-
-		<h1 id="tasks">Tournaments</h1>
+		<h1 id="tournaments">Tournaments</h1>
 
 		<table class="table table-bordered table-striped table-condensed">
 			<thead class="text-center">
@@ -346,7 +245,7 @@
 			</tbody>
 		</table>
 
-		<h1 id="tasks">Schedules</h1>
+		<h1 id="schedules">Schedules</h1>
 
 		<table class="table table-bordered table-striped table-condensed">
 			<thead class="text-center">
@@ -382,7 +281,7 @@
 		</table>
 
 
-		<h1 id="tasks">Games</h1>
+		<h1 id="games">Games</h1>
 
 		<table class="table table-bordered table-striped table-condensed">
 			<thead class="text-center">

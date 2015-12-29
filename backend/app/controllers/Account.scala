@@ -2,7 +2,7 @@ package controllers
 
 import api.ApiError._
 import api.JsonCombinators._
-import models.{ Game, User, ApiToken }
+import models.{ Game, User, UserDao, ApiToken }
 import play.api.mvc._
 import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -14,7 +14,7 @@ import play.api.libs.functional.syntax._
 class Account @Inject() (val messagesApi: MessagesApi) extends api.ApiController {
 
   def info = SecuredApiAction { implicit request =>
-    maybeItem(User.findById(request.userId))
+    maybeItem(UserDao.findById(request.userId))
   }
 
   def myGames = SecuredApiAction { implicit request =>
@@ -26,7 +26,7 @@ class Account @Inject() (val messagesApi: MessagesApi) extends api.ApiController
 
   def update = SecuredApiActionWithBody { implicit request =>
     readFromRequest[User] { user =>
-      User.update(request.userId, user.name).flatMap { isOk =>
+      UserDao.update(request.userId, user.name).flatMap { isOk =>
         if (isOk) noContent() else errorInternal
       }
     }
@@ -40,10 +40,10 @@ class Account @Inject() (val messagesApi: MessagesApi) extends api.ApiController
   def updatePassword = SecuredApiActionWithBody { implicit request =>
     readFromRequest[Tuple2[String, String]] {
       case (oldPwd, newPwd) =>
-        User.findById(request.userId).flatMap {
+        UserDao.findById(request.userId).flatMap {
           case None => errorUserNotFound
           case Some(user) if (oldPwd != user.password) => errorCustom("api.error.reset.pwd.old.incorrect")
-          case Some(user) => User.updatePassword(request.userId, newPwd).flatMap { isOk =>
+          case Some(user) => UserDao.updatePassword(request.userId, newPwd).flatMap { isOk =>
             if (isOk) noContent() else errorInternal
           }
         }
@@ -52,7 +52,7 @@ class Account @Inject() (val messagesApi: MessagesApi) extends api.ApiController
 
   def delete = SecuredApiAction { implicit request =>
     ApiToken.delete(request.token).flatMap { _ =>
-      User.delete(request.userId).flatMap { _ =>
+      UserDao.delete(request.userId).flatMap { _ =>
         noContent()
       }
     }

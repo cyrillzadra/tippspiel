@@ -57,24 +57,6 @@ object FakeDB {
     3L -> Game(3L, 2L, "Game Name 3", List.empty)
   )
 
-  // FOLDERS
-  val folders = FakeTable(
-    1L -> Folder(1L, 1L, 0, "Personal"),
-    2L -> Folder(2L, 1L, 1, "Work"),
-    3L -> Folder(3L, 1L, 2, "Home")
-  )
-
-  // TASKS
-  val tasks = FakeTable(
-    1L -> Task(1L, 1L, 0, "Shirts on dry cleaner", dt.parse("2015-09-06 10:11:00"), Some(dt.parse("2015-09-08 17:00:00")), true),
-    2L -> Task(2L, 1L, 1, "Gift for Mum's birthday", dt.parse("2015-09-05 12:24:32"), Some(dt.parse("2015-10-22 00:00:00")), false),
-    3L -> Task(3L, 1L, 2, "Plan the Barcelona's trip", dt.parse("2015-09-06 14:41:11"), None, false),
-    4L -> Task(4L, 2L, 0, "Check monday's report", dt.parse("2015-09-06 09:21:00"), Some(dt.parse("2015-09-08 18:00:00")), false),
-    5L -> Task(5L, 2L, 1, "Call conference with Jonh", dt.parse("2015-09-06 11:37:00"), Some(dt.parse("2015-09-07 18:00:00")), false),
-    6L -> Task(6L, 3L, 0, "Fix the lamp", dt.parse("2015-08-16 21:22:00"), None, false),
-    7L -> Task(7L, 3L, 1, "Buy coffee", dt.parse("2015-09-05 08:12:00"), None, false)
-  )
-
   /*
 	* Fake table that emulates a SQL table with an auto-increment index
 	*/
