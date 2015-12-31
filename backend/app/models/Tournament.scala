@@ -6,7 +6,7 @@ case class Tournament(
   id: Long,
   name: String)
 
-object Tournament {
+object FakeTournamentDao {
   import FakeDB.tournaments
 
   def findById(id: Long): Future[Option[Tournament]] = Future.successful {

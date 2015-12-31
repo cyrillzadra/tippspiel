@@ -3,7 +3,7 @@ package controllers
 import api._
 import api.ApiError._
 import api.JsonCombinators._
-import models.{UserDao, User}
+import models.{ FakeUserDao, User }
 import play.api.mvc._
 import play.api.libs.json._
 import scala.concurrent.Future
@@ -14,7 +14,7 @@ import play.api.i18n.{ MessagesApi }
 class Users @Inject() (val messagesApi: MessagesApi) extends api.ApiController {
 
   def usernames = ApiAction { implicit request =>
-    UserDao.list.flatMap { list =>
+    FakeUserDao.list.flatMap { list =>
       ok(list.map(u => Json.obj("id" -> u.id, "name" -> u.name, "email" -> u.email)))
     }
   }

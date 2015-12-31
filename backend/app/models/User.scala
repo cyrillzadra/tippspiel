@@ -1,7 +1,6 @@
 package models
 
 import scala.concurrent.Future
-import scala.concurrent.ExecutionContext.Implicits.global
 
 case class User(
   id: Long,
@@ -11,7 +10,7 @@ case class User(
   emailConfirmed: Boolean,
   active: Boolean)
 
-object UserDao {
+object FakeUserDao {
   import FakeDB.users
 
   def findById(id: Long): Future[Option[User]] = Future.successful {

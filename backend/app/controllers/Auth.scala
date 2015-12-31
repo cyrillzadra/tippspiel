@@ -2,7 +2,7 @@ package controllers
 
 import api.ApiError._
 import api.JsonCombinators._
-import models.{UserDao, User, ApiToken}
+import models.{ FakeUserDao, User, ApiToken }
 import play.api.mvc._
 import play.api.libs.json._
 import play.api.libs.functional.syntax._
@@ -24,7 +24,7 @@ class Auth @Inject() (val messagesApi: MessagesApi) extends api.ApiController {
   def signIn = ApiActionWithBody { implicit request =>
     readFromRequest[Tuple2[String, String]] {
       case (email, pwd) =>
-        UserDao.findByEmail(email).flatMap {
+        FakeUserDao.findByEmail(email).flatMap {
           case None => errorUserNotFound
           case Some(user) => {
             if (user.password != pwd) errorUserNotFound
@@ -56,15 +56,15 @@ class Auth @Inject() (val messagesApi: MessagesApi) extends api.ApiController {
   def signUp = ApiActionWithBody { implicit request =>
     readFromRequest[Tuple3[String, String, User]] {
       case (email, password, user) =>
-        UserDao.findByEmail(email).flatMap {
+        FakeUserDao.findByEmail(email).flatMap {
           case Some(anotherUser) => errorCustom("api.error.signup.email.exists")
-          case None => UserDao.insert(email, password, user.name).flatMap {
+          case None => FakeUserDao.insert(email, password, user.name).flatMap {
             case (id, user) =>
 
               // Send confirmation email. You will have to catch the link and confirm the email and activate the user.
               // But meanwhile...
               Akka.system.scheduler.scheduleOnce(30 seconds) {
-                UserDao.confirmEmail(id)
+                FakeUserDao.confirmEmail(id)
               }
 
               ok(user)

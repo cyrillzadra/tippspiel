@@ -6,6 +6,7 @@ import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
 
 import scala.collection.mutable.Map
+import scala.concurrent.Future
 
 /*
 * A fake DB to store and load all the data
@@ -112,3 +113,4 @@ object FakeDB {
   }
 
 }
+
