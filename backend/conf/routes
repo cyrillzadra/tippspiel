@@ -14,11 +14,19 @@ POST		/signup							controllers.Auth.signUp
 GET			/usernames					    controllers.Users.usernames
 
 # ACCOUNT
-GET			/account						controllers.Account.info
-PUT			/account						controllers.Account.update
-GET			/account/mygames			    controllers.Account.myGames
-PUT			/account/password		        controllers.Account.updatePassword
-DELETE	    /account						controllers.Account.delete
+GET			/account						        controllers.Account.info
+PUT			/account						        controllers.Account.update
+GET			/account/mygames			            controllers.Account.myGames
+PUT			/account/password		                controllers.Account.updatePassword
+DELETE	    /account						        controllers.Account.delete
+
+# TOURNAMENT
+GET			/tournaments					        controllers.Tournament.list
+GET			/tournaments/:id				        controllers.Tournament.info(id: Long)
+
+# SCHEDULES
+GET			/tournaments/:id/schedules		        controllers.Schedules.list(id: Long)
+
 
 # FOLDERS
 #GET			/folders						controllers.Folders.list(sort: Option[String], page: Int ?= 1, size: Int ?= 10)
@@ -39,14 +47,29 @@ DELETE	    /account						controllers.Account.delete
 #DELETE	/tasks/:id/done			controllers.Tasks.updateDone(id: Long, done: Boolean = false)
 #DELETE	/tasks/:id					controllers.Tasks.delete(id: Long)
 
-
 # Map static resources from the /public folder to the /assets URL path
 GET			/assets/*file				controllers.Assets.versioned(path="/public", file: Asset)
 
 
 # SHOW FAKE DB DATA
 # Auxiliar to check the FakeDB information. It's only for testing purpose. You should remove it.
-GET			/fakeDB							controllers.Application.fakeDB
+GET			/fakeDB							            controllers.Application.fakeDB
 
-GET			/realDB							controllers.Application.realDB
-GET			/setupRealDB							controllers.Application.setupRealDB
+GET			/realDB							            controllers.Application.realDB
+GET			/setupRealDB					            controllers.Application.setupRealDB
+
+# ADMIN
+GET			/admin/                                     controllers.Admin.tournaments
+# ADMIN TOURNAMENTS
+GET			/admin/tournaments               	        controllers.Admin.tournaments
+GET			/admin/tournaments/:id          	        controllers.Admin.tournamentEdit(id : Long)
+POST        /admin/tournaments/:id                      controllers.Admin.tournamentUpdate(id : Long)
+
+# ADMIN SCHEDULES
+GET			/admin/tournaments/:id/schedules   	        controllers.Admin.schedulesOfTournament(id : Long)
+GET			/admin/tournaments/:id/createSchedule       controllers.Admin.scheduleCreate(id : Long)
+POST		/admin/tournaments/:id/saveSchedule         controllers.Admin.scheduleSave(id : Long)
+
+GET			/admin/schedules       	                    controllers.Admin.schedules
+GET			/admin/schedules/:id   	                    controllers.Admin.scheduleEdit(id : Long)
+POST        /admin/schedules/:id                        controllers.Admin.scheduleUpdate(id : Long)

@@ -1,20 +1,20 @@
 package models
 
-import org.joda.time.DateTime
+import java.sql.Date
 
 import scala.concurrent.Future
 
 case class Schedule(
-  id: Long,
-  tournamentId: Long,
-  gameTime: DateTime,
+  id: Option[Long],
+  tournamentId: Option[Long],
+  gameTime: Date,
   group: String,
   homeTeam: String,
   visitorTeam: String,
   homeScore: Int,
   visitorScore: Int)
 
-object Schedule {
+object FakeScheduleDao {
 
   import FakeDB.schedules
 
@@ -22,11 +22,11 @@ object Schedule {
     schedules.get(id)
   }
 
-  def insert(tournamentId: Long, gameTime: DateTime, group: String, homeTeam: String, visitorTeam: String, homeScore: Int, visitorScore: Int): Future[(Long, Schedule)] = Future.successful {
-    schedules.insert(Schedule(_, tournamentId, gameTime, group, homeTeam, visitorTeam, homeScore, visitorScore))
-  }
+  //def insert(tournamentId: Option[Long], gameTime: Date, group: String, homeTeam: String, visitorTeam: String, homeScore: Int, visitorScore: Int): Future[(Long, Schedule)] = Future.successful {
+  //  schedules.insert(Schedule(_, tournamentId, gameTime, group, homeTeam, visitorTeam, homeScore, visitorScore))
+  //}
 
-  def update(id: Long, tournamentId: Long, gameTime: DateTime, group: String, homeTeam: String, visitorTeam: String, homeScore: Int, visitorScore: Int): Future[Boolean] = Future.successful {
+  def update(id: Long, tournamentId: Long, gameTime: Date, group: String, homeTeam: String, visitorTeam: String, homeScore: Int, visitorScore: Int): Future[Boolean] = Future.successful {
     //TODO update for all attributes
     schedules.update(id)(_.copy(group = group))
   }

@@ -7,6 +7,7 @@ import org.joda.time.format.DateTimeFormat
 
 import scala.collection.mutable.Map
 import scala.concurrent.Future
+import scala.util.Try
 
 /*
 * A fake DB to store and load all the data
@@ -42,13 +43,17 @@ object FakeDB {
   )
 
   // SCHEDULES
+  val aDate = Try(dt.parse("2015-09-06 10:11:00"))
+    .map(d => new java.sql.Date(d.getTime()))
+    .toOption
+
   val schedules = FakeTable(
-    1L -> Schedule(1L, 1L, DateTime.parse("2015-09-06 10:11:00", dtf), "A", "Frankreich", "Rumänien", 0, 1),
-    2L -> Schedule(2L, 1L, DateTime.parse("2015-09-06 10:11:00", dtf), "A", "Frankreich", "Rumänien", 0, 1),
-    3L -> Schedule(3L, 1L, DateTime.parse("2015-09-06 10:11:00", dtf), "A", "Frankreich", "Rumänien", 0, 1),
-    4L -> Schedule(4L, 1L, DateTime.parse("2015-09-06 10:11:00", dtf), "A", "Frankreich", "Rumänien", 0, 1),
-    5L -> Schedule(5L, 1L, DateTime.parse("2015-09-06 10:11:00", dtf), "B", "Frankreich", "Rumänien", 0, 1),
-    6L -> Schedule(6L, 1L, DateTime.parse("2015-09-06 10:11:00", dtf), "b", "Frankreich", "Rumänien", 0, 1)
+    1L -> Schedule(None, Some(1L), new java.sql.Date(dt.parse("2015-09-06 10:11:00").getTime), "A", "Frankreich", "Rumänien", 0, 1),
+    2L -> Schedule(None, Some(1L), new java.sql.Date(dt.parse("2015-09-06 10:11:00").getTime), "A", "Frankreich", "Rumänien", 0, 1),
+    3L -> Schedule(None, Some(1L), new java.sql.Date(dt.parse("2015-09-06 10:11:00").getTime), "A", "Frankreich", "Rumänien", 0, 1),
+    4L -> Schedule(None, Some(1L), new java.sql.Date(dt.parse("2015-09-06 10:11:00").getTime), "A", "Frankreich", "Rumänien", 0, 1),
+    5L -> Schedule(None, Some(1L), new java.sql.Date(dt.parse("2015-09-06 10:11:00").getTime), "B", "Frankreich", "Rumänien", 0, 1),
+    6L -> Schedule(None, Some(1L), new java.sql.Date(dt.parse("2015-09-06 10:11:00").getTime), "B", "Frankreich", "Rumänien", 0, 1)
   )
 
   // GAMES
