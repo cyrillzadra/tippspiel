@@ -9,5 +9,5 @@ case class Schedule(
   group: String,
   homeTeam: String,
   visitorTeam: String,
-  homeScore: Int,
-  visitorScore: Int)
+  homeScore: Option[Int] = None,
+  visitorScore: Option[Int] = None)

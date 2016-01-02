@@ -71,8 +71,8 @@ class Admin @Inject() (userDao: UserDao, tournamentDao: TournamentDao, scheduleD
       "group" -> nonEmptyText,
       "homeTeam" -> nonEmptyText,
       "visitorTeam" -> nonEmptyText,
-      "homeScore" -> number(min = 0, max = 100),
-      "visitorScore" -> number(min = 0, max = 100)
+      "homeScore" -> optional(number(min = 0, max = 100)),
+      "visitorScore" -> optional(number(min = 0, max = 100))
     )(Schedule.apply)(Schedule.unapply)
   )
 

@@ -29,8 +29,8 @@ trait ScheduleTable { self: HasDatabaseConfigProvider[JdbcProfile] =>
     def group = column[String]("GROUP")
     def homeTeam = column[String]("HOME_TEAM")
     def visitorTeam = column[String]("VISITOR_TEAM")
-    def homeScore = column[Int]("HOME_SCORE")
-    def visitorScore = column[Int]("VISITOR_SCORE")
+    def homeScore = column[Option[Int]]("HOME_SCORE")
+    def visitorScore = column[Option[Int]]("VISITOR_SCORE")
 
     def * = (id.?, tournamentId.?, gameTime, group, homeTeam, visitorTeam, homeScore, visitorScore) <> (Schedule.tupled, Schedule.unapply _)
   }
@@ -89,10 +89,11 @@ class ScheduleDao @Inject() (protected val dbConfigProvider: DatabaseConfigProvi
       schedules.schema.create,
 
       // Insert some schedules
-      schedules += Schedule(None, Some(1L), new java.sql.Date(dt.parse("2015-09-06 10:11:00").getTime), "A", Country.FR.toString, Country.RO.toString, 0, 1),
-      schedules += Schedule(None, Some(1L), new java.sql.Date(dt.parse("2015-09-06 10:11:00").getTime), "A", Country.AL.toString, Country.CH.toString, 0, 1),
-      schedules += Schedule(None, Some(1L), new java.sql.Date(dt.parse("2015-09-06 10:11:00").getTime), "A", Country.RO.toString, Country.CH.toString, 0, 1),
-      schedules += Schedule(None, Some(1L), new java.sql.Date(dt.parse("2015-09-06 10:11:00").getTime), "B", Country.GB.toString, Country.RU.toString, 0, 1)
+      schedules += Schedule(None, Some(1L), new java.sql.Date(dt.parse("2015-09-06 10:11:00").getTime),
+        "A", Country.FR.toString, Country.RO.toString, Some(0), Some(1)),
+      schedules += Schedule(None, Some(1L), new java.sql.Date(dt.parse("2015-09-06 10:11:00").getTime), "A", Country.AL.toString, Country.CH.toString, None, None),
+      schedules += Schedule(None, Some(1L), new java.sql.Date(dt.parse("2015-09-06 10:11:00").getTime), "A", Country.RO.toString, Country.CH.toString, None, None),
+      schedules += Schedule(None, Some(1L), new java.sql.Date(dt.parse("2015-09-06 10:11:00").getTime), "B", Country.GB.toString, Country.RU.toString, None, None)
     ))
 
     println(schedules.insertStatement)
