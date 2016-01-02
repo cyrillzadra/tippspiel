@@ -110,7 +110,7 @@ class Admin @Inject() (userDao: UserDao, tournamentDao: TournamentDao, scheduleD
     },
       schedule => {
         val x = scheduleDao.update(id, schedule)
-        Future.successful(TournamentHome.flashing("success" -> "Schedule %s - %s has been updated".format(schedule.homeTeam, schedule.visitorTeam)))
+        Future.successful(Redirect(routes.Admin.schedulesOfTournament(1)).flashing("success" -> "Schedule %s - %s has been updated".format(schedule.homeTeam, schedule.visitorTeam)))
       })
   }
 
@@ -139,7 +139,7 @@ class Admin @Inject() (userDao: UserDao, tournamentDao: TournamentDao, scheduleD
       formHasErrors => Future.successful(BadRequest(views.html.admin.scheduleCreate(tournamentId, teams, formHasErrors))),
       schedule => {
         val x = scheduleDao.insert(schedule)
-        Future.successful(TournamentHome.flashing("success" -> "Schedule has been created"))
+        Future.successful(Redirect(routes.Admin.schedulesOfTournament(tournamentId)).flashing("success" -> "Schedule has been created"))
       })
   }
 
