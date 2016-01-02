@@ -3,12 +3,13 @@ package controllers
 import java.sql.Date
 import javax.inject.Inject
 
-import models.{ Schedule, Tournament }
+import models.{ Country, Schedule, Tournament }
 import models.tables.{ ScheduleDao, TournamentDao, UserDao }
 import play.api.data.Form
 import play.api.data.Forms.{ date, longNumber, mapping, nonEmptyText, optional, number, sqlDate }
 import play.api.i18n.{ I18nSupport, MessagesApi }
 import play.api.mvc._
+import play.i18n._
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -76,6 +77,9 @@ class Admin @Inject() (userDao: UserDao, tournamentDao: TournamentDao, scheduleD
     )(Schedule.apply)(Schedule.unapply)
   )
 
+  val teams: Seq[(String, String)] =
+    Country.values.map(x => (x.toString, Messages.get("country." + x.toString))).toSeq
+
   /**
    *
    * @param scheduleId
@@ -89,7 +93,7 @@ class Admin @Inject() (userDao: UserDao, tournamentDao: TournamentDao, scheduleD
     schedule.map {
       case (t) =>
         t match {
-          case Some(c) => Ok(views.html.admin.scheduleEdit(scheduleId, schedulesForm.fill(c)))
+          case Some(c) => Ok(views.html.admin.scheduleEdit(scheduleId, teams, schedulesForm.fill(c)))
           case None => NotFound
         }
     }
@@ -102,7 +106,7 @@ class Admin @Inject() (userDao: UserDao, tournamentDao: TournamentDao, scheduleD
    */
   def scheduleUpdate(id: Long) = Action.async { implicit rs =>
     schedulesForm.bindFromRequest.fold(formHasErrors => {
-      Future.successful(BadRequest(views.html.admin.scheduleEdit(id, formHasErrors)))
+      Future.successful(BadRequest(views.html.admin.scheduleEdit(id, teams, formHasErrors)))
     },
       schedule => {
         val x = scheduleDao.update(id, schedule)
@@ -127,12 +131,12 @@ class Admin @Inject() (userDao: UserDao, tournamentDao: TournamentDao, scheduleD
   }
 
   def scheduleCreate(tournamentId: Long) = Action.async { implicit rs =>
-    Future.successful(Ok(views.html.admin.scheduleCreate(tournamentId, schedulesForm)))
+    Future.successful(Ok(views.html.admin.scheduleCreate(tournamentId, teams, schedulesForm)))
   }
 
   def scheduleSave(tournamentId: Long) = Action.async { implicit rs =>
     schedulesForm.bindFromRequest.fold(
-      formHasErrors => Future.successful(BadRequest(views.html.admin.scheduleCreate(tournamentId, formHasErrors))),
+      formHasErrors => Future.successful(BadRequest(views.html.admin.scheduleCreate(tournamentId, teams, formHasErrors))),
       schedule => {
         val x = scheduleDao.insert(schedule)
         Future.successful(TournamentHome.flashing("success" -> "Schedule has been created"))

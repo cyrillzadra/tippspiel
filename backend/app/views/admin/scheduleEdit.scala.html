@@ -1,4 +1,4 @@
-@(id: Long, scheduleForm: Form[models.Schedule])(implicit messages: Messages)
+@(id: Long, teams : Seq[(String,String)], scheduleForm: Form[models.Schedule])(implicit messages: Messages)
 
 @import helper._
 
@@ -44,8 +44,21 @@
 				@inputText(scheduleForm("tournamentId"), '_label -> "Tournament Id")
 				@inputDate(scheduleForm("gameTime"), '_label -> "Spieldatum")
 				@inputText(scheduleForm("group"), '_label -> "Gruppe")
-				@inputText(scheduleForm("homeTeam"), '_label -> "Home Team")
-				@inputText(scheduleForm("visitorTeam"), '_label -> "Visitor Team")
+
+				@select(
+					scheduleForm("homeTeam"),
+					teams,
+					'_label -> "Home Team", '_default -> "-- Choose a team --",
+					'_showConstraints -> false
+				)
+
+				@select(
+					scheduleForm("visitorTeam"),
+					teams,
+					'_label -> "Visitor Team", '_default -> "-- Choose a team --",
+					'_showConstraints -> false
+				)
+
 				@inputText(scheduleForm("homeScore"), '_label -> "Home Score")
 				@inputText(scheduleForm("visitorScore"), '_label -> "Visitor Score")
 
