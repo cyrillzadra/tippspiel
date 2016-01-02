@@ -2,17 +2,15 @@ package controllers
 
 import javax.inject.Inject
 
-import api.ApiError._
-import api.JsonCombinators._
 import models.tables.TournamentDao
-import models.{ ApiToken, FakeUserDao, Game, User }
 import play.api.i18n.MessagesApi
-import play.api.libs.functional.syntax._
 import play.api.libs.json._
+import models.{ Tournament }
+import api.JsonCombinators._
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
-class Tournament @Inject() (tournamentDao: TournamentDao, val messagesApi: MessagesApi) extends api.ApiController {
+class Tournaments @Inject() (tournamentDao: TournamentDao, val messagesApi: MessagesApi) extends api.ApiController {
 
   def list = SecuredApiAction { implicit request =>
     val x = tournamentDao.list

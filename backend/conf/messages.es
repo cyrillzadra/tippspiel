@@ -32,3 +32,12 @@ api.error.item.notfound=Item no encontrado
 
 api.error.signup.email.exists=El email ha sido escogido por otro usuario
 api.error.reset.pwd.old.incorrect=La contraseña antigua es incorrecta
+
+################################################################################################
+# Countries
+country.CH=Switzerland
+country.FR=France
+country.RO=Romania
+country.AL=Albania
+country.RU=Russia
+country.GB=England

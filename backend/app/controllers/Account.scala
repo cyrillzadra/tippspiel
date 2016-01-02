@@ -1,33 +1,36 @@
 package controllers
 
+import javax.inject.Inject
+
 import api.ApiError._
 import api.JsonCombinators._
-import models.{ Game, User, FakeUserDao, ApiToken }
-import play.api.mvc._
-import scala.concurrent.Future
-import scala.concurrent.ExecutionContext.Implicits.global
-import javax.inject.Inject
-import play.api.i18n.{ MessagesApi }
-import play.api.libs.json._
+import models.tables.{ GameDao, UserDao }
+import models.{ ApiToken, User }
+import play.api.i18n.MessagesApi
 import play.api.libs.functional.syntax._
+import play.api.libs.json._
 
-class Account @Inject() (val messagesApi: MessagesApi) extends api.ApiController {
+import scala.concurrent.ExecutionContext.Implicits.global
+
+class Account @Inject() (gameDao: GameDao, userDao: UserDao, val messagesApi: MessagesApi) extends api.ApiController {
 
   def info = SecuredApiAction { implicit request =>
-    maybeItem(FakeUserDao.findById(request.userId))
+    maybeItem(userDao.findById(request.userId))
   }
 
   def myGames = SecuredApiAction { implicit request =>
-    val x = Game.findByCreatorId(request.userId)
+    val x = gameDao.listByCreatorId(request.userId)
     x.flatMap { list =>
-      ok(list.map(g => Json.obj("id" -> g.id, "creatorId" -> g.creatorId, "name" -> g.name, "players" -> g.players.length)))
+      ok(list.map(g => Json.obj("id" -> g.id, "creatorId" -> g.creatorId, "name" -> g.name)))
     }
   }
 
   def update = SecuredApiActionWithBody { implicit request =>
     readFromRequest[User] { user =>
-      FakeUserDao.update(request.userId, user.name).flatMap { isOk =>
-        if (isOk) noContent() else errorInternal
+      userDao.update(request.userId, user).flatMap { isOk =>
+        //TODO
+        //if (isOk) noContent() else errorInternal
+        noContent()
       }
     }
   }
@@ -40,11 +43,13 @@ class Account @Inject() (val messagesApi: MessagesApi) extends api.ApiController
   def updatePassword = SecuredApiActionWithBody { implicit request =>
     readFromRequest[Tuple2[String, String]] {
       case (oldPwd, newPwd) =>
-        FakeUserDao.findById(request.userId).flatMap {
+        userDao.findById(request.userId).flatMap {
           case None => errorUserNotFound
           case Some(user) if (oldPwd != user.password) => errorCustom("api.error.reset.pwd.old.incorrect")
-          case Some(user) => FakeUserDao.updatePassword(request.userId, newPwd).flatMap { isOk =>
-            if (isOk) noContent() else errorInternal
+          case Some(user) => userDao.updatePassword(request.userId, newPwd).flatMap { isOk =>
+            //TODO
+            //if (isOk) noContent() else errorInternal
+            noContent()
           }
         }
     }
@@ -52,7 +57,7 @@ class Account @Inject() (val messagesApi: MessagesApi) extends api.ApiController
 
   def delete = SecuredApiAction { implicit request =>
     ApiToken.delete(request.token).flatMap { _ =>
-      FakeUserDao.delete(request.userId).flatMap { _ =>
+      userDao.delete(request.userId).flatMap { _ =>
         noContent()
       }
     }

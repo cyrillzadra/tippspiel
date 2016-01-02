@@ -14,6 +14,7 @@ object JsonCombinators {
   implicit val dateWrites = Writes.dateWrites("dd-MM-yyyy HH:mm:ss")
   implicit val dateReads = Reads.dateReads("dd-MM-yyyy HH:mm:ss")
 
+  //USER
   implicit val userWrites = new Writes[User] {
     def writes(u: User) = Json.obj(
       "id" -> u.id,
@@ -21,9 +22,11 @@ object JsonCombinators {
       "name" -> u.name
     )
   }
+
   implicit val userReads: Reads[User] =
     (__ \ "name").read[String](minLength[String](1)).map(name => User(0L, null, null, name, false, false))
 
+  //TOURNAMENT
   implicit val tournamentWrites = new Writes[Tournament] {
     def writes(u: Tournament) = Json.obj(
       "id" -> u.id,

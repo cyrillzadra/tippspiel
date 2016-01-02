@@ -8,11 +8,10 @@ import java.sql.Date
 import java.text.SimpleDateFormat
 import javax.inject.Inject
 import javax.inject.Singleton
-import org.joda.time.DateTime
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
-import models.{ Tournament, Schedule, User }
+import models.{ Country, Tournament, Schedule, User }
 import play.api.db.slick.{ DatabaseConfigProvider, HasDatabaseConfigProvider }
 import slick.driver.JdbcProfile
 
@@ -30,7 +29,7 @@ trait ScheduleTable { self: HasDatabaseConfigProvider[JdbcProfile] =>
     def group = column[String]("GROUP")
     def homeTeam = column[String]("HOME_TEAM")
     def visitorTeam = column[String]("VISITOR_TEAM")
-    def homeScore = column[Int]("VISITOR_SCORE")
+    def homeScore = column[Int]("HOME_SCORE")
     def visitorScore = column[Int]("VISITOR_SCORE")
 
     def * = (id.?, tournamentId.?, gameTime, group, homeTeam, visitorTeam, homeScore, visitorScore) <> (Schedule.tupled, Schedule.unapply _)
@@ -79,6 +78,10 @@ class ScheduleDao @Inject() (protected val dbConfigProvider: DatabaseConfigProvi
     db.run(listStmt)
   }
 
+  /** Delete a Schedule. */
+  def delete(id: Long): Future[Unit] =
+    db.run(schedules.filter(_.id === id).delete).map(_ => ())
+
   def setup(): Boolean = {
     schedules.schema.create.statements.foreach(println)
 
@@ -86,13 +89,10 @@ class ScheduleDao @Inject() (protected val dbConfigProvider: DatabaseConfigProvi
       schedules.schema.create,
 
       // Insert some schedules
-      schedules += Schedule(None, Some(1L), new java.sql.Date(dt.parse("2015-09-06 10:11:00").getTime), "A", "Frankreich", "Rumänien", 0, 1),
-      schedules += Schedule(None, Some(1L), new java.sql.Date(dt.parse("2015-09-06 10:11:00").getTime), "A", "Frankreich", "Rumänien", 0, 1),
-      schedules += Schedule(None, Some(1L), new java.sql.Date(dt.parse("2015-09-06 10:11:00").getTime), "A", "Frankreich", "Rumänien", 0, 1),
-      schedules += Schedule(None, Some(1L), new java.sql.Date(dt.parse("2015-09-06 10:11:00").getTime), "A", "Frankreich", "Rumänien", 0, 1),
-      schedules += Schedule(None, Some(1L), new java.sql.Date(dt.parse("2015-09-06 10:11:00").getTime), "B", "Frankreich", "Rumänien", 0, 1),
-      schedules += Schedule(None, Some(1L), new java.sql.Date(dt.parse("2015-09-06 10:11:00").getTime), "B", "Frankreich", "Rumänien", 0, 1)
-
+      schedules += Schedule(None, Some(1L), new java.sql.Date(dt.parse("2015-09-06 10:11:00").getTime), "A", Country.FR.toString, Country.RO.toString, 0, 1),
+      schedules += Schedule(None, Some(1L), new java.sql.Date(dt.parse("2015-09-06 10:11:00").getTime), "A", Country.AL.toString, Country.CH.toString, 0, 1),
+      schedules += Schedule(None, Some(1L), new java.sql.Date(dt.parse("2015-09-06 10:11:00").getTime), "A", Country.RO.toString, Country.CH.toString, 0, 1),
+      schedules += Schedule(None, Some(1L), new java.sql.Date(dt.parse("2015-09-06 10:11:00").getTime), "B", Country.GB.toString, Country.RU.toString, 0, 1)
     ))
 
     println(schedules.insertStatement)

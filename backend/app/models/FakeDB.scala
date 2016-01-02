@@ -2,6 +2,7 @@ package models
 
 import api.Page
 import java.text.SimpleDateFormat
+import models.tables.Game
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
 
@@ -30,13 +31,6 @@ object FakeDB {
   // API REQUEST LOG
   val logs = FakeTable[ApiLog]()
 
-  // USERS
-  val users = FakeTable(
-    1L -> User(1L, "user1@mail.com", "123456", "User 1", true, true),
-    2L -> User(2L, "user2@mail.com", "123456", "User 2", true, true),
-    3L -> User(3L, "user3@mail.com", "123456", "User 3", true, true)
-  )
-
   // TOURNAMENTS
   val tournaments = FakeTable(
     1L -> Tournament(1L, "EM 2015")
@@ -58,9 +52,9 @@ object FakeDB {
 
   // GAMES
   val games = FakeTable(
-    1L -> Game(1L, 1L, "Game Name 1", List.empty),
-    2L -> Game(2L, 1L, "Game Name 2", List.empty),
-    3L -> Game(3L, 2L, "Game Name 3", List.empty)
+    1L -> Game(1L, 1L, 1L, "Game Name 1"),
+    2L -> Game(2L, 1L, 1L, "Game Name 2"),
+    3L -> Game(3L, 2L, 1L, "Game Name 3")
   )
 
   /*
@@ -75,8 +69,11 @@ object FakeDB {
         nextId
       }
     }
+
     def get(id: Long): Option[A] = table.get(id)
+
     def find(p: A => Boolean): Option[A] = table.values.find(p)
+
     def insert(a: Long => A): (Long, A) = {
       val id = nextId
       val tuple = (id -> a(id))
@@ -84,21 +81,30 @@ object FakeDB {
       incr += 1
       tuple
     }
+
     def update(id: Long)(f: A => A): Boolean = {
       get(id).map { a =>
         table += (id -> f(a))
         true
       }.getOrElse(false)
     }
+
     def delete(id: Long): Unit = table -= id
+
     def delete(p: A => Boolean): Unit = table = table.filterNot { case (id, a) => p(a) }
 
     def values: List[A] = table.values.toList
+
     def map[B](f: A => B): List[B] = values.map(f)
+
     def filter(p: A => Boolean): List[A] = values.filter(p)
+
     def exists(p: A => Boolean): Boolean = values.exists(p)
+
     def count(p: A => Boolean): Int = values.count(p)
+
     def size: Int = table.size
+
     def isEmpty: Boolean = size == 0
 
     def page(p: Int, s: Int)(filterFunc: A => Boolean)(sortFuncs: ((A, A) => Boolean)*): Page[A] = {

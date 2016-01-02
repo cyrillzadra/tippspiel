@@ -7,13 +7,11 @@ package models.tables
 import javax.inject.Inject
 import javax.inject.Singleton
 
-import org.joda.time.DateTime
-
 import scala.concurrent.ExecutionContext.Implicits.global
 
 import models.{ Tournament }
 import play.api.db.slick.{ DatabaseConfigProvider, HasDatabaseConfigProvider }
-import slick.driver.{ H2Driver, JdbcProfile }
+import slick.driver.{ JdbcProfile }
 
 import scala.concurrent.{ Future }
 
@@ -21,7 +19,7 @@ trait TournamentTable { self: HasDatabaseConfigProvider[JdbcProfile] =>
 
   import driver.api._
 
-  class Tournaments(tag: Tag) extends Table[Tournament](tag, "TOURNAMENT") {
+  class TournamentT(tag: Tag) extends Table[Tournament](tag, "TOURNAMENT") {
 
     def id = column[Long]("ID", O.PrimaryKey, O.AutoInc)
     def name = column[String]("NAME")
@@ -36,7 +34,7 @@ class TournamentDao @Inject() (protected val dbConfigProvider: DatabaseConfigPro
 
   import driver.api._
 
-  val tournaments = TableQuery[Tournaments]
+  val tournaments = TableQuery[TournamentT]
 
   /** Retrieve a tournament by id. */
   def findById(id: Long): Future[Option[Tournament]] =
@@ -59,6 +57,10 @@ class TournamentDao @Inject() (protected val dbConfigProvider: DatabaseConfigPro
   /** Return a list of (Tournament) */
   def list: Future[Seq[Tournament]] =
     db.run(tournaments.result)
+
+  /** Delete a Tournament. */
+  def delete(id: Long): Future[Unit] =
+    db.run(tournaments.filter(_.id === id).delete).map(_ => ())
 
   def setup(): Boolean = {
     tournaments.schema.create.statements.foreach(println)

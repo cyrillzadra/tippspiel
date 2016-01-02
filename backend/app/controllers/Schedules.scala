@@ -2,18 +2,18 @@ package controllers
 
 import javax.inject.Inject
 
-import models.tables.TournamentDao
+import models.tables.{ ScheduleDao, TournamentDao }
 import play.api.i18n.MessagesApi
 import play.api.libs.json._
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
-class Schedules @Inject() (tournamentDao: TournamentDao, val messagesApi: MessagesApi) extends api.ApiController {
+class Schedules @Inject() (scheduleDao: ScheduleDao, val messagesApi: MessagesApi) extends api.ApiController {
 
-  def list(id: Long) = SecuredApiAction { implicit request =>
-    val x = tournamentDao.list
+  def list(tournamentId: Long) = SecuredApiAction { implicit request =>
+    val x = scheduleDao.list(tournamentId)
     x.flatMap { list =>
-      ok(list.map(g => Json.obj("id" -> g.id, "name" -> g.name)))
+      ok(list.map(g => Json.obj("id" -> g.id, "tournamendId" -> g.tournamentId, "group" -> g.group)))
     }
   }
 

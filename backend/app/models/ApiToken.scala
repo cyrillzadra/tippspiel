@@ -30,7 +30,8 @@ object ApiToken {
       if (!tokens.exists(_.token == uuid)) uuid else newUUID
     }
     val token = newUUID
-    tokens.insert(_ => ApiToken(token, apiKey, expirationTime = (new DateTime()) plusMinutes 10, userId))
+    val timeout = 60
+    tokens.insert(_ => ApiToken(token, apiKey, expirationTime = (new DateTime()) plusMinutes timeout, userId))
     token
   }
 
