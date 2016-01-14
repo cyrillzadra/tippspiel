@@ -4,7 +4,7 @@ import javax.inject.Inject
 
 import api.ApiError._
 import api.JsonCombinators._
-import models.tables.{ GameDao, UserDao }
+import models.tables.{ GroupDao, UserDao }
 import models.{ ApiToken, User }
 import play.api.i18n.MessagesApi
 import play.api.libs.functional.syntax._
@@ -12,7 +12,7 @@ import play.api.libs.json._
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
-class Account @Inject() (gameDao: GameDao, userDao: UserDao, val messagesApi: MessagesApi) extends api.ApiController {
+class Account @Inject() (gameDao: GroupDao, userDao: UserDao, val messagesApi: MessagesApi) extends api.ApiController {
 
   def info = SecuredApiAction { implicit request =>
     maybeItem(userDao.findById(request.userId))

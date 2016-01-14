@@ -3,14 +3,14 @@ package controllers
 import javax.inject.Inject
 
 import models.SetupDataBase
-import models.tables.{ GameDao, ScheduleDao, UserDao }
+import models.tables.{ GroupDao, ScheduleDao, UserDao }
 import play.api.i18n.MessagesApi
 import play.api.mvc._
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
 class Application @Inject() (userDao: UserDao,
-    scheduleDao: ScheduleDao, gameDao: GameDao, val messagesApi: MessagesApi) extends api.ApiController {
+                             scheduleDao: ScheduleDao, gameDao: GroupDao, val messagesApi: MessagesApi) extends api.ApiController {
 
   def test = ApiAction { implicit request =>
     ok("The API is ready")
