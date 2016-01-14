@@ -3,15 +3,17 @@
 # ~~~~
 
 # TEST PAGE
-GET			/test							controllers.Application.test
+GET			/test							        controllers.Application.test
 
 # AUTHENTICATION
-POST		/signin							controllers.Auth.signIn
-POST		/signout						controllers.Auth.signOut
-POST		/signup							controllers.Auth.signUp
+POST		/signin							        controllers.Auth.signIn
+POST		/signout						        controllers.Auth.signOut
+POST		/signup							        controllers.Auth.signUp
+# signupconfirmation?userId=&confirmationToken=
+GET         /confirm                                controllers.Admin.signupConfirmation(userId : Long, confirmationToken: String)
 
 # USERNAMES
-GET			/usernames					    controllers.Users.usernames
+GET			/usernames					            controllers.Users.usernames
 
 # ACCOUNT
 GET			/account						        controllers.Account.info
@@ -19,10 +21,6 @@ PUT			/account						        controllers.Account.update
 GET			/account/mygames			            controllers.Account.myGames
 PUT			/account/password		                controllers.Account.updatePassword
 DELETE	    /account						        controllers.Account.delete
-
-# TOURNAMENT
-GET			/tournaments					        controllers.Tournaments.list
-GET			/tournaments/:id				        controllers.Tournaments.info(id: Long)
 
 # SCHEDULES
 GET			/tournaments/:id/schedules		        controllers.Schedules.list(id: Long)
@@ -55,17 +53,16 @@ GET			/realDB							            controllers.Application.realDB
 GET			/setupRealDB					            controllers.Application.setupRealDB
 
 # ADMIN
-GET			/admin/                                     controllers.Admin.tournaments
-# ADMIN TOURNAMENTS
-GET			/admin/tournaments               	        controllers.Admin.tournaments
-GET			/admin/tournaments/:id          	        controllers.Admin.tournamentEdit(id : Long)
-POST        /admin/tournaments/:id                      controllers.Admin.tournamentUpdate(id : Long)
+GET			/admin/                                     controllers.Admin.schedulesOfTournament
 
 # ADMIN SCHEDULES
-GET			/admin/tournaments/:id/schedules   	        controllers.Admin.schedulesOfTournament(id : Long)
-GET			/admin/tournaments/:id/createSchedule       controllers.Admin.scheduleCreate(id : Long)
-POST		/admin/tournaments/:id/saveSchedule         controllers.Admin.scheduleSave(id : Long)
-
+GET			/admin/schedules   	                        controllers.Admin.schedulesOfTournament
+GET			/admin/createSchedule                       controllers.Admin.scheduleCreate
+POST		/admin/saveSchedule                         controllers.Admin.scheduleSave
 GET			/admin/schedules       	                    controllers.Admin.schedules
 GET			/admin/schedules/:id   	                    controllers.Admin.scheduleEdit(id : Long)
 POST        /admin/schedules/:id                        controllers.Admin.scheduleUpdate(id : Long)
+
+# Admin Login page
+# GET     /admin/login                                    controllers.AdminLogin.login
+# GET     /admin/logout                                   controllers.AdminLogin.logout

@@ -5,6 +5,5 @@ package models
  */
 case class SetupDataBase(
   userCreated: Boolean,
-  tournamentsCreated: Boolean,
   schedulesCreated: Boolean,
   gamesCreated: Boolean)

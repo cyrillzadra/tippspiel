@@ -5,5 +5,6 @@ case class User(
   email: String,
   password: String,
   name: String,
+  country: String,
   emailConfirmed: Boolean,
   active: Boolean)

@@ -24,10 +24,11 @@ trait UserTable {
     def email = column[String]("EMAIL")
     def password = column[String]("PASSWORD")
     def name = column[String]("NAME")
+    def country = column[String]("COUNTRY")
     def emailConfirmed = column[Boolean]("EMAIL_CONFIRMED")
     def active = column[Boolean]("ACTIVE")
 
-    def * = (id, email, password, name, emailConfirmed, active) <> (User.tupled, User.unapply _)
+    def * = (id, email, password, name, country, emailConfirmed, active) <> (User.tupled, User.unapply _)
   }
 
 }
@@ -59,7 +60,7 @@ class UserDao @Inject() (protected val dbConfigProvider: DatabaseConfigProvider)
   //TODO
   def insert(email: String, password: String, name: String): Future[Unit] = Future.successful {
     //TODO set active to false - email confirmation
-    db.run(users += User(10, email, password, name, false, active = true))
+    db.run(users += User(10, email, password, name, country = "CH", false, active = true))
       .map(_ => ())
   }
 
@@ -97,9 +98,9 @@ class UserDao @Inject() (protected val dbConfigProvider: DatabaseConfigProvider)
       users.schema.create,
 
       // Insert some users
-      users += User(1, "user1@mail.com", "123456", "User 1", true, true),
-      users += User(2, "user2@mail.com", "123456", "User 2", true, true),
-      users += User(3, "user3@mail.com", "123456", "User 3", true, true)
+      users += User(1, "user1@mail.com", "123456", "User 1", "CH", true, true),
+      users += User(2, "user2@mail.com", "123456", "User 2", "CH", true, true),
+      users += User(3, "user3@mail.com", "123456", "User 3", "DE", true, true)
 
     ))
 

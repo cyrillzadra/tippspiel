@@ -3,71 +3,24 @@ package controllers
 import java.sql.Date
 import javax.inject.Inject
 
-import models.{ Country, Schedule, Tournament }
-import models.tables.{ ScheduleDao, TournamentDao, UserDao }
+import models.{ User, Country, Schedule }
+import models.tables.{ ScheduleDao, UserDao }
 import play.api.data.Form
 import play.api.data.Forms.{ date, longNumber, mapping, nonEmptyText, optional, number, sqlDate }
 import play.api.i18n.{ I18nSupport, MessagesApi }
+import play.api.libs.mailer.{ MailerClient, Email }
 import play.api.mvc._
 import play.i18n._
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
-class Admin @Inject() (userDao: UserDao, tournamentDao: TournamentDao, scheduleDao: ScheduleDao, val messagesApi: MessagesApi) extends Controller with I18nSupport {
-
-  val TournamentHome = Redirect(routes.Admin.tournaments())
-
-  val tournamentForm = Form(
-    mapping(
-      "id" -> longNumber,
-      "name" -> nonEmptyText
-    )(Tournament.apply)(Tournament.unapply)
-  )
-
-  /**
-   * tournament edit form
-   * @param id
-   * @return
-   */
-  def tournamentEdit(id: Long) = Action.async { implicit rs =>
-    val tournament = for {
-      t <- tournamentDao.findById(id)
-    } yield t
-
-    tournament.map {
-      case (t) =>
-        t match {
-          case Some(c) => Ok(views.html.admin.tournamentEdit(id, tournamentForm.fill(c)))
-          case None => NotFound
-        }
-    }
-  }
-
-  /**
-   * handles tournament edit form changes
-   * @param id
-   * @return
-   */
-  def tournamentUpdate(id: Long) = Action.async { implicit rs =>
-    tournamentForm.bindFromRequest.fold(formHasErrors => {
-      Future.successful(BadRequest(views.html.admin.tournamentEdit(id, formHasErrors)))
-    },
-      tournament => {
-        val x = tournamentDao.update(id, tournament)
-        Future.successful(TournamentHome.flashing("success" -> "Tournament %s has been updated".format(tournament.name)))
-      })
-  }
-
-  def tournaments = Action.async { implicit request =>
-    val userList = tournamentDao.list
-    userList.map(tournaments => Ok(views.html.admin.tournamentList(tournaments)))
-  }
+class Admin @Inject() (userDao: UserDao,
+    scheduleDao: ScheduleDao, val messagesApi: MessagesApi) extends Controller with I18nSupport {
 
   val schedulesForm = Form(
     mapping(
       "id" -> optional(longNumber),
-      "tournamentId" -> optional(longNumber),
       "gameTime" -> sqlDate,
       "group" -> nonEmptyText,
       "homeTeam" -> nonEmptyText,
@@ -110,7 +63,7 @@ class Admin @Inject() (userDao: UserDao, tournamentDao: TournamentDao, scheduleD
     },
       schedule => {
         val x = scheduleDao.update(id, schedule)
-        Future.successful(Redirect(routes.Admin.schedulesOfTournament(1)).flashing("success" -> "Schedule %s - %s has been updated".format(schedule.homeTeam, schedule.visitorTeam)))
+        Future.successful(Redirect(routes.Admin.schedulesOfTournament()).flashing("success" -> "Schedule %s - %s has been updated".format(schedule.homeTeam, schedule.visitorTeam)))
       })
   }
 
@@ -122,25 +75,37 @@ class Admin @Inject() (userDao: UserDao, tournamentDao: TournamentDao, scheduleD
     })
   }
 
-  def schedulesOfTournament(tournamentId: Long) = Action.async { implicit request =>
-    val schedulesList = scheduleDao.list(tournamentId)
+  def schedulesOfTournament = Action.async { implicit request =>
+    val schedulesList = scheduleDao.list
     schedulesList.map(schedules => {
       println("# schedules = " + schedules.size)
       Ok(views.html.admin.schedulesList(schedules))
     })
   }
 
-  def scheduleCreate(tournamentId: Long) = Action.async { implicit rs =>
-    Future.successful(Ok(views.html.admin.scheduleCreate(tournamentId, teams, schedulesForm)))
+  def scheduleCreate() = Action.async { implicit rs =>
+    Future.successful(Ok(views.html.admin.scheduleCreate(teams, schedulesForm)))
   }
 
-  def scheduleSave(tournamentId: Long) = Action.async { implicit rs =>
+  def scheduleSave() = Action.async { implicit rs =>
     schedulesForm.bindFromRequest.fold(
-      formHasErrors => Future.successful(BadRequest(views.html.admin.scheduleCreate(tournamentId, teams, formHasErrors))),
+      formHasErrors => Future.successful(BadRequest(views.html.admin.scheduleCreate(teams, formHasErrors))),
       schedule => {
         val x = scheduleDao.insert(schedule)
-        Future.successful(Redirect(routes.Admin.schedulesOfTournament(tournamentId)).flashing("success" -> "Schedule has been created"))
+        Future.successful(Redirect(routes.Admin.schedulesOfTournament()).flashing("success" -> "Schedule has been created"))
       })
+  }
+
+  /**
+   * E-MAIL CONFIRMATION
+   */
+  // confirm url
+  // signupconfirmation?userId=&confirmationToken=?
+  def signupConfirmation(userId: Long, confirmationToken: String) = Action.async { implicit request =>
+    userDao.findById(userId).flatMap {
+      case Some(user) => Future.successful(Ok(views.html.emailConfirmation(user)))
+      case None => Future.successful(Ok(views.html.emailConfirmationFailed("Failed")))
+    }
   }
 
 }

@@ -1,4 +1,4 @@
-@(id: Long, teams : Seq[(String,String)], scheduleForm: Form[models.Schedule])(implicit messages: Messages)
+@(scheduleId: Long, teams : Seq[(String,String)], scheduleForm: Form[models.Schedule])(implicit messages: Messages)
 
 @import helper._
 
@@ -36,12 +36,11 @@
 		  </div>
 		</nav>
 
-		@form(routes.Admin.scheduleUpdate(id)) {
+		@form(routes.Admin.scheduleUpdate(scheduleId)) {
 
 			<fieldset>
 
 				@inputText(scheduleForm("id"), '_label -> "Id")
-				@inputText(scheduleForm("tournamentId"), '_label -> "Tournament Id")
 				@inputDate(scheduleForm("gameTime"), '_label -> "Spieldatum")
 				@inputText(scheduleForm("group"), '_label -> "Gruppe")
 
@@ -66,7 +65,7 @@
 
 			<div class="actions">
 				<input type="submit" value="Save this tournament" class="btn primary"> or
-				<a href="@routes.Admin.tournaments()" class="btn">Cancel</a>
+				<a href="@routes.Admin.schedulesOfTournament()" class="btn">Cancel</a>
 			</div>
 
 			@if(scheduleForm.hasGlobalErrors) {

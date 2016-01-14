@@ -6,7 +6,6 @@ package models.tables
 
 import javax.inject.{ Inject, Singleton }
 
-import models.User
 import play.api.db.slick.{ DatabaseConfigProvider, HasDatabaseConfigProvider }
 import slick.driver.JdbcProfile
 
@@ -16,7 +15,6 @@ import scala.concurrent.Future
 case class Game(
   id: Long,
   creatorId: Long,
-  tournamentId: Long,
   name: String)
 
 trait GameTable { self: HasDatabaseConfigProvider[JdbcProfile] =>
@@ -27,10 +25,9 @@ trait GameTable { self: HasDatabaseConfigProvider[JdbcProfile] =>
 
     def id = column[Long]("ID", O.PrimaryKey, O.AutoInc)
     def creatorId = column[Long]("CREATOR_ID")
-    def tournamentId = column[Long]("TOURNAMENT_ID")
     def name = column[String]("NAME")
 
-    def * = (id, creatorId, tournamentId, name) <> (Game.tupled, Game.unapply _)
+    def * = (id, creatorId, name) <> (Game.tupled, Game.unapply _)
   }
 
 }
@@ -80,9 +77,9 @@ class GameDao @Inject() (protected val dbConfigProvider: DatabaseConfigProvider)
       games.schema.create,
 
       // Insert some Games
-      games += Game(1, 1, 1, "Game1@mail.com"),
-      games += Game(2, 1, 1, "Game2@mail.com"),
-      games += Game(3, 1, 1, "Game3@mail.com")
+      games += Game(1, 1, "Game1@mail.com"),
+      games += Game(2, 1, "Game2@mail.com"),
+      games += Game(3, 1, "Game3@mail.com")
 
     ))
 

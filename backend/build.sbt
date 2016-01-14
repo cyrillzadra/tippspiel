@@ -15,7 +15,9 @@ libraryDependencies ++= Seq(
   specs2 % Test,
 	"org.specs2" %% "specs2-matcher-extra" % "3.6" % Test,
   "com.typesafe.play" %% "play-slick" % "1.1.1",
-  "com.h2database" % "h2" % "1.4.190"
+  "com.h2database" % "h2" % "1.4.190",
+  "com.typesafe.play" %% "play-mailer" % "4.0.0-M1",
+  "ws.securesocial" %% "securesocial" % "3.0-M4"
 )
 
 resolvers += "scalaz-bintray" at "http://dl.bintray.com/scalaz/releases"

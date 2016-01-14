@@ -4,7 +4,6 @@ import java.sql.Date
 
 case class Schedule(
   id: Option[Long],
-  tournamentId: Option[Long],
   gameTime: Date,
   group: String,
   homeTeam: String,

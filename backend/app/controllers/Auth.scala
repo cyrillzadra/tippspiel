@@ -1,21 +1,24 @@
 package controllers
 
+import javax.inject.Inject
+
 import api.ApiError._
 import api.JsonCombinators._
 import models.tables.UserDao
-import models.{ User, ApiToken }
-import play.api.mvc._
-import play.api.libs.json._
-import play.api.libs.functional.syntax._
+import models.{ ApiToken, User }
 import play.api.Play.current
+import play.api.i18n.MessagesApi
 import play.api.libs.concurrent.Akka
-import scala.concurrent.duration._
-import scala.concurrent.Future
-import scala.concurrent.ExecutionContext.Implicits.global
-import javax.inject.Inject
-import play.api.i18n.{ MessagesApi }
+import play.api.libs.functional.syntax._
+import play.api.libs.json._
+import play.api.libs.mailer._
+import play.api.mvc.Action
 
-class Auth @Inject() (userDao: UserDao, val messagesApi: MessagesApi) extends api.ApiController {
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
+import scala.concurrent.duration._
+
+class Auth @Inject() (userDao: UserDao, mailerClient: MailerClient, val messagesApi: MessagesApi) extends api.ApiController {
 
   implicit val loginInfoReads: Reads[Tuple2[String, String]] = (
     (__ \ "email").read[String](Reads.email) and
@@ -63,16 +66,36 @@ class Auth @Inject() (userDao: UserDao, val messagesApi: MessagesApi) extends ap
             userDao.insert(email, password, user.name)
             userDao.findByEmail(email).flatMap {
               case Some(user) => {
-                // Send confirmation email. You will have to catch the link and confirm the email and activate the user.
-                // But meanwhile...
-                Akka.system.scheduler.scheduleOnce(30 seconds) {
-                  userDao.confirmEmail(user.id)
-                }
+
+                sendConfirmationEmail(user);
+
                 ok(user)
               }
             }
         }
     }
+  }
+
+  private def sendConfirmationEmail(user: User) {
+    val cid = "1234"
+    val confirmationUrl = "http://localhost:9000/signupconfirmation?userId=" + user.id + "&confirmationToken="
+    val email = Email(
+      "Bestätigungs E-Mail",
+      "Mister FROM <cyrill.zadra@tie.ch>",
+      Seq("Miss TO <cyrill.zadra@gmail.com>"),
+      // adds attachment
+      //attachments = Seq(
+      //AttachmentFile("attachment.pdf", new File("/some/path/attachment.pdf")),
+      // adds inline attachment from byte array
+      //AttachmentData("data.txt", "data".getBytes, "text/plain", Some("Simple data"), Some(EmailAttachment.INLINE)),
+      // adds cid attachment
+      //AttachmentFile("image.jpg", new File("/some/path/image.jpg"), contentId = Some(cid))
+      //),
+      // sends text, HTML or both...
+      bodyText = Some("A text message"),
+      bodyHtml = Some(s"""<html><body><p>An <b>html</b> message with cid <img src="cid:$cid"></p><a href="$confirmationUrl">$confirmationUrl</a></body></html>""")
+    )
+    mailerClient.send(email)
   }
 
 }

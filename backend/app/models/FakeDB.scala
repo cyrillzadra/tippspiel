@@ -1,13 +1,11 @@
 package models
 
-import api.Page
 import java.text.SimpleDateFormat
+
+import api.Page
 import models.tables.Game
-import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
 
-import scala.collection.mutable.Map
-import scala.concurrent.Future
 import scala.util.Try
 
 /*
@@ -31,36 +29,31 @@ object FakeDB {
   // API REQUEST LOG
   val logs = FakeTable[ApiLog]()
 
-  // TOURNAMENTS
-  val tournaments = FakeTable(
-    1L -> Tournament(1L, "EM 2015")
-  )
-
   // SCHEDULES
   val aDate = Try(dt.parse("2015-09-06 10:11:00"))
     .map(d => new java.sql.Date(d.getTime()))
     .toOption
 
   val schedules = FakeTable(
-    1L -> Schedule(None, Some(1L), new java.sql.Date(dt.parse("2015-09-06 10:11:00").getTime),
+    1L -> Schedule(None, new java.sql.Date(dt.parse("2015-09-06 10:11:00").getTime),
       "A", "Frankreich", "Rumänien", Some(0), Some(1)),
-    2L -> Schedule(None, Some(1L), new java.sql.Date(dt.parse("2015-09-06 10:11:00").getTime),
+    2L -> Schedule(None, new java.sql.Date(dt.parse("2015-09-06 10:11:00").getTime),
       "A", "Frankreich", "Rumänien", Some(0), Some(1)),
-    3L -> Schedule(None, Some(1L), new java.sql.Date(dt.parse("2015-09-06 10:11:00").getTime),
+    3L -> Schedule(None, new java.sql.Date(dt.parse("2015-09-06 10:11:00").getTime),
       "A", "Frankreich", "Rumänien", Some(0), Some(1)),
-    4L -> Schedule(None, Some(1L), new java.sql.Date(dt.parse("2015-09-06 10:11:00").getTime),
+    4L -> Schedule(None, new java.sql.Date(dt.parse("2015-09-06 10:11:00").getTime),
       "A", "Frankreich", "Rumänien", Some(0), Some(1)),
-    5L -> Schedule(None, Some(1L), new java.sql.Date(dt.parse("2015-09-06 10:11:00").getTime),
+    5L -> Schedule(None, new java.sql.Date(dt.parse("2015-09-06 10:11:00").getTime),
       "B", "Frankreich", "Rumänien", Some(0), Some(1)),
-    6L -> Schedule(None, Some(1L), new java.sql.Date(dt.parse("2015-09-06 10:11:00").getTime),
+    6L -> Schedule(None, new java.sql.Date(dt.parse("2015-09-06 10:11:00").getTime),
       "B", "Frankreich", "Rumänien", Some(0), Some(1))
   )
 
   // GAMES
   val games = FakeTable(
-    1L -> Game(1L, 1L, 1L, "Game Name 1"),
-    2L -> Game(2L, 1L, 1L, "Game Name 2"),
-    3L -> Game(3L, 2L, 1L, "Game Name 3")
+    1L -> Game(1L, 1L, "Game Name 1"),
+    2L -> Game(2L, 1L, "Game Name 2"),
+    3L -> Game(3L, 2L, "Game Name 3")
   )
 
   /*

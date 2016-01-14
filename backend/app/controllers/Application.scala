@@ -1,18 +1,15 @@
 package controllers
 
-import models.SetupDataBase
-import models.tables.{ GameDao, UserDao, TournamentDao, ScheduleDao }
-import play.api.db
-import play.api.mvc._
 import javax.inject.Inject
-import play.api.i18n.{ MessagesApi }
-import slick.jdbc.meta.MTable
 
-import scala.concurrent.duration.Duration
-import scala.concurrent.{ Await, Future }
+import models.SetupDataBase
+import models.tables.{ GameDao, ScheduleDao, UserDao }
+import play.api.i18n.MessagesApi
+import play.api.mvc._
+
 import scala.concurrent.ExecutionContext.Implicits.global
 
-class Application @Inject() (userDao: UserDao, tournamentDao: TournamentDao,
+class Application @Inject() (userDao: UserDao,
     scheduleDao: ScheduleDao, gameDao: GameDao, val messagesApi: MessagesApi) extends api.ApiController {
 
   def test = ApiAction { implicit request =>
@@ -26,11 +23,10 @@ class Application @Inject() (userDao: UserDao, tournamentDao: TournamentDao,
 
   def setupRealDB = Action { implicit request =>
     val usersCreated: Boolean = userDao.setup()
-    val tournamentsCreated: Boolean = tournamentDao.setup()
     val schedulesCreated: Boolean = scheduleDao.setup()
     val gamesCreated: Boolean = gameDao.setup()
 
-    Ok(views.html.setupRealDB(SetupDataBase(usersCreated, tournamentsCreated, schedulesCreated, gamesCreated)))
+    Ok(views.html.setupRealDB(SetupDataBase(usersCreated, schedulesCreated, gamesCreated)))
   }
 
 }
