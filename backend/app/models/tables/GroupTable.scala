@@ -1,21 +1,22 @@
 package models.tables
 
 /**
-  * Created by tiezad on 29.12.2015.
-  */
+ * Created by tiezad on 29.12.2015.
+ */
 
-import javax.inject.{Inject, Singleton}
+import javax.inject.{ Inject, Singleton }
 
-import play.api.db.slick.{DatabaseConfigProvider, HasDatabaseConfigProvider}
+import play.api.db.slick.{ DatabaseConfigProvider, HasDatabaseConfigProvider }
 import slick.driver.JdbcProfile
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 case class Group(
-                  id: Long,
-                  creatorId: Long,
-                  name: String)
+  id: Long,
+  creatorId: Long,
+  name: String,
+  description: Option[String])
 
 trait GroupTable {
   self: HasDatabaseConfigProvider[JdbcProfile] =>
@@ -30,14 +31,16 @@ trait GroupTable {
 
     def name = column[String]("NAME")
 
-    def * = (id, creatorId, name) <>(Group.tupled, Group.unapply _)
+    def description = column[Option[String]]("DESCRIPTION")
+
+    def * = (id, creatorId, name, description) <> (Group.tupled, Group.unapply _)
   }
 
 }
 
 @Singleton()
-class GroupDao @Inject()(protected val dbConfigProvider: DatabaseConfigProvider) extends GroupTable
-with HasDatabaseConfigProvider[JdbcProfile] {
+class GroupDao @Inject() (protected val dbConfigProvider: DatabaseConfigProvider) extends GroupTable
+    with HasDatabaseConfigProvider[JdbcProfile] {
 
   import driver.api._
 
@@ -80,10 +83,9 @@ with HasDatabaseConfigProvider[JdbcProfile] {
       groups.schema.create,
 
       // Insert some Groups
-      groups += Group(1, 1, "groupName1"),
-      groups += Group(2, 1, "groupName2"),
-      groups += Group(3, 1, "groupName3")
-
+      groups += Group(1, 1, "groupName1", Some("Beschreibung 1")),
+      groups += Group(2, 1, "groupName2", Some("Beschreibung 2")),
+      groups += Group(3, 1, "groupName3", Some("Beschreibung 3"))
     ))
 
     true

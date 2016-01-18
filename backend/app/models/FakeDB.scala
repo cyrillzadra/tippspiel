@@ -3,7 +3,7 @@ package models
 import java.text.SimpleDateFormat
 
 import api.Page
-import models.tables.Group
+import models.tables.{ Schedule, Group }
 import org.joda.time.format.DateTimeFormat
 
 import scala.util.Try
@@ -51,9 +51,9 @@ object FakeDB {
 
   // GAMES
   val games = FakeTable(
-    1L -> Group(1L, 1L, "Game Name 1"),
-    2L -> Group(2L, 1L, "Game Name 2"),
-    3L -> Group(3L, 2L, "Game Name 3")
+    1L -> Group(1L, 1L, "Game Name 1", Some("Beschreibung1")),
+    2L -> Group(2L, 1L, "Game Name 2", None),
+    3L -> Group(3L, 2L, "Game Name 3", None)
   )
 
   /*

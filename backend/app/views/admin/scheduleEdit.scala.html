@@ -1,4 +1,5 @@
-@(scheduleId: Long, teams : Seq[(String,String)], scheduleForm: Form[models.Schedule])(implicit messages: Messages)
+@import models.tables.Schedule
+@(scheduleId: Long, teams : Seq[(String,String)], scheduleForm: Form[Schedule])(implicit messages: Messages)
 
 @import helper._
 

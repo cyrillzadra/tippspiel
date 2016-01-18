@@ -1,35 +1,32 @@
 package models.tables
 
 /**
-  * Created by tiezad on 29.12.2015.
-  */
+ * Created by tiezad on 29.12.2015.
+ */
 
-import javax.inject.{Inject, Singleton}
+import javax.inject.{ Inject, Singleton }
 
-import play.api.db.slick.{DatabaseConfigProvider, HasDatabaseConfigProvider}
+import play.api.db.slick.{ DatabaseConfigProvider, HasDatabaseConfigProvider }
 import slick.driver.JdbcProfile
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 case class Tip(
-                id: Long,
-                playerId: Long,
-                groupId: Long,
-                scheduleId: Long,
-                homeScore: Option[Int] = None,
-                visitorScore: Option[Int] = None)
+  userId: Long,
+  groupId: Long,
+  scheduleId: Long,
+  homeScore: Option[Int] = None,
+  visitorScore: Option[Int] = None)
 
 trait TipTable {
   self: HasDatabaseConfigProvider[JdbcProfile] =>
 
   import driver.api._
 
-  class TipT(tag: Tag) extends Table[Tip](tag, "PLAYER_TIP") {
-    //TODO remove tipId!!!
-    def id = column[Long]("ID", O.PrimaryKey, O.AutoInc)
+  class TipT(tag: Tag) extends Table[Tip](tag, "USER_TIP") {
 
-    def playerId = column[Long]("PLAYER_ID")
+    def userId = column[Long]("PLAYER_ID")
 
     def groupId = column[Long]("GROUP_ID")
 
@@ -39,14 +36,14 @@ trait TipTable {
 
     def visitorScore = column[Option[Int]]("VISITOR_SCORE")
 
-    def * = (id, groupId, scheduleId, playerId, homeScore, visitorScore) <>(Tip.tupled, Tip.unapply _)
+    def * = (groupId, scheduleId, userId, homeScore, visitorScore) <> (Tip.tupled, Tip.unapply _)
   }
 
 }
 
 @Singleton()
-class TipDao @Inject()(protected val dbConfigProvider: DatabaseConfigProvider) extends TipTable
-with HasDatabaseConfigProvider[JdbcProfile] {
+class TipDao @Inject() (protected val dbConfigProvider: DatabaseConfigProvider) extends TipTable
+    with HasDatabaseConfigProvider[JdbcProfile] {
 
   import driver.api._
 
@@ -71,9 +68,9 @@ with HasDatabaseConfigProvider[JdbcProfile] {
       tips.schema.create,
 
       // Insert some Groups
-      tips += Tip(1, 1, 1, 1, None, None),
-      tips += Tip(2, 1, 1, 1, None, None),
-      tips += Tip(3, 1, 1, 1, None, None)
+      tips += Tip(1, 1, 1, None, None),
+      tips += Tip(1, 1, 2, None, None),
+      tips += Tip(1, 1, 3, None, None)
 
     ))
 

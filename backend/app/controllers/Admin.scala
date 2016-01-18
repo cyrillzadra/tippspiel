@@ -1,14 +1,12 @@
 package controllers
 
-import java.sql.Date
 import javax.inject.Inject
 
-import models.{ User, Country, Schedule }
-import models.tables.{ ScheduleDao, UserDao }
+import models.Country
+import models.tables.{ Schedule, ScheduleDao, UserDao }
 import play.api.data.Form
-import play.api.data.Forms.{ date, longNumber, mapping, nonEmptyText, optional, number, sqlDate }
+import play.api.data.Forms.{ longNumber, mapping, nonEmptyText, number, optional, sqlDate }
 import play.api.i18n.{ I18nSupport, MessagesApi }
-import play.api.libs.mailer.{ MailerClient, Email }
 import play.api.mvc._
 import play.i18n._
 

@@ -10,7 +10,7 @@ import play.api.mvc._
 import scala.concurrent.ExecutionContext.Implicits.global
 
 class Application @Inject() (userDao: UserDao,
-                             scheduleDao: ScheduleDao, gameDao: GroupDao, val messagesApi: MessagesApi) extends api.ApiController {
+    scheduleDao: ScheduleDao, gameDao: GroupDao, val messagesApi: MessagesApi) extends api.ApiController {
 
   def test = ApiAction { implicit request =>
     ok("The API is ready")

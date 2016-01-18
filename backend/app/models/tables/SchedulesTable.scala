@@ -4,35 +4,50 @@ package models.tables
  * Created by tiezad on 29.12.2015.
  */
 
-import java.sql.Date
+import java.sql.{ Date, Timestamp }
 import java.text.SimpleDateFormat
-import javax.inject.Inject
-import javax.inject.Singleton
+import javax.inject.{ Inject, Singleton }
 
-import scala.concurrent.ExecutionContext.Implicits.global
-
-import models.{ Country, Schedule, User }
+import models.Country
 import play.api.db.slick.{ DatabaseConfigProvider, HasDatabaseConfigProvider }
 import slick.driver.JdbcProfile
 
-import scala.concurrent.{ Await, Future }
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 
-trait ScheduleTable { self: HasDatabaseConfigProvider[JdbcProfile] =>
+case class Schedule(
+  id: Option[Long],
+  gameTime: Date,
+  group: String,
+  homeTeam: String,
+  visitorTeam: String,
+  homeScore: Option[Int] = None,
+  visitorScore: Option[Int] = None)
+
+trait ScheduleTable {
+  self: HasDatabaseConfigProvider[JdbcProfile] =>
 
   import driver.api._
 
   class SchedulesT(tag: Tag) extends Table[Schedule](tag, "SCHEDULE") {
 
     def id = column[Long]("ID", O.PrimaryKey, O.AutoInc)
+
     def gameTime = column[Date]("GAME_TIME")
+
     def group = column[String]("GROUP")
+
     def homeTeam = column[String]("HOME_TEAM")
+
     def visitorTeam = column[String]("VISITOR_TEAM")
+
     def homeScore = column[Option[Int]]("HOME_SCORE")
+
     def visitorScore = column[Option[Int]]("VISITOR_SCORE")
 
     def * = (id.?, gameTime, group, homeTeam, visitorTeam, homeScore, visitorScore) <> (Schedule.tupled, Schedule.unapply _)
   }
+
 }
 
 @Singleton()

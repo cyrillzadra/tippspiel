@@ -1,5 +1,6 @@
 @import play.i18n._
-@(schedules : Seq[models.Schedule])
+@import models.tables.Schedule
+@(schedules : Seq[Schedule])
 @displayDate(date: java.util.Date)(implicit dateFormat: java.text.SimpleDateFormat) = @{ dateFormat.format(date) }
 @displayDateTwoLines(date: java.util.Date)(implicit dateFormat: java.text.SimpleDateFormat) = @{ Html(dateFormat.format(date).replace(" ", "<br>")) }
 @defining(new java.text.SimpleDateFormat("dd-MM-yyyy HH:ss:mm")) { implicit dateFormat =>

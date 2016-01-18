@@ -33,7 +33,6 @@ class Auth @Inject() (userDao: UserDao, mailerClient: MailerClient, val messages
           case Some(user) => {
             if (user.password != pwd) errorUserNotFound
             else if (!user.emailConfirmed) errorUserEmailUnconfirmed
-            else if (!user.active) errorUserInactive
             else ApiToken.create(request.apiKeyOpt.get, user.id).flatMap { token =>
               ok(Json.obj(
                 "token" -> token,
@@ -71,6 +70,7 @@ class Auth @Inject() (userDao: UserDao, mailerClient: MailerClient, val messages
 
                 ok(user)
               }
+              case None => errorCustom("api.error.signup.email.exists")
             }
         }
     }
