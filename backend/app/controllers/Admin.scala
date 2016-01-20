@@ -122,7 +122,7 @@ class Admin @Inject()(userDao: UserDao,
   }
 
 
-  def schedulesOfTournament = withAsyncAuth { username => implicit request =>
+  def schedulesOfTournament = Action.async { implicit request =>
     val schedulesList = scheduleDao.list
     schedulesList.map(schedules => {
       println("# schedules = " + schedules.size)
@@ -130,7 +130,7 @@ class Admin @Inject()(userDao: UserDao,
     })
   }
 
-  def scheduleCreate() = withAsyncAuth { username => implicit rs =>
+  def scheduleCreate() = Action.async { implicit rs =>
     Future.successful(Ok(views.html.admin.scheduleCreate(teams, schedulesForm)))
   }
 
@@ -169,12 +169,14 @@ trait SecuredAdmin {
     }
   }
 
+/*
   def withAsyncAuth(f: => String => Request[AnyContent] => Future[Result]): Future[Result] = Action.async {
     Security.Authenticated(username, onUnauthorized) { user =>
       println(user)
     }
 
-    //Action(request => f(user)(request))
+    Action(request => f(user)(request))
   }
+*/
 
 }
