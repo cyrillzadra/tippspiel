@@ -2,8 +2,9 @@ import models.User
 import models.tables.UserDao
 import org.junit.runner.RunWith
 import org.specs2.runner.JUnitRunner
-import org.specs2.specification.BeforeAll
-import play.api.Application
+import org.specs2.specification.{BeforeSpec, BeforeAll}
+import play.api.inject.guice.GuiceApplicationBuilder
+import play.api.{Configuration, Application}
 import play.api.test.{PlaySpecification, WithApplicationLoader}
 
 import scala.concurrent.Await
@@ -15,17 +16,17 @@ import scala.concurrent.duration._
 @RunWith(classOf[JUnitRunner])
 class UserSchemaSpec  extends PlaySpecification with BeforeAll {
 
-  def beforeAll {
-    println("test")
+  override def beforeAll(): Unit = {
+    val application = new GuiceApplicationBuilder()
+      .loadConfig(env => Configuration.load(env))
+      .build
+    val app2dao = Application.instanceCache[UserDao]
+    val userDao: UserDao = app2dao(application)
+    userDao.setup()
   }
 
   "USERDAO" should {
     val app2dao = Application.instanceCache[UserDao]
-
-    "setup" in new WithApplicationLoader {
-      val userDao: UserDao = app2dao(app)
-      userDao.setup()
-    }
 
     "find user by id" in new WithApplicationLoader {
       val userDao: UserDao = app2dao(app)
@@ -56,6 +57,5 @@ class UserSchemaSpec  extends PlaySpecification with BeforeAll {
     }
 
   }
-
 
 }
