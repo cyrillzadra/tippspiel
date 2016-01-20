@@ -78,7 +78,7 @@ trait Schema {
 
   class UserT(tag: Tag) extends Table[User](tag, "USER") {
 
-    def id = column[Long]("ID")
+    def id = column[Long]("ID", O.PrimaryKey, O.AutoInc)
 
     def email = column[String]("EMAIL")
 
@@ -92,7 +92,7 @@ trait Schema {
 
     def idx = index("unique_email", (email), unique = true)
 
-    def * = (id, email, password, name, country, emailConfirmed) <> (User.tupled, User.unapply _)
+    def * = (id.?, email, password, name, country, emailConfirmed) <> (User.tupled, User.unapply _)
   }
 
 }

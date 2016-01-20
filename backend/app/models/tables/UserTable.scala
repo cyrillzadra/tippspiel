@@ -40,13 +40,13 @@ class UserDao @Inject() (protected val dbConfigProvider: DatabaseConfigProvider)
   //TODO
   def insert(email: String, password: String, name: String): Future[Unit] = Future.successful {
     //TODO set active to false - email confirmation
-    db.run(users += User(10, email, password, name, country = "CH", false))
+    db.run(users += User(None, email, password, name, country = "CH", false))
       .map(_ => ())
   }
 
   /** Update a User. */
   def update(id: Long, user: User): Future[Unit] = {
-    val userToUpdate: User = user.copy(id)
+    val userToUpdate: User = user.copy(Some(id))
     db.run(users.filter(_.id === id).update(userToUpdate)).map(_ => ())
   }
 
@@ -78,9 +78,9 @@ class UserDao @Inject() (protected val dbConfigProvider: DatabaseConfigProvider)
       users.schema.create,
 
       // Insert some users
-      users += User(1, "user1@mail.com", "123456", "User 1", "CH", true),
-      users += User(2, "user2@mail.com", "123456", "User 2", "CH", true),
-      users += User(3, "user3@mail.com", "123456", "User 3", "DE", true)
+      users += User(None, "user1@mail.com", "123456", "User 1", "CH", true),
+      users += User(None, "user2@mail.com", "123456", "User 2", "CH", true),
+      users += User(None, "user3@mail.com", "123456", "User 3", "DE", true)
 
     ))
 

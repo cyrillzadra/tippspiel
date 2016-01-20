@@ -24,7 +24,7 @@ object JsonCombinators {
   }
 
   implicit val userReads: Reads[User] =
-    (__ \ "name").read[String](minLength[String](1)).map(name => User(0L, null, null, name, null, false))
+    (__ \ "name").read[String](minLength[String](1)).map(name => User(None, null, null, name, null, false))
 
   /* implicit val taskWrites = new Writes[Task] {
     def writes(t: Task) = Json.obj(

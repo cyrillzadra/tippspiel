@@ -33,7 +33,7 @@ class Auth @Inject() (userDao: UserDao, mailerClient: MailerClient, val messages
           case Some(user) => {
             if (user.password != pwd) errorUserNotFound
             else if (!user.emailConfirmed) errorUserEmailUnconfirmed
-            else ApiToken.create(request.apiKeyOpt.get, user.id).flatMap { token =>
+            else ApiToken.create(request.apiKeyOpt.get, user.id.getOrElse(0L)).flatMap { token =>
               ok(Json.obj(
                 "token" -> token,
                 "minutes" -> 10
