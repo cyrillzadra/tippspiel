@@ -17,7 +17,10 @@ libraryDependencies ++= Seq(
   "com.typesafe.play" %% "play-slick" % "1.1.1",
   "com.h2database" % "h2" % "1.4.190",
   "com.typesafe.play" %% "play-mailer" % "4.0.0-M1",
-  "ws.securesocial" %% "securesocial" % "3.0-M4"
+  "ws.securesocial" %% "securesocial" % "3.0-M4",
+  "joda-time" % "joda-time" % "2.7",
+  "org.joda" % "joda-convert" % "1.7",
+  "com.github.tototoshi" %% "slick-joda-mapper" % "1.2.0"
 )
 
 resolvers += "scalaz-bintray" at "http://dl.bintray.com/scalaz/releases"

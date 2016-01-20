@@ -3,7 +3,7 @@
 @(schedules : Seq[Schedule])
 @displayDate(date: java.util.Date)(implicit dateFormat: java.text.SimpleDateFormat) = @{ dateFormat.format(date) }
 @displayDateTwoLines(date: java.util.Date)(implicit dateFormat: java.text.SimpleDateFormat) = @{ Html(dateFormat.format(date).replace(" ", "<br>")) }
-@defining(new java.text.SimpleDateFormat("dd-MM-yyyy HH:ss:mm")) { implicit dateFormat =>
+@defining(new java.text.SimpleDateFormat("dd-MM-yyyy HH:mm")) { implicit dateFormat =>
 	@main("Real DB") {
 		<style>
 		body { padding-top: 70px; background-color: #fbfcfe; }
@@ -55,7 +55,7 @@
 					@schedules.sortBy(_.id).map { schedule =>
 						<tr>
 							<td class="text-center">@schedule.id</td>
-							<td>@schedule.gameTime</td>
+							<td>@displayDate(schedule.gameTime.toDate)</td>
 							<td>@schedule.group</td>
 							<td>@Messages.get("country."+schedule.homeTeam)</td>
 							<td>@Messages.get("country."+schedule.visitorTeam)</td>

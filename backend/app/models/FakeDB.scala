@@ -1,9 +1,11 @@
 package models
 
 import java.text.SimpleDateFormat
+import javax.xml.datatype.DatatypeConstants
 
 import api.Page
 import models.tables.{ Schedule, Group }
+import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
 
 import scala.util.Try
@@ -35,17 +37,17 @@ object FakeDB {
     .toOption
 
   val schedules = FakeTable(
-    1L -> Schedule(None, new java.sql.Date(dt.parse("2015-09-06 10:11:00").getTime),
+    1L -> Schedule(None, DateTime.parse("2015-09-06 10:11:00", dtf),
       "A", "Frankreich", "Rumänien", Some(0), Some(1)),
-    2L -> Schedule(None, new java.sql.Date(dt.parse("2015-09-06 10:11:00").getTime),
+    2L -> Schedule(None, DateTime.parse("2015-09-06 10:11:00", dtf),
       "A", "Frankreich", "Rumänien", Some(0), Some(1)),
-    3L -> Schedule(None, new java.sql.Date(dt.parse("2015-09-06 10:11:00").getTime),
+    3L -> Schedule(None, DateTime.parse("2015-09-06 10:11:00", dtf),
       "A", "Frankreich", "Rumänien", Some(0), Some(1)),
-    4L -> Schedule(None, new java.sql.Date(dt.parse("2015-09-06 10:11:00").getTime),
+    4L -> Schedule(None, DateTime.parse("2015-09-06 10:11:00", dtf),
       "A", "Frankreich", "Rumänien", Some(0), Some(1)),
-    5L -> Schedule(None, new java.sql.Date(dt.parse("2015-09-06 10:11:00").getTime),
+    5L -> Schedule(None, DateTime.parse("2015-09-06 10:11:00", dtf),
       "B", "Frankreich", "Rumänien", Some(0), Some(1)),
-    6L -> Schedule(None, new java.sql.Date(dt.parse("2015-09-06 10:11:00").getTime),
+    6L -> Schedule(None, DateTime.parse("2015-09-06 10:11:00", dtf),
       "B", "Frankreich", "Rumänien", Some(0), Some(1))
   )
 

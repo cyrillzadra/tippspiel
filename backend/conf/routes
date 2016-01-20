@@ -64,5 +64,6 @@ GET			/admin/schedules/:id   	                    controllers.Admin.scheduleEdit
 POST        /admin/schedules/:id                        controllers.Admin.scheduleUpdate(id : Long)
 
 # Admin Login page
-# GET     /admin/login                                    controllers.AdminLogin.login
+GET         /admin/login                                    controllers.Admin.login
+POST        /admin/login                                    controllers.Admin.authenticate
 # GET     /admin/logout                                   controllers.AdminLogin.logout

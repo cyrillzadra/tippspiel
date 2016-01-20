@@ -4,11 +4,13 @@ package models.tables
  * Created by tiezad on 29.12.2015.
  */
 
-import java.sql.{ Date, Timestamp }
+import java.sql.Timestamp
 import java.text.SimpleDateFormat
 import javax.inject.{ Inject, Singleton }
 
 import models.Country
+import org.joda.time.DateTime
+import org.joda.time.format.DateTimeFormat
 import play.api.db.slick.{ DatabaseConfigProvider, HasDatabaseConfigProvider }
 import slick.driver.JdbcProfile
 
@@ -17,7 +19,7 @@ import scala.concurrent.Future
 
 case class Schedule(
   id: Option[Long],
-  gameTime: Date,
+  gameTime: DateTime,
   group: String,
   homeTeam: String,
   visitorTeam: String,
@@ -31,9 +33,14 @@ trait ScheduleTable {
 
   class SchedulesT(tag: Tag) extends Table[Schedule](tag, "SCHEDULE") {
 
+    implicit val timestamp2dateTime = MappedColumnType.base[DateTime, Timestamp](
+      dateTime => new Timestamp(dateTime.getMillis),
+      timestamp => new DateTime(timestamp)
+    )
+
     def id = column[Long]("ID", O.PrimaryKey, O.AutoInc)
 
-    def gameTime = column[Date]("GAME_TIME")
+    def gameTime = column[DateTime]("GAME_TIME")
 
     def group = column[String]("GROUP")
 
@@ -46,6 +53,7 @@ trait ScheduleTable {
     def visitorScore = column[Option[Int]]("VISITOR_SCORE")
 
     def * = (id.?, gameTime, group, homeTeam, visitorTeam, homeScore, visitorScore) <> (Schedule.tupled, Schedule.unapply _)
+
   }
 
 }
@@ -90,17 +98,19 @@ class ScheduleDao @Inject() (protected val dbConfigProvider: DatabaseConfigProvi
     db.run(schedules.filter(_.id === id).delete).map(_ => ())
 
   def setup(): Boolean = {
+    val dtf = DateTimeFormat.forPattern("yyyy-mm-dd hh:mm:ss")
+
     schedules.schema.create.statements.foreach(println)
 
     dbConfig.db.run(DBIO.seq(
       schedules.schema.create,
 
       // Insert some schedules
-      schedules += Schedule(None, new java.sql.Date(dt.parse("2015-09-06 10:11:00").getTime),
+      schedules += Schedule(None, DateTime.parse("2015-09-06 10:11:00", dtf),
         "A", Country.FR.toString, Country.RO.toString, Some(0), Some(1)),
-      schedules += Schedule(None, new java.sql.Date(dt.parse("2015-09-06 10:11:00").getTime), "A", Country.AL.toString, Country.CH.toString, None, None),
-      schedules += Schedule(None, new java.sql.Date(dt.parse("2015-09-06 10:11:00").getTime), "A", Country.RO.toString, Country.CH.toString, None, None),
-      schedules += Schedule(None, new java.sql.Date(dt.parse("2015-09-06 10:11:00").getTime), "B", Country.GB.toString, Country.RU.toString, None, None)
+      schedules += Schedule(None, DateTime.parse("2015-09-06 10:11:00", dtf), "A", Country.AL.toString, Country.CH.toString, None, None),
+      schedules += Schedule(None, DateTime.parse("2015-09-06 10:11:00", dtf), "A", Country.RO.toString, Country.CH.toString, None, None),
+      schedules += Schedule(None, DateTime.parse("2015-09-06 10:11:00", dtf), "B", Country.GB.toString, Country.RU.toString, None, None)
     ))
 
     println(schedules.insertStatement)
