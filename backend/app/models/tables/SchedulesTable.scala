@@ -26,40 +26,8 @@ case class Schedule(
   homeScore: Option[Int] = None,
   visitorScore: Option[Int] = None)
 
-trait ScheduleTable {
-  self: HasDatabaseConfigProvider[JdbcProfile] =>
-
-  import driver.api._
-
-  class SchedulesT(tag: Tag) extends Table[Schedule](tag, "SCHEDULE") {
-
-    implicit val timestamp2dateTime = MappedColumnType.base[DateTime, Timestamp](
-      dateTime => new Timestamp(dateTime.getMillis),
-      timestamp => new DateTime(timestamp)
-    )
-
-    def id = column[Long]("ID", O.PrimaryKey, O.AutoInc)
-
-    def gameTime = column[DateTime]("GAME_TIME")
-
-    def group = column[String]("GROUP")
-
-    def homeTeam = column[String]("HOME_TEAM")
-
-    def visitorTeam = column[String]("VISITOR_TEAM")
-
-    def homeScore = column[Option[Int]]("HOME_SCORE")
-
-    def visitorScore = column[Option[Int]]("VISITOR_SCORE")
-
-    def * = (id.?, gameTime, group, homeTeam, visitorTeam, homeScore, visitorScore) <> (Schedule.tupled, Schedule.unapply _)
-
-  }
-
-}
-
 @Singleton()
-class ScheduleDao @Inject() (protected val dbConfigProvider: DatabaseConfigProvider) extends ScheduleTable
+class ScheduleDao @Inject() (protected val dbConfigProvider: DatabaseConfigProvider) extends Schema
     with HasDatabaseConfigProvider[JdbcProfile] {
 
   val dt = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss")

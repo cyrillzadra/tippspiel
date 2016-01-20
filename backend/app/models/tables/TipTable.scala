@@ -19,30 +19,8 @@ case class Tip(
   homeScore: Option[Int] = None,
   visitorScore: Option[Int] = None)
 
-trait TipTable {
-  self: HasDatabaseConfigProvider[JdbcProfile] =>
-
-  import driver.api._
-
-  class TipT(tag: Tag) extends Table[Tip](tag, "USER_TIP") {
-
-    def userId = column[Long]("PLAYER_ID")
-
-    def groupId = column[Long]("GROUP_ID")
-
-    def scheduleId = column[Long]("SCHEDULE_ID")
-
-    def homeScore = column[Option[Int]]("HOME_SCORE")
-
-    def visitorScore = column[Option[Int]]("VISITOR_SCORE")
-
-    def * = (groupId, scheduleId, userId, homeScore, visitorScore) <> (Tip.tupled, Tip.unapply _)
-  }
-
-}
-
 @Singleton()
-class TipDao @Inject() (protected val dbConfigProvider: DatabaseConfigProvider) extends TipTable
+class TipDao @Inject() (protected val dbConfigProvider: DatabaseConfigProvider) extends Schema
     with HasDatabaseConfigProvider[JdbcProfile] {
 
   import driver.api._

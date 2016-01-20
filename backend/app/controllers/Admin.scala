@@ -3,10 +3,10 @@ package controllers
 import javax.inject.Inject
 
 import models.Country
-import models.tables.{Schedule, ScheduleDao, UserDao}
+import models.tables.{ Schedule, ScheduleDao, UserDao }
 import play.api.data.Form
-import play.api.data.Forms.{jodaDate, longNumber, mapping, nonEmptyText, number, optional, text}
-import play.api.i18n.{I18nSupport, MessagesApi}
+import play.api.data.Forms.{ jodaDate, longNumber, mapping, nonEmptyText, number, optional, text }
+import play.api.i18n.{ I18nSupport, MessagesApi }
 import play.api.mvc._
 import play.i18n._
 
@@ -15,16 +15,16 @@ import scala.concurrent.Future
 
 case class Login(user: String, password: String)
 
-class Admin @Inject()(userDao: UserDao,
-                      scheduleDao: ScheduleDao, val messagesApi: MessagesApi) extends Controller with I18nSupport with SecuredAdmin {
+class Admin @Inject() (userDao: UserDao,
+    scheduleDao: ScheduleDao, val messagesApi: MessagesApi) extends Controller with I18nSupport with SecuredAdmin {
 
   val loginForm = Form(
     mapping(
       "user" -> text,
       "password" -> text
-    )(Login.apply)(Login.unapply) verifying("Failed authentication!", fields => fields match {
-      case userData => validate(userData.user, userData.password).isDefined
-    })
+    )(Login.apply)(Login.unapply) verifying ("Failed authentication!", fields => fields match {
+        case userData => validate(userData.user, userData.password).isDefined
+      })
   )
 
   def validate(user: String, password: String) = {
@@ -38,19 +38,19 @@ class Admin @Inject()(userDao: UserDao,
   }
 
   /**
-    * handles authentication form
-    *
-    * @return
-    */
+   * handles authentication form
+   *
+   * @return
+   */
   def login = Action.async { implicit rs =>
     Future.successful(Ok(views.html.admin.login(loginForm)));
   }
 
   /**
-    * handles authentication form
-    *
-    * @return
-    */
+   * handles authentication form
+   *
+   * @return
+   */
   def authenticate = Action.async { implicit rs =>
     loginForm.bindFromRequest.fold(formHasErrors => {
       Future.successful(BadRequest(views.html.admin.login(formHasErrors)));
@@ -79,10 +79,10 @@ class Admin @Inject()(userDao: UserDao,
     Country.values.map(x => (x.toString, Messages.get("country." + x.toString))).toSeq
 
   /**
-    *
-    * @param scheduleId
-    * @return
-    */
+   *
+   * @param scheduleId
+   * @return
+   */
   def scheduleEdit(scheduleId: Long) = Action.async { implicit rs =>
     val schedule = for {
       t <- scheduleDao.findById(scheduleId)
@@ -98,11 +98,11 @@ class Admin @Inject()(userDao: UserDao,
   }
 
   /**
-    * handles schedule edit form changes
-    *
-    * @param id
-    * @return
-    */
+   * handles schedule edit form changes
+   *
+   * @param id
+   * @return
+   */
   def scheduleUpdate(id: Long) = Action.async { implicit rs =>
     schedulesForm.bindFromRequest.fold(formHasErrors => {
       Future.successful(BadRequest(views.html.admin.scheduleEdit(id, teams, formHasErrors)))
@@ -120,7 +120,6 @@ class Admin @Inject()(userDao: UserDao,
       Ok(views.html.admin.schedulesList(schedules))
     })
   }
-
 
   def schedulesOfTournament = Action.async { implicit request =>
     val schedulesList = scheduleDao.list
@@ -144,8 +143,8 @@ class Admin @Inject()(userDao: UserDao,
   }
 
   /**
-    * E-MAIL CONFIRMATION
-    */
+   * E-MAIL CONFIRMATION
+   */
   // confirm url
   // signupconfirmation?userId=&confirmationToken=?
   def signupConfirmation(userId: Long, confirmationToken: String) = Action.async { implicit request =>
@@ -169,7 +168,7 @@ trait SecuredAdmin {
     }
   }
 
-/*
+  /*
   def withAsyncAuth(f: => String => Request[AnyContent] => Future[Result]): Future[Result] = Action.async {
     Security.Authenticated(username, onUnauthorized) { user =>
       println(user)

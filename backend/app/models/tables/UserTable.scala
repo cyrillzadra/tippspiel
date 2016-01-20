@@ -13,27 +13,8 @@ import slick.driver.JdbcProfile
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
-trait UserTable {
-  self: HasDatabaseConfigProvider[JdbcProfile] =>
-
-  import driver.api._
-
-  class UserT(tag: Tag) extends Table[User](tag, "USER") {
-
-    def id = column[Long]("ID")
-    def email = column[String]("EMAIL")
-    def password = column[String]("PASSWORD")
-    def name = column[String]("NAME")
-    def country = column[String]("COUNTRY")
-    def emailConfirmed = column[Boolean]("EMAIL_CONFIRMED")
-
-    def * = (id, email, password, name, country, emailConfirmed) <> (User.tupled, User.unapply _)
-  }
-
-}
-
 @Singleton()
-class UserDao @Inject() (protected val dbConfigProvider: DatabaseConfigProvider) extends UserTable
+class UserDao @Inject() (protected val dbConfigProvider: DatabaseConfigProvider) extends Schema
     with HasDatabaseConfigProvider[JdbcProfile] {
 
   import driver.api._

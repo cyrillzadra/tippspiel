@@ -18,28 +18,8 @@ case class Group(
   name: String,
   description: Option[String])
 
-trait GroupTable {
-  self: HasDatabaseConfigProvider[JdbcProfile] =>
-
-  import driver.api._
-
-  class GroupT(tag: Tag) extends Table[Group](tag, "GROUP") {
-
-    def id = column[Long]("ID", O.PrimaryKey, O.AutoInc)
-
-    def creatorId = column[Long]("CREATOR_ID")
-
-    def name = column[String]("NAME")
-
-    def description = column[Option[String]]("DESCRIPTION")
-
-    def * = (id, creatorId, name, description) <> (Group.tupled, Group.unapply _)
-  }
-
-}
-
 @Singleton()
-class GroupDao @Inject() (protected val dbConfigProvider: DatabaseConfigProvider) extends GroupTable
+class GroupDao @Inject() (protected val dbConfigProvider: DatabaseConfigProvider) extends Schema
     with HasDatabaseConfigProvider[JdbcProfile] {
 
   import driver.api._
