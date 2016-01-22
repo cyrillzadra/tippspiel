@@ -14,8 +14,8 @@
     "strip-sourcemap-loader": "0.0.1",
     "typescript": "^1.7.3"
   },
-  "name": "myionic2project",
-  "description": "MyIonic2Project: An Ionic project",
+  "name": "tippspiel",
+  "description": "TippSpiel: Euro 2016",
   "cordovaPlugins": [
     "cordova-plugin-device",
     "cordova-plugin-console",
