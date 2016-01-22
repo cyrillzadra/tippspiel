@@ -13,7 +13,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 case class Group(
-  id: Long,
+  id: Option[Long],
   creatorId: Long,
   name: String,
   description: Option[String])
@@ -40,7 +40,7 @@ class GroupDao @Inject() (protected val dbConfigProvider: DatabaseConfigProvider
 
   /** Update a Group. */
   def update(id: Long, group: Group): Future[Unit] = {
-    val groupToUpdate: Group = group.copy(id)
+    val groupToUpdate: Group = group.copy(Some(id))
     db.run(groups.filter(_.id === id).update(groupToUpdate)).map(_ => ())
   }
 
@@ -63,9 +63,9 @@ class GroupDao @Inject() (protected val dbConfigProvider: DatabaseConfigProvider
       groups.schema.create,
 
       // Insert some Groups
-      groups += Group(1, 1, "groupName1", Some("Beschreibung 1")),
-      groups += Group(2, 1, "groupName2", Some("Beschreibung 2")),
-      groups += Group(3, 1, "groupName3", Some("Beschreibung 3"))
+      groups += Group(None, 1, "groupName1", Some("Beschreibung 1")),
+      groups += Group(None, 1, "groupName2", Some("Beschreibung 2")),
+      groups += Group(None, 1, "groupName3", Some("Beschreibung 3"))
     ))
 
     true

@@ -65,7 +65,7 @@ class ScheduleDao @Inject() (protected val dbConfigProvider: DatabaseConfigProvi
   def delete(id: Long): Future[Unit] =
     db.run(schedules.filter(_.id === id).delete).map(_ => ())
 
-  def setup(): Boolean = {
+  def testSchemaCreate(): Boolean = {
     val dtf = DateTimeFormat.forPattern("yyyy-mm-dd hh:mm:ss")
 
     schedules.schema.create.statements.foreach(println)
@@ -83,6 +83,13 @@ class ScheduleDao @Inject() (protected val dbConfigProvider: DatabaseConfigProvi
 
     println(schedules.insertStatement)
 
+    true
+  }
+
+  def testSchemaDrop(): Boolean = {
+    dbConfig.db.run(DBIO.seq(
+      schedules.schema.create
+    ))
     true
   }
 }

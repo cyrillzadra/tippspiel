@@ -19,8 +19,6 @@ class UserDao @Inject() (protected val dbConfigProvider: DatabaseConfigProvider)
 
   import driver.api._
 
-  val users = TableQuery[UserT]
-
   /** Retrieve a user by id. */
   def findById(id: Long): Future[Option[User]] =
     db.run(users.filter(_.id === id).result.headOption)
@@ -37,9 +35,7 @@ class UserDao @Inject() (protected val dbConfigProvider: DatabaseConfigProvider)
   def insert(users: Seq[User]): Future[Unit] =
     db.run(this.users ++= users).map(_ => ())
 
-  //TODO
   def insert(email: String, password: String, name: String): Future[Unit] = Future.successful {
-    //TODO set active to false - email confirmation
     db.run(users += User(None, email, password, name, country = "CH", false))
       .map(_ => ())
   }
@@ -61,6 +57,10 @@ class UserDao @Inject() (protected val dbConfigProvider: DatabaseConfigProvider)
   def list: Future[Seq[User]] =
     db.run(users.result)
 
+  /** Count all users. */
+  def count(): Future[Int] =
+    db.run(users.map(_.id).length.result)
+
   /** Delete a User. */
   def delete(id: Long): Future[Unit] =
     db.run(users.filter(_.id === id).delete).map(_ => ())
@@ -71,7 +71,7 @@ class UserDao @Inject() (protected val dbConfigProvider: DatabaseConfigProvider)
       .update(true)).map(_ => ())
   }
 
-  def setup(): Boolean = {
+  def schemaCreate(): Boolean = {
     users.schema.create.statements.foreach(println)
 
     dbConfig.db.run(DBIO.seq(
@@ -84,6 +84,13 @@ class UserDao @Inject() (protected val dbConfigProvider: DatabaseConfigProvider)
 
     ))
 
+    true
+  }
+
+  def schemaDrop(): Boolean = {
+    dbConfig.db.run(DBIO.seq(
+      users.schema.drop
+    ))
     true
   }
 }

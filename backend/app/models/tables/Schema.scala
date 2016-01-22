@@ -40,17 +40,25 @@ trait Schema {
 
   }
 
+  val users = TableQuery[UserT];
+
   class GroupT(tag: Tag) extends Table[Group](tag, "GROUP") {
 
     def id = column[Long]("ID", O.PrimaryKey, O.AutoInc)
 
     def creatorId = column[Long]("CREATOR_ID")
 
+    //TODO uniqueness of group
     def name = column[String]("NAME")
 
     def description = column[Option[String]]("DESCRIPTION")
 
-    def * = (id, creatorId, name, description) <> (Group.tupled, Group.unapply _)
+    def * = (id.?, creatorId, name, description) <> (Group.tupled, Group.unapply _)
+
+    def creatorFk = foreignKey("creator_fk", creatorId, users)(_.id)
+
+    def creatorJoin = users.filter(_.id === creatorId)
+
   }
 
   class TipT(tag: Tag) extends Table[Tip](tag, "USER_TIP") {
@@ -65,15 +73,18 @@ trait Schema {
 
     def visitorScore = column[Option[Int]]("VISITOR_SCORE")
 
+    def * = (groupId, scheduleId, userId, homeScore, visitorScore) <> (Tip.tupled, Tip.unapply _)
+
     def pk = primaryKey("PK_USER_TIP", (userId, groupId, scheduleId))
 
-    def fk1 = foreignKey("user_fk", userId, TableQuery[UserT])(_.id, onUpdate = ForeignKeyAction.Cascade, onDelete = ForeignKeyAction.Cascade)
+    def userFk = foreignKey("user_fk", userId, TableQuery[UserT])(_.id, onUpdate = ForeignKeyAction.Cascade, onDelete = ForeignKeyAction.Cascade)
 
-    def fk2 = foreignKey("group_fk", groupId, TableQuery[GroupT])(_.id, onUpdate = ForeignKeyAction.Cascade, onDelete = ForeignKeyAction.Cascade)
+    def groupFk = foreignKey("group_fk", groupId, TableQuery[GroupT])(_.id, onUpdate = ForeignKeyAction.Cascade, onDelete = ForeignKeyAction.Cascade)
 
-    def fk3 = foreignKey("schedule_fk", groupId, TableQuery[SchedulesT])(_.id, onUpdate = ForeignKeyAction.Cascade, onDelete = ForeignKeyAction.Cascade)
+    def scheduleFk = foreignKey("schedule_fk", groupId, TableQuery[SchedulesT])(_.id, onUpdate = ForeignKeyAction.Cascade, onDelete = ForeignKeyAction.Cascade)
 
-    def * = (groupId, scheduleId, userId, homeScore, visitorScore) <> (Tip.tupled, Tip.unapply _)
+    def idxUserGroup = index("idx_user_group", (userId, groupId), unique = false)
+
   }
 
   class UserT(tag: Tag) extends Table[User](tag, "USER") {

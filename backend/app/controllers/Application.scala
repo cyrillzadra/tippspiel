@@ -22,8 +22,8 @@ class Application @Inject() (userDao: UserDao,
   }
 
   def setupRealDB = Action { implicit request =>
-    val usersCreated: Boolean = userDao.setup()
-    val schedulesCreated: Boolean = scheduleDao.setup()
+    val usersCreated: Boolean = userDao.schemaCreate()
+    val schedulesCreated: Boolean = scheduleDao.testSchemaCreate()
     val gamesCreated: Boolean = gameDao.setup()
 
     Ok(views.html.setupRealDB(SetupDataBase(usersCreated, schedulesCreated, gamesCreated)))

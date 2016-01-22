@@ -2,10 +2,11 @@ import models.User
 import models.tables.UserDao
 import org.junit.runner.RunWith
 import org.specs2.runner.JUnitRunner
-import org.specs2.specification.{BeforeSpec, BeforeAll}
+import org.specs2.specification.{BeforeAfterAll, AfterAll, BeforeSpec, BeforeAll}
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.{Configuration, Application}
 import play.api.test.{PlaySpecification, WithApplicationLoader}
+import slick.lifted.TableQuery
 
 import scala.concurrent.Await
 import scala.concurrent.duration._
@@ -14,16 +15,18 @@ import scala.concurrent.duration._
   * Created by tiezad on 20.01.2016.
   */
 @RunWith(classOf[JUnitRunner])
-class UserSchemaSpec  extends PlaySpecification with BeforeAll {
+class UserSchemaSpec extends PlaySpecification with BeforeAfterAll {
 
   override def beforeAll(): Unit = {
-    val application = new GuiceApplicationBuilder()
-      .loadConfig(env => Configuration.load(env))
-      .build
-    val app2dao = Application.instanceCache[UserDao]
-    val userDao: UserDao = app2dao(application)
-    userDao.setup()
+    val userDao: UserDao = getUserDao
+    userDao.schemaCreate()
   }
+
+  override def afterAll(): Unit = {
+    val userDao: UserDao = getUserDao
+    userDao.schemaDrop()
+  }
+
 
   "USERDAO" should {
     val app2dao = Application.instanceCache[UserDao]
@@ -31,7 +34,7 @@ class UserSchemaSpec  extends PlaySpecification with BeforeAll {
     "find user by id" in new WithApplicationLoader {
       val userDao: UserDao = app2dao(app)
 
-      val user = Await.result( userDao.findById(1), 2 seconds )
+      val user = Await.result(userDao.findById(1), 2 seconds)
 
       user must beSome
       user.map { user =>
@@ -39,14 +42,22 @@ class UserSchemaSpec  extends PlaySpecification with BeforeAll {
       }
     }
 
+    "count user" in new WithApplicationLoader {
+      val userDao: UserDao = app2dao(app)
+
+      val numberOfUsers = Await.result(userDao.count(), 2 seconds)
+
+      numberOfUsers must equalTo(3)
+    }
+
     "insert user" in new WithApplicationLoader {
       val userDao: UserDao = app2dao(app)
 
-      val newUser : User = User( None , "user4@mail.com", "123456", "User 3", "DE", true)
+      val newUser: User = User(None, "user4@mail.com", "123456", "User 3", "DE", true)
 
       userDao.insert(newUser)
 
-      val user = Await.result( userDao.findByEmail("user4@mail.com"), 2 seconds )
+      val user = Await.result(userDao.findByEmail("user4@mail.com"), 2 seconds)
 
       user must beSome
       user.map { user =>
@@ -56,6 +67,16 @@ class UserSchemaSpec  extends PlaySpecification with BeforeAll {
       }
     }
 
+  }
+
+
+  private def getUserDao: UserDao = {
+    val application = new GuiceApplicationBuilder()
+      .loadConfig(env => Configuration.load(env))
+      .build
+    val app2dao = Application.instanceCache[UserDao]
+    val userDao: UserDao = app2dao(application)
+    userDao
   }
 
 }
