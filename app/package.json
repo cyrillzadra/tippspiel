@@ -1,6 +1,7 @@
 {
   "dependencies": {
-    "angular2": "2.0.0-beta.1",
+    "angular2": "2.0.0-beta.2",
+    "firebase": "^2.4.0",
     "es6-promise": "3.0.2",
     "es6-shim": "0.33.13",
     "ionic-framework": "2.0.0-alpha.51",
@@ -12,7 +13,7 @@
   "devDependencies": {
     "awesome-typescript-loader": "^0.15.9",
     "strip-sourcemap-loader": "0.0.1",
-    "typescript": "^1.7.5"
+    "typescript": "^1.8.0"
   },
   "name": "Euro2016Tip",
   "description": "Euro 2016 Tip",

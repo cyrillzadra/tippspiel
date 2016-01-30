@@ -16,7 +16,7 @@ var MyApp = (function () {
         this.app = app;
         this.platform = platform;
         // make HelloIonicPage the root (or first) page
-        this.rootPage = hello_ionic_1.HelloIonicPage;
+        this.rootPage = login_1.LoginPage;
         this.initializeApp();
         // set our app's pages
         this.pages = [

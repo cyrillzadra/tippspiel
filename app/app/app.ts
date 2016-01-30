@@ -13,7 +13,7 @@ import {Type} from 'angular2/core';
 })
 class MyApp {
   // make HelloIonicPage the root (or first) page
-  rootPage: Type = HelloIonicPage;
+  rootPage: Type = LoginPage;
   pages: Array<{title: string, component: Type}>;
 
   constructor(private app: IonicApp, private platform: Platform) {

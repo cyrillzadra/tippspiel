@@ -8,7 +8,7 @@
     "experimentalDecorators": true,
     "sourceMap": true,
     "inlineSourceMap": false,
-    "inlineSources": false,
+    "inlineSources": false
   },
   "exclude": [
     "node_modules"
