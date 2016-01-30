@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var ionic_1 = require('ionic-framework/ionic');
 var hello_ionic_1 = require('./pages/hello-ionic/hello-ionic');
 var list_1 = require('./pages/list/list');
+var login_1 = require('./pages/login/login');
 var MyApp = (function () {
     function MyApp(app, platform) {
         this.app = app;
@@ -20,7 +21,8 @@ var MyApp = (function () {
         // set our app's pages
         this.pages = [
             { title: 'Hello Ionic', component: hello_ionic_1.HelloIonicPage },
-            { title: 'My First List', component: list_1.ListPage }
+            { title: 'My First List', component: list_1.ListPage },
+            { title: 'Login', component: login_1.LoginPage }
         ];
     }
     MyApp.prototype.initializeApp = function () {

@@ -2,10 +2,10 @@ import {App, IonicApp, Platform} from 'ionic-framework/ionic';
 
 import {HelloIonicPage} from './pages/hello-ionic/hello-ionic';
 import {ListPage} from './pages/list/list';
+import {LoginPage} from './pages/login/login';
 
 // https://angular.io/docs/ts/latest/api/core/Type-interface.html
 import {Type} from 'angular2/core';
-
 
 @App({
   templateUrl: 'build/app.html',
@@ -23,7 +23,8 @@ class MyApp {
     // set our app's pages
     this.pages = [
       { title: 'Hello Ionic', component: HelloIonicPage },
-      { title: 'My First List', component: ListPage }
+      { title: 'My First List', component: ListPage },
+      { title: 'Login', component: LoginPage }
     ];
   }
 

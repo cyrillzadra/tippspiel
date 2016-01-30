@@ -1,19 +1,15 @@
 {
+  "version": "1.7.5",
   "compilerOptions": {
     "target": "ES5",
     "module": "commonjs",
     "noEmitOnError": false,
-    "rootDir": ".",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "sourceMap": false,
-    "sourceRoot": "",
+    "sourceMap": true,
     "inlineSourceMap": false,
-    "inlineSources": false
+    "inlineSources": false,
   },
-  "files": [
-    "app/app.ts"
-  ],
   "exclude": [
     "node_modules"
   ],

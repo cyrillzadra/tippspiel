@@ -4,13 +4,23 @@ Ionic 2 Playground
 ### Installation Android
 
 http://cordova.apache.org/docs/en/latest/guide/platforms/android/index.html
-
 Android SDK (http://developer.android.com/sdk/index.html)
+http://developer.android.com/sdk/installing/index.html?pkg=studio
+
+Before Installation turn on 
+
+http://www.sysprobs.com/disable-enable-virtualization-technology-bios
+
 
 Installed Directories:
 
 C:\Program Files\Android\Android Studio
 C:\Users\TIEZAD\AppData\Local\Android\sdk
+
+C:\Users\TIEZAD\AppData\Local\Android\sdk\tools\android.BAT
+
+Add Android 22 (5.1.1)
+Add Intel x86 Emulator Accelerator (HAXM installer)
 
 Installing the Android SDK is also necessary. The Android SDK provides you the 
 API libraries and developer tools necessary to build, test, and debug apps for Android.
