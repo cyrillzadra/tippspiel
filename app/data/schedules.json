@@ -1,0 +1,410 @@
+{
+		"1": {
+			"gameTime": "10.06.2016 / 21:00",
+			"group": "A",
+			"homeTeam": "FRA",
+			"visitorTeam": "ROU",
+			"homeScore": null,
+			"visitorScore": null
+		},
+		"2": {
+			"gameTime": "11.06.2016 / 15:00",
+			"group": "A",
+			"homeTeam": "ALB",
+			"visitorTeam": "SUI",
+			"homeScore": null,
+			"visitorScore": null
+		},
+		"3": {
+			"gameTime": "11.06.2016 / 18:00",
+			"group": "B",
+			"homeTeam": "WAL",
+			"visitorTeam": "SVK",
+			"homeScore": null,
+			"visitorScore": null
+		},
+		"4": {
+			"gameTime": "11.06.2016 / 21:00",
+			"group": "B",
+			"homeTeam": "ENG",
+			"visitorTeam": "RUS",
+			"homeScore": null,
+			"visitorScore": null
+		},
+		"5": {
+			"gameTime": "12.06.2016 / 18:00",
+			"group": "C",
+			"homeTeam": "POL",
+			"visitorTeam": "NIR",
+			"homeScore": null,
+			"visitorScore": null
+		},
+		"6": {
+			"gameTime": "12.06.2016 / 21:00",
+			"group": "C",
+			"homeTeam": "GER",
+			"visitorTeam": "UKR",
+			"homeScore": null,
+			"visitorScore": null
+		},
+		"7": {
+			"gameTime": "12.06.2016 / 15:00",
+			"group": "D",
+			"homeTeam": "TUR",
+			"visitorTeam": "CRO",
+			"homeScore": null,
+			"visitorScore": null
+		},
+		"8": {
+			"gameTime": "13.06.2016 / 15:00",
+			"group": "D",
+			"homeTeam": "ESP",
+			"visitorTeam": "CZE",
+			"homeScore": null,
+			"visitorScore": null
+		},
+		"9": {
+			"gameTime": "13.06.2016 / 18:00",
+			"group": "E",
+			"homeTeam": "IRL",
+			"visitorTeam": "SWE",
+			"homeScore": null,
+			"visitorScore": null
+		},
+		"10": {
+			"gameTime": "13.06.2016 / 21:00",
+			"group": "E",
+			"homeTeam": "BEL",
+			"visitorTeam": "ITA",
+			"homeScore": null,
+			"visitorScore": null
+		},
+		"11": {
+			"gameTime": "14.06.2016 / 18:00",
+			"group": "F",
+			"homeTeam": "AUT",
+			"visitorTeam": "HUN",
+			"homeScore": null,
+			"visitorScore": null
+		},
+		"12": {
+			"gameTime": "14.06.2016 / 21:00",
+			"group": "F",
+			"homeTeam": "POR",
+			"visitorTeam": "ISL",
+			"homeScore": null,
+			"visitorScore": null
+		},
+		"13": {
+			"gameTime": "15.06.2016 / 18:00",
+			"group": "A",
+			"homeTeam": "ROU",
+			"visitorTeam": "SUI",
+			"homeScore": null,
+			"visitorScore": null
+		},
+		"14": {
+			"gameTime": "15.06.2016 / 21:00",
+			"group": "A",
+			"homeTeam": "FRA",
+			"visitorTeam": "ALB",
+			"homeScore": null,
+			"visitorScore": null
+		},
+		"15": {
+			"gameTime": "15.06.2016 / 15:00",
+			"group": "B",
+			"homeTeam": "RUS",
+			"visitorTeam": "SVK",
+			"homeScore": null,
+			"visitorScore": null
+		},
+		"16": {
+			"gameTime": "16.06.2016 / 18:00",
+			"group": "B",
+			"homeTeam": "ENG",
+			"visitorTeam": "WAL",
+			"homeScore": null,
+			"visitorScore": null
+		},
+		"17": {
+			"gameTime": "16.06.2016 / 18:00",
+			"group": "C",
+			"homeTeam": "UKR",
+			"visitorTeam": "NIR",
+			"homeScore": null,
+			"visitorScore": null
+		},
+		"18": {
+			"gameTime": "16.06.2016 / 21:00:00",
+			"group": "C",
+			"homeTeam": "GER",
+			"visitorTeam": "POL",
+			"homeScore": null,
+			"visitorScore": null
+		},
+		"19": {
+			"gameTime": "17.06.2016 / 18:00",
+			"group": "D",
+			"homeTeam": "CZE",
+			"visitorTeam": "CRO",
+			"homeScore": null,
+			"visitorScore": null
+		},
+		"20": {
+			"gameTime": "17.06.2016 / 21:00",
+			"group": "D",
+			"homeTeam": "ESP",
+			"visitorTeam": "TUR",
+			"homeScore": null,
+			"visitorScore": null
+		},
+		"21": {
+			"gameTime": "17.06.2016 / 15:00",
+			"group": "E",
+			"homeTeam": "ITA",
+			"visitorTeam": "SWE",
+			"homeScore": null,
+			"visitorScore": null
+		},
+		"22": {
+			"gameTime": "18.06.2016 / 15:00",
+			"group": "E",
+			"homeTeam": "BEL",
+			"visitorTeam": "IRL",
+			"homeScore": null,
+			"visitorScore": null
+		},
+		"23": {
+			"gameTime": "18.06.2016 / 18:00",
+			"group": "F",
+			"homeTeam": "ISL",
+			"visitorTeam": "HUN",
+			"homeScore": null,
+			"visitorScore": null
+		},
+		"24": {
+			"gameTime": "18.06.2016 / 21:00",
+			"group": "F",
+			"homeTeam": "POR",
+			"visitorTeam": "AUT",
+			"homeScore": null,
+			"visitorScore": null
+		},
+		"25": {
+			"gameTime": "19.06.2016 / 21:00",
+			"group": "A",
+			"homeTeam": "SUI",
+			"visitorTeam": "FRA",
+			"homeScore": null,
+			"visitorScore": null
+		},
+		"26": {
+			"gameTime": "19.06.2016 / 21:00",
+			"group": "A",
+			"homeTeam": "ROU",
+			"visitorTeam": "ALB",
+			"homeScore": null,
+			"visitorScore": null
+		},
+		"27": {
+			"gameTime": "20.06.2016 / 21:00",
+			"group": "B",
+			"homeTeam": "SVK",
+			"visitorTeam": "ENG",
+			"homeScore": null,
+			"visitorScore": null
+		},
+		"28": {
+			"gameTime": "20.06.2016 / 21:00",
+			"group": "B",
+			"homeTeam": "RUS",
+			"visitorTeam": "WAL",
+			"homeScore": null,
+			"visitorScore": null
+		},
+		"29": {
+			"gameTime": "21.06.2016 / 18:00",
+			"group": "C",
+			"homeTeam": "UKR",
+			"visitorTeam": "POL",
+			"homeScore": null,
+			"visitorScore": null
+		},
+		"30": {
+			"gameTime": "21.06.2016 / 18:00",
+			"group": "C",
+			"homeTeam": "NIR",
+			"visitorTeam": "GER",
+			"homeScore": null,
+			"visitorScore": null
+		},
+		"31": {
+			"gameTime": "21.06.2016 / 21:00",
+			"group": "D",
+			"homeTeam": "CRO",
+			"visitorTeam": "ESP",
+			"homeScore": null,
+			"visitorScore": null
+		},
+		"32": {
+			"gameTime": "21.06.2016 / 21:00",
+			"group": "D",
+			"homeTeam": "CZE",
+			"visitorTeam": "TUR",
+			"homeScore": null,
+			"visitorScore": null
+		},
+		"33": {
+			"gameTime": "22.06.2016 / 21:00",
+			"group": "E",
+			"homeTeam": "ITA",
+			"visitorTeam": "IRL",
+			"homeScore": null,
+			"visitorScore": null
+		},
+		"34": {
+			"gameTime": "22.06.2016 / 21:00",
+			"group": "E",
+			"homeTeam": "SWE",
+			"visitorTeam": "BEL",
+			"homeScore": null,
+			"visitorScore": null
+		},
+		"35": {
+			"gameTime": "22.06.2016 / 18:00",
+			"group": "F",
+			"homeTeam": "HUN",
+			"visitorTeam": "POR",
+			"homeScore": null,
+			"visitorScore": null
+		},
+		"36": {
+			"gameTime": "22.06.2016 / 18:00",
+			"group": "F",
+			"homeTeam": "ISL",
+			"visitorTeam": "AUT",
+			"homeScore": null,
+			"visitorScore": null
+		},
+		"37": {
+			"gameTime": "25.06.2016 / 15:00",
+			"group": "AF1",
+			"homeTeam": "A2",
+			"visitorTeam": "C2",
+			"homeScore": null,
+			"visitorScore": null
+		},
+		"38": {
+			"gameTime": "25.06.2016 / 18:00",
+			"group": "AF2",
+			"homeTeam": "B1",
+			"visitorTeam": "ACD3",
+			"homeScore": null,
+			"visitorScore": null
+		},
+		"39": {
+			"gameTime": "25.06.2016 / 21:00",
+			"group": "AF3",
+			"homeTeam": "D1",
+			"visitorTeam": "BEF3",
+			"homeScore": null,
+			"visitorScore": null
+		},
+		"40": {
+			"gameTime": "26.06.2016 / 15:00",
+			"group": "AF4",
+			"homeTeam": "A1",
+			"visitorTeam": "CDE3",
+			"homeScore": null,
+			"visitorScore": null
+		},
+		"41": {
+			"gameTime": "26.06.2016 / 18:00",
+			"group": "AF5",
+			"homeTeam": "C1",
+			"visitorTeam": "ABF3",
+			"homeScore": null,
+			"visitorScore": null
+		},
+		"42": {
+			"gameTime": "26.06.2016 / 21:00",
+			"group": "AF6",
+			"homeTeam": "F1",
+			"visitorTeam": "E2",
+			"homeScore": null,
+			"visitorScore": null
+		},
+		"43": {
+			"gameTime": "27.06.2016 / 18:00",
+			"group": "AF7",
+			"homeTeam": "E1",
+			"visitorTeam": "D2",
+			"homeScore": null,
+			"visitorScore": null
+		},
+		"44": {
+			"gameTime": "27.06.2016 / 21:00",
+			"group": "AF8",
+			"homeTeam": "B2",
+			"visitorTeam": "F2",
+			"homeScore": null,
+			"visitorScore": null
+		},
+		"45": {
+			"gameTime": "30.06.2016 / 21:00",
+			"group": "VF1",
+			"homeTeam": "AF1",
+			"visitorTeam": "AF3",
+			"homeScore": null,
+			"visitorScore": null
+		},
+		"46": {
+			"gameTime": "01.07.2016 / 21:00",
+			"group": "VF2",
+			"homeTeam": "AF2",
+			"visitorTeam": "AF6",
+			"homeScore": null,
+			"visitorScore": null
+		},
+		"47": {
+			"gameTime": "02.07.2016 / 21:00",
+			"group": "VF3",
+			"homeTeam": "AF5",
+			"visitorTeam": "AF7",
+			"homeScore": null,
+			"visitorScore": null
+		},
+		"48": {
+			"gameTime": "03.07.2016 / 21:00",
+			"group": "VF4",
+			"homeTeam": "AF4",
+			"visitorTeam": "AF8",
+			"homeScore": null,
+			"visitorScore": null
+		},
+		"49": {
+			"gameTime": "06.07.2016 / 21:00",
+			"group": "HF1",
+			"homeTeam": "VF1",
+			"visitorTeam": "VF2",
+			"homeScore": null,
+			"visitorScore": null
+		},
+		"50": {
+			"gameTime": "07.07.2016 / 21:00",
+			"group": "HF2",
+			"homeTeam": "VF3",
+			"visitorTeam": "VF4",
+			"homeScore": null,
+			"visitorScore": null
+		},
+		"51": {
+			"gameTime": "10.07.2016 / 21:00",
+			"group": "Finale",
+			"homeTeam": "HF1",
+			"visitorTeam": "HF2",
+			"homeScore": null,
+			"visitorScore": null
+		}
+	}
