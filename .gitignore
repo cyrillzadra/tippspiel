@@ -1,2 +1,6 @@
-/backend-test/
-/MyIonic2ProjectTest/
+# Specifies files to intentionally ignore when using Git
+# http://git-scm.com/docs/gitignore
+*.js
+*.js.map
+/.idea/
+/node_modules/
