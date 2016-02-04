@@ -7,7 +7,7 @@
     <form (submit)="signin($event)" [ngFormModel]="form">
         <ion-item>
             <ion-label fixed>Email address</ion-label>
-            <ion-input ngControl="email" [(ngModel)]="email" type="email" ></ion-input>
+            <ion-input ngControl="email" [(ngModel)]="email" type="email"></ion-input>
         </ion-item>
 
         <ion-item>
@@ -15,16 +15,20 @@
             <ion-input ngControl="password" [(ngModel)]="password" type="password"></ion-input>
         </ion-item>
 
+        <label padding>{{errorMsg}}</label>
+
         <div padding>
             <button block type="submit">SignIn</button>
         </div>
+
+
     </form>
 
-    <button secondary block (click)="signup()" >SignUp</button>
+
+    <button secondary block (click)="signup()">SignUp</button>
     <button secondary block (click)="authGithub()">Signin Github</button>
     <button secondary block (click)="authGithub()">Signin Facebook</button>
     <button secondary block (click)="authGithub()">Signin Google+</button>
-
 
 
 </ion-content>

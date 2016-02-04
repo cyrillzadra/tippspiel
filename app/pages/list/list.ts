@@ -1,4 +1,7 @@
 import {Page, NavController, NavParams} from 'ionic-framework/ionic';
+import {fbName} from "../fbConfig";
+
+var Firebase = require('firebase');
 
 
 @Page({
@@ -7,27 +10,47 @@ import {Page, NavController, NavParams} from 'ionic-framework/ionic';
 export class ListPage {
   selectedItem: any;
   icons: string[];
-  items: Array<{title: string, note: string, icon: string}>;
+  items: Array<{homeTeam: string, visitorTeam: string, icon: string}>;
+  uid: string;
 
   constructor(private nav: NavController, navParams: NavParams) {
     // If we navigated to this page, we will have an item available as a nav param
     this.selectedItem = navParams.get('item');
+    this.uid = navParams.get('uid');
 
     this.icons = ['flask', 'wifi', 'beer', 'football', 'basketball', 'paper-plane',
     'american-football', 'boat', 'bluetooth', 'build'];
 
     this.items = [];
-    for(let i = 1; i < 11; i++) {
-      this.items.push({
-        title: 'Item ' + i,
-        note: 'This is item #' + i,
-        icon: this.icons[Math.floor(Math.random() * this.icons.length)]
+
+    // Get a database reference to our posts
+    var ref = new Firebase(fbName + "/schedules/");
+
+    var list = this;
+
+
+    // Attach an asynchronous callback to read the data at our posts reference
+    ref.on("value", function(snapshot) {
+
+      console.log(snapshot.val());
+
+      snapshot.forEach( function(data) {
+        list.items.push({
+          homeTeam: 'HomeTeam:' + data.val().visitorTeam,
+          visitorTeam: 'VisitorTeam: ' + data.val().visitorTeam,
+          icon: list.icons[Math.floor(Math.random() * list.icons.length)]
+        });
+
       });
-    }
+
+    }, function (errorObject) {
+      console.log("The read failed: " + errorObject.code);
+    });
   }
 
   itemTapped(event, item) {
     this.nav.push(ListPage, {
+      uid: '???',
       item: item
     });
   }

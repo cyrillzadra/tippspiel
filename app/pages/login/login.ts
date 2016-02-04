@@ -3,6 +3,7 @@ import {Page, NavController,IONIC_DIRECTIVES} from 'ionic-framework/ionic';
 import {fbName} from "../fbConfig";
 import {SignupPage} from "../signup/signup";
 import {ControlGroup, Validators, Control} from "angular2/common";
+import {ListPage} from "../list/list";
 
 var Firebase = require('firebase');
 
@@ -12,10 +13,11 @@ var Firebase = require('firebase');
     directives: [IONIC_DIRECTIVES]
 })
 export class LoginPage {
-
     form : ControlGroup;
     email : string;
     password : string;
+
+    errorMsg : string = "";
 
     constructor(private nav: NavController) {
         this.form = new ControlGroup({
@@ -41,15 +43,18 @@ export class LoginPage {
     }
 
     signin(event) : void {
+        var login = this;
         var ref = new Firebase(fbName);
-        ref.createUser({
+        ref.authWithPassword({
             email: this.email,
             password: this.password
         }, function (error, userData) {
             if (error) {
-                console.log("Error creating user:", error);
+                console.log("Invalid user or password:", error);
+                login.errorMsg = "Invalid user or password";
             } else {
                 console.log("Successfully created user account with uid:", userData.uid);
+                login.nav.push(ListPage, { uid: userData.uid });
             }
         });
     }
