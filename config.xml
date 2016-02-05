@@ -7,7 +7,7 @@
     <description>Euro 2016 Tippspiel</description>
     <author email="cyrill.zadra@gmail.com" href="https://github.com/cyrillzadra/tippspiel">Euro 2016 Tippspiel Team
     </author>
-    <content src="index.html"/>
+    <content src="www/index.html"/>
     <access origin="*"/>
     <allow-intent href="http://*/*"/>
     <allow-intent href="https://*/*"/>
@@ -15,7 +15,7 @@
     <allow-intent href="sms:*"/>
     <allow-intent href="mailto:*"/>
     <allow-intent href="geo:*"/>
-    <platform name="blackberry"/>
+
     <platform name="android">
         <allow-intent href="market:*"/>
     </platform>
