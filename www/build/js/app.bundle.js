@@ -62175,8 +62175,39 @@
 	var fbConfig_1 = __webpack_require__(359);
 	var Firebase = __webpack_require__(360);
 	var ListPage = (function () {
-	    function ListPage(nav, navParams) {
+	    function ListPage(nav, navParams, trans) {
 	        this.nav = nav;
+	        // Example German string mapping
+	        trans.translations('de', {
+	            'FRA': 'Frankreich',
+	            'ROU': 'Rumänien',
+	            'SUI': 'Schweiz',
+	            'ALB': 'Albanien',
+	            'WAL': 'Wales',
+	            'SVK': 'Slowakei',
+	            'RUS': 'Russland',
+	            'ENG': 'England',
+	            'POL': 'Polen',
+	            'NIR': 'Nordirland',
+	            'UKR': 'Ukraine',
+	            'GER': 'Deutschland',
+	            'TUR': 'Türkei',
+	            'ESP': 'Spanien',
+	            'CZE': 'Tschechien',
+	            'CRO': 'Kroatien',
+	            'IRL': 'Irland',
+	            'BEL': 'Belgien',
+	            'SWE': 'Schweden',
+	            'ITA': 'Italien',
+	            'AUT': 'Österreich',
+	            'HUN': 'Ungarn',
+	            'ISL': 'Island',
+	            'POR': 'Portugal'
+	        });
+	        console.log(trans.translate('FRA')); // Shows 'Location'
+	        console.log(trans.translate('FRA', 'de')); // Shows 'lage'
+	        trans.setLanguage('de');
+	        console.log(trans.translate('FRA')); // Shows 'Location'
 	        // If we navigated to this page, we will have an item available as a nav param
 	        this.selectedItem = navParams.get('item');
 	        this.uid = navParams.get('uid');
@@ -62191,8 +62222,8 @@
 	            console.log(snapshot.val());
 	            snapshot.forEach(function (data) {
 	                list.items.push({
-	                    homeTeam: 'HomeTeam:' + data.val().visitorTeam,
-	                    visitorTeam: 'VisitorTeam: ' + data.val().visitorTeam,
+	                    homeTeam: data.val().homeTeam,
+	                    visitorTeam: data.val().visitorTeam,
 	                    icon: list.icons[Math.floor(Math.random() * list.icons.length)]
 	                });
 	            });
@@ -62208,9 +62239,10 @@
 	    };
 	    ListPage = __decorate([
 	        ionic_1.Page({
-	            templateUrl: 'build/pages/list/list.html'
+	            templateUrl: 'build/pages/list/list.html',
+	            pipes: [ionic_1.TranslatePipe]
 	        }), 
-	        __metadata('design:paramtypes', [ionic_1.NavController, ionic_1.NavParams])
+	        __metadata('design:paramtypes', [ionic_1.NavController, ionic_1.NavParams, ionic_1.Translate])
 	    ], ListPage);
 	    return ListPage;
 	}());
