@@ -27,12 +27,14 @@ export class LoginPage {
     }
 
     authGithub()  {
+        var login = this;
         var fbRef = new Firebase(fbName);
 
         fbRef.authWithOAuthPopup("github", function(error, authData) {
             if (error) {
                 console.log("Login Failed!", error);
             } else {
+                login.nav.push(ListPage, { uid: authData.uid });
                 console.log("Authenticated successfully with payload:", authData);
             }
         });

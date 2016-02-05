@@ -62542,12 +62542,14 @@
 	        });
 	    }
 	    LoginPage.prototype.authGithub = function () {
+	        var login = this;
 	        var fbRef = new Firebase(fbConfig_1.fbName);
 	        fbRef.authWithOAuthPopup("github", function (error, authData) {
 	            if (error) {
 	                console.log("Login Failed!", error);
 	            }
 	            else {
+	                login.nav.push(list_1.ListPage, { uid: authData.uid });
 	                console.log("Authenticated successfully with payload:", authData);
 	            }
 	        });
