@@ -6,8 +6,8 @@
 
     <form (submit)="signin($event)" [ngFormModel]="form">
         <ion-item>
-            <ion-label fixed>Email address</ion-label>
-            <ion-input ngControl="email" [(ngModel)]="email" type="email"></ion-input>
+            <ion-label fixed>User</ion-label>
+            <ion-input ngControl="email" [(ngModel)]="email" type="email" placeholder="user@mail.com"></ion-input>
         </ion-item>
 
         <ion-item>
@@ -21,14 +21,12 @@
             <button block type="submit">SignIn</button>
         </div>
 
-
     </form>
-
 
     <button secondary block (click)="signup()">SignUp</button>
     <button secondary block (click)="authGithub()">Signin Github</button>
-    <button secondary block (click)="authGithub()">Signin Facebook</button>
-    <button secondary block (click)="authGithub()">Signin Google+</button>
+    <!--button-- secondary block (click)="authGithub()">Signin Facebook</button-->
+    <!--button secondary block (click)="authGithub()">Signin Google+</button-->
 
 
 </ion-content>
