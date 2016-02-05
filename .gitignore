@@ -1,6 +1,6 @@
 # Specifies files to intentionally ignore when using Git
 # http://git-scm.com/docs/gitignore
-*.js
-*.js.map
+/app/**/*.js
+/app/**/*.js.map
 /.idea/
 /node_modules/
