@@ -4930,7 +4930,8 @@ a.button {
 
 .button-full.button-outline {
   border-left-width: 0;
-  border-right-width: 0; }
+  border-right-width: 0;
+  border-radius: 0; }
 
 .button {
   margin: 0.4rem 0.2rem;
@@ -5262,9 +5263,7 @@ a.button {
 
 ion-card {
   display: block;
-  overflow: hidden;
-  -webkit-transform: translateZ(0);
-  transform: translateZ(0); }
+  overflow: hidden; }
 
 ion-card img {
   display: block;
@@ -5278,6 +5277,14 @@ ion-card-header {
 
 ion-card-content {
   display: block; }
+
+ion-card > :first-child {
+  border-top-left-radius: inherit;
+  border-top-right-radius: inherit; }
+
+ion-card > :last-child {
+  border-bottom-left-radius: inherit;
+  border-bottom-right-radius: inherit; }
 
 ion-card {
   margin: 10px 10px 10px 10px;
@@ -7013,6 +7020,12 @@ ion-tabs > ion-navbar-section {
   -webkit-order: -30;
   -ms-flex-order: -30;
   order: -30; }
+
+ion-tabs > ion-navbar-section ion-navbar.toolbar.show-navbar {
+  opacity: 0; }
+
+ion-tabs > ion-navbar-section ion-navbar.toolbar.show-navbar.show-tab-navbar {
+  opacity: 1; }
 
 ion-tabbar-section {
   position: relative;
