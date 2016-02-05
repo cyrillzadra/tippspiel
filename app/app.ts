@@ -1,4 +1,4 @@
-import {App, IonicApp, Platform} from 'ionic-framework/ionic';
+import {App, IonicApp, Platform, Translate} from 'ionic-framework/ionic';
 
 import {HelloIonicPage} from './pages/hello-ionic/hello-ionic';
 import {ListPage} from './pages/list/list';
@@ -6,6 +6,9 @@ import {LoginPage} from './pages/login/login';
 
 // https://angular.io/docs/ts/latest/api/core/Type-interface.html
 import {Type} from 'angular2/core';
+
+import {team} from "./locales/teams/de";
+
 
 @App({
   templateUrl: 'build/app.html',
@@ -16,7 +19,7 @@ class MyApp {
   rootPage: Type = LoginPage;
   pages: Array<{title: string, component: Type}>;
 
-  constructor(private app: IonicApp, private platform: Platform) {
+  constructor(private app: IonicApp, private platform: Platform, private trans : Translate) {
 
     this.initializeApp();
 
@@ -26,6 +29,10 @@ class MyApp {
       { title: 'My First List', component: ListPage },
       { title: 'Login', component: LoginPage }
     ];
+
+    //load locale
+    trans.setLanguage('de');
+    trans.translations('de', team);
   }
 
   initializeApp() {

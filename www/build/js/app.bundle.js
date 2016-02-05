@@ -3211,10 +3211,12 @@
 	var hello_ionic_1 = __webpack_require__(357);
 	var list_1 = __webpack_require__(358);
 	var login_1 = __webpack_require__(361);
+	var de_1 = __webpack_require__(364);
 	var MyApp = (function () {
-	    function MyApp(app, platform) {
+	    function MyApp(app, platform, trans) {
 	        this.app = app;
 	        this.platform = platform;
+	        this.trans = trans;
 	        // make HelloIonicPage the root (or first) page
 	        this.rootPage = login_1.LoginPage;
 	        this.initializeApp();
@@ -3224,6 +3226,9 @@
 	            { title: 'My First List', component: list_1.ListPage },
 	            { title: 'Login', component: login_1.LoginPage }
 	        ];
+	        //load locale
+	        trans.setLanguage('de');
+	        trans.translations('de', de_1.team);
 	    }
 	    MyApp.prototype.initializeApp = function () {
 	        this.platform.ready().then(function () {
@@ -3255,7 +3260,7 @@
 	            templateUrl: 'build/app.html',
 	            config: {} // http://ionicframework.com/docs/v2/api/config/Config/
 	        }), 
-	        __metadata('design:paramtypes', [ionic_1.IonicApp, ionic_1.Platform])
+	        __metadata('design:paramtypes', [ionic_1.IonicApp, ionic_1.Platform, ionic_1.Translate])
 	    ], MyApp);
 	    return MyApp;
 	}());
@@ -62175,39 +62180,8 @@
 	var fbConfig_1 = __webpack_require__(359);
 	var Firebase = __webpack_require__(360);
 	var ListPage = (function () {
-	    function ListPage(nav, navParams, trans) {
+	    function ListPage(nav, navParams) {
 	        this.nav = nav;
-	        // Example German string mapping
-	        trans.translations('de', {
-	            'FRA': 'Frankreich',
-	            'ROU': 'Rumänien',
-	            'SUI': 'Schweiz',
-	            'ALB': 'Albanien',
-	            'WAL': 'Wales',
-	            'SVK': 'Slowakei',
-	            'RUS': 'Russland',
-	            'ENG': 'England',
-	            'POL': 'Polen',
-	            'NIR': 'Nordirland',
-	            'UKR': 'Ukraine',
-	            'GER': 'Deutschland',
-	            'TUR': 'Türkei',
-	            'ESP': 'Spanien',
-	            'CZE': 'Tschechien',
-	            'CRO': 'Kroatien',
-	            'IRL': 'Irland',
-	            'BEL': 'Belgien',
-	            'SWE': 'Schweden',
-	            'ITA': 'Italien',
-	            'AUT': 'Österreich',
-	            'HUN': 'Ungarn',
-	            'ISL': 'Island',
-	            'POR': 'Portugal'
-	        });
-	        console.log(trans.translate('FRA')); // Shows 'Location'
-	        console.log(trans.translate('FRA', 'de')); // Shows 'lage'
-	        trans.setLanguage('de');
-	        console.log(trans.translate('FRA')); // Shows 'Location'
 	        // If we navigated to this page, we will have an item available as a nav param
 	        this.selectedItem = navParams.get('item');
 	        this.uid = navParams.get('uid');
@@ -62242,7 +62216,7 @@
 	            templateUrl: 'build/pages/list/list.html',
 	            pipes: [ionic_1.TranslatePipe]
 	        }), 
-	        __metadata('design:paramtypes', [ionic_1.NavController, ionic_1.NavParams, ionic_1.Translate])
+	        __metadata('design:paramtypes', [ionic_1.NavController, ionic_1.NavParams])
 	    ], ListPage);
 	    return ListPage;
 	}());
@@ -62668,6 +62642,38 @@
 	}());
 	exports.SignupPage = SignupPage;
 	//# sourceMappingURL=signup.js.map
+
+/***/ },
+/* 363 */,
+/* 364 */
+/***/ function(module, exports) {
+
+	"use strict";
+	exports.team = { "FRA": "Frankreich",
+	    "ROU": "Rumänien",
+	    "SUI": "Schweiz",
+	    "ALB": "Albanien",
+	    "WAL": "Wales",
+	    "SVK": "Slowakei",
+	    "RUS": "Russland",
+	    "ENG": "England",
+	    "POL": "Polen",
+	    "NIR": "Nordirland",
+	    "UKR": "Ukraine",
+	    "GER": "Deutschland",
+	    "TUR": "Türkei",
+	    "ESP": "Spanien",
+	    "CZE": "Tschechien",
+	    "CRO": "Kroatien",
+	    "IRL": "Irland",
+	    "BEL": "Belgien",
+	    "SWE": "Schweden",
+	    "ITA": "Italien",
+	    "AUT": "Österreich",
+	    "HUN": "Ungarn",
+	    "ISL": "Island",
+	    "POR": "Portugal" };
+	//# sourceMappingURL=de.js.map
 
 /***/ }
 /******/ ]);

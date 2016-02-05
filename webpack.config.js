@@ -29,7 +29,8 @@ module.exports = {
         test: /\.js$/,
         include: path.resolve('node_modules/angular2'),
         loader: 'strip-sourcemap'
-      }
+      },
+      { test: /\.json/, loader: 'json'}
     ],
     noParse: [
       /es6-shim/,
@@ -42,6 +43,6 @@ module.exports = {
     alias: {
       'web-animations.min': path.normalize('ionic-framework/js/web-animations.min')
     },
-    extensions: ["", ".js", ".ts"]
+    extensions: ["", ".js", ".ts", ".json"]
   }
 };
