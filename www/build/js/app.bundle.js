@@ -3247,7 +3247,6 @@
 	            //if (typeof StatusBar !== 'undefined') {
 	            //  StatusBar.styleDefault();
 	            //}
-	            appModel_1.appModel.setLanguage("en");
 	            if (typeof navigator.globalization !== "undefined") {
 	                navigator.globalization.getPreferredLanguage(function (language) {
 	                    alert('language: ' + language.value + '\n');
@@ -3255,6 +3254,9 @@
 	                }, function () {
 	                    alert('Error getting language\n');
 	                });
+	            }
+	            else {
+	                appModel_1.appModel.setLanguage("de");
 	            }
 	            //load locale
 	            trans.setLanguage(appModel_1.appModel.getLanguage);
@@ -62669,7 +62671,6 @@
 	 */
 	var AppModel = (function () {
 	    function AppModel() {
-	        this.language = "fr";
 	    }
 	    AppModel.prototype.getLanguage = function () { return this.language; };
 	    AppModel.prototype.setLanguage = function (language) { this.language = language; };

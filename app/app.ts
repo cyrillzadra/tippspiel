@@ -52,7 +52,6 @@ class MyApp {
             //  StatusBar.styleDefault();
             //}
 
-            appModel.setLanguage("en")
             if(typeof navigator.globalization !== "undefined") {
                 navigator.globalization.getPreferredLanguage(
                     function (language) {
@@ -63,6 +62,8 @@ class MyApp {
                         alert('Error getting language\n');
                     }
                 );
+            } else {
+                appModel.setLanguage("de")
             }
 
             //load locale
