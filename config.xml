@@ -53,11 +53,8 @@
         <param name="ios-package" value="CDVSplashScreen"/>
     </feature>
     <feature name="Globalization">
-        <param name="ios-package" value="CDVGlobalization" />
-        <param name="android-package" value="org.apache.cordova.Globalization" />
+        <param name="ios-package" value="CDVGlobalization"/>
+        <param name="android-package" value="org.apache.cordova.Globalization"/>
     </feature>
-    <feature name="debug-server" required="true">
-        <param name="domain" value="http://debug.phonegap.com"/>
-        <param name="key" value="ch.euro2016.tippspiel"/>
-    </feature>
+    <feature name="debug-server" required="true" />
 </widget>
