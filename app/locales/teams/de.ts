@@ -1,4 +1,4 @@
-export var team = { "FRA" : "Frankreich",
+export var team_de = { "FRA" : "Frankreich",
   "ROU" : "Rumänien",
   "SUI" : "Schweiz",
   "ALB" : "Albanien",

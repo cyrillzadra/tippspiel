@@ -7,7 +7,11 @@ import {LoginPage} from './pages/login/login';
 // https://angular.io/docs/ts/latest/api/core/Type-interface.html
 import {Type} from 'angular2/core';
 
-import {team} from "./locales/teams/de";
+import {team_de} from "./locales/teams/de";
+import {team_en} from "./locales/teams/en";
+
+import {appModel} from "./models/appModel"
+
 
 
 @App({
@@ -21,7 +25,7 @@ class MyApp {
 
   constructor(private app: IonicApp, private platform: Platform, private trans : Translate) {
 
-    this.initializeApp();
+    this.initializeApp(trans);
 
     // set our app's pages
     this.pages = [
@@ -29,13 +33,9 @@ class MyApp {
       { title: 'My First List', component: ListPage },
       { title: 'Login', component: LoginPage }
     ];
-
-    //load locale
-    trans.setLanguage('de');
-    trans.translations('de', team);
   }
 
-  initializeApp() {
+  initializeApp(trans : Translate) {
     this.platform.ready().then(() => {
       // The platform is now ready. Note: if this callback fails to fire, follow
       // the Troubleshooting guide for a number of possible solutions:
@@ -50,7 +50,27 @@ class MyApp {
       //
       // For example, we might change the StatusBar color. This one below is
       // good for dark backgrounds and light text:
-      // StatusBar.setStyle(StatusBar.LIGHT_CONTENT)
+
+
+      console.log(StatusBar);
+      if (typeof StatusBar !== 'undefined') {
+        StatusBar.styleDefault();
+      }
+
+      console.log(window.cordova.plugins.Keyboard);
+      console.log(navigator.globalization);
+      var globalization = navigator.globalization;
+
+      var language = globalization.getPreferedLanguage();
+
+      appModel.setLanguage(language)
+
+      //load locale
+      trans.setLanguage(language);
+      trans.translations('de', team_de);
+      trans.translations('en', team_en);
+
+
     });
   }
 

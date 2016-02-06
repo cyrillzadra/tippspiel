@@ -4,6 +4,7 @@ import {fbName} from "../fbConfig";
 import {SignupPage} from "../signup/signup";
 import {ControlGroup, Validators, Control} from "angular2/common";
 import {ListPage} from "../list/list";
+import {appModel, AppModel} from "../../models/appModel"
 
 var Firebase = require('firebase');
 
@@ -19,11 +20,14 @@ export class LoginPage {
 
     errorMsg : string = "";
 
+    model : AppModel;
+
     constructor(private nav: NavController) {
         this.form = new ControlGroup({
             email: new Control("",Validators.required),
             password: new Control("",Validators.required)
         });
+        this.model = appModel;
     }
 
     authGithub()  {

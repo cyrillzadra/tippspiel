@@ -24,12 +24,6 @@
         <param name="ios-package" value="CDVSplashScreen" />
         <param name="onload" value="true" />
     </feature>
-    <feature name="StatusBar">
-        <param name="ios-package" value="CDVStatusBar" />
-        <param name="onload" value="true" />
-    </feature>
-    <preference name="StatusBarOverlaysWebView" value="true" />
-    <preference name="StatusBarStyle" value="lightcontent" />
     <feature name="Keyboard">
         <param name="ios-package" onload="true" value="IonicKeyboard" />
     </feature>
@@ -65,4 +59,13 @@
     <feature name="InAppBrowser">
         <param name="ios-package" value="CDVInAppBrowser" />
     </feature>
+    <feature name="Globalization">
+        <param name="ios-package" value="CDVGlobalization" />
+    </feature>
+    <feature name="StatusBar">
+        <param name="ios-package" value="CDVStatusBar" />
+        <param name="onload" value="true" />
+    </feature>
+    <preference name="StatusBarOverlaysWebView" value="true" />
+    <preference name="StatusBarStyle" value="lightcontent" />
 </widget>

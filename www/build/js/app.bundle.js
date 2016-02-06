@@ -3211,7 +3211,9 @@
 	var hello_ionic_1 = __webpack_require__(357);
 	var list_1 = __webpack_require__(358);
 	var login_1 = __webpack_require__(361);
-	var de_1 = __webpack_require__(364);
+	var de_1 = __webpack_require__(363);
+	var en_1 = __webpack_require__(364);
+	var appModel_1 = __webpack_require__(365);
 	var MyApp = (function () {
 	    function MyApp(app, platform, trans) {
 	        this.app = app;
@@ -3219,18 +3221,15 @@
 	        this.trans = trans;
 	        // make HelloIonicPage the root (or first) page
 	        this.rootPage = login_1.LoginPage;
-	        this.initializeApp();
+	        this.initializeApp(trans);
 	        // set our app's pages
 	        this.pages = [
 	            { title: 'Hello Ionic', component: hello_ionic_1.HelloIonicPage },
 	            { title: 'My First List', component: list_1.ListPage },
 	            { title: 'Login', component: login_1.LoginPage }
 	        ];
-	        //load locale
-	        trans.setLanguage('de');
-	        trans.translations('de', de_1.team);
 	    }
-	    MyApp.prototype.initializeApp = function () {
+	    MyApp.prototype.initializeApp = function (trans) {
 	        this.platform.ready().then(function () {
 	            // The platform is now ready. Note: if this callback fails to fire, follow
 	            // the Troubleshooting guide for a number of possible solutions:
@@ -3245,7 +3244,19 @@
 	            //
 	            // For example, we might change the StatusBar color. This one below is
 	            // good for dark backgrounds and light text:
-	            // StatusBar.setStyle(StatusBar.LIGHT_CONTENT)
+	            console.log(StatusBar);
+	            if (typeof StatusBar !== 'undefined') {
+	                StatusBar.styleDefault();
+	            }
+	            console.log(window.cordova.plugins.Keyboard);
+	            console.log(navigator.globalization);
+	            var globalization = navigator.globalization;
+	            var language = globalization.getPreferedLanguage();
+	            appModel_1.appModel.setLanguage(language);
+	            //load locale
+	            trans.setLanguage(language);
+	            trans.translations('de', de_1.team_de);
+	            trans.translations('en', en_1.team_en);
 	        });
 	    };
 	    MyApp.prototype.openPage = function (page) {
@@ -62537,6 +62548,7 @@
 	var signup_1 = __webpack_require__(362);
 	var common_1 = __webpack_require__(173);
 	var list_1 = __webpack_require__(358);
+	var appModel_1 = __webpack_require__(365);
 	var Firebase = __webpack_require__(360);
 	var LoginPage = (function () {
 	    function LoginPage(nav) {
@@ -62546,6 +62558,7 @@
 	            email: new common_1.Control("", common_1.Validators.required),
 	            password: new common_1.Control("", common_1.Validators.required)
 	        });
+	        this.model = appModel_1.appModel;
 	    }
 	    LoginPage.prototype.authGithub = function () {
 	        var login = this;
@@ -62644,12 +62657,11 @@
 	//# sourceMappingURL=signup.js.map
 
 /***/ },
-/* 363 */,
-/* 364 */
+/* 363 */
 /***/ function(module, exports) {
 
 	"use strict";
-	exports.team = { "FRA": "Frankreich",
+	exports.team_de = { "FRA": "Frankreich",
 	    "ROU": "Rumänien",
 	    "SUI": "Schweiz",
 	    "ALB": "Albanien",
@@ -62674,6 +62686,57 @@
 	    "ISL": "Island",
 	    "POR": "Portugal" };
 	//# sourceMappingURL=de.js.map
+
+/***/ },
+/* 364 */
+/***/ function(module, exports) {
+
+	"use strict";
+	exports.team_en = {
+	    'FRA': 'France',
+	    'ROU': 'Romania',
+	    'SUI': 'Switzerland',
+	    'ALB': 'Albania',
+	    'WAL': 'Wales',
+	    'SVK': 'Slovakia',
+	    'RUS': 'Russia',
+	    'ENG': 'England',
+	    'POL ': 'Poland',
+	    'NIR': 'Northern Ireland',
+	    'UKR': 'Ukraine',
+	    'GER': 'Germany',
+	    'TUR': 'Turkey',
+	    'ESP': 'Spain',
+	    'CZE': 'Czech Republic',
+	    'CRO': 'Croatia',
+	    'IRL': 'Ireland',
+	    'BEL': 'Belgium',
+	    'SWE': 'Schweden',
+	    'ITA': 'Italy',
+	    'AUT': 'Austria',
+	    'HUN': 'Hungary',
+	    'ISL': 'Island',
+	    'POR': 'Portugal' };
+	//# sourceMappingURL=en.js.map
+
+/***/ },
+/* 365 */
+/***/ function(module, exports) {
+
+	"use strict";
+	/**
+	 * Created by tiezad on 06.02.2016.
+	 */
+	var AppModel = (function () {
+	    function AppModel() {
+	    }
+	    AppModel.prototype.getLanguage = function () { return this.language; };
+	    AppModel.prototype.setLanguage = function (language) { this.language = language; };
+	    return AppModel;
+	}());
+	exports.AppModel = AppModel;
+	exports.appModel = new AppModel();
+	//# sourceMappingURL=appModel.js.map
 
 /***/ }
 /******/ ]);
