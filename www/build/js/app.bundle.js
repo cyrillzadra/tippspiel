@@ -3221,6 +3221,9 @@
 	        this.trans = trans;
 	        // make HelloIonicPage the root (or first) page
 	        this.rootPage = login_1.LoginPage;
+	        document.addEventListener("deviceready", function () {
+	            this.I18n(trans);
+	        }, false);
 	        this.initializeApp(trans);
 	        // set our app's pages
 	        this.pages = [
@@ -3229,7 +3232,7 @@
 	            { title: 'Login', component: login_1.LoginPage }
 	        ];
 	    }
-	    MyApp.prototype.initializeApp = function (trans) {
+	    MyApp.prototype.initializeApp = function () {
 	        this.platform.ready().then(function () {
 	            // The platform is now ready. Note: if this callback fails to fire, follow
 	            // the Troubleshooting guide for a number of possible solutions:
@@ -3247,23 +3250,26 @@
 	            //if (typeof StatusBar !== 'undefined') {
 	            //  StatusBar.styleDefault();
 	            //}
-	            if (typeof navigator.globalization !== "undefined") {
-	                navigator.globalization.getPreferredLanguage(function (language) {
-	                    alert('language: ' + language.value + '\n');
-	                    appModel_1.appModel.setLanguage(language.value);
-	                }, function () {
-	                    alert('Error getting language\n');
-	                });
-	            }
-	            else {
-	                appModel_1.appModel.setLanguage("de");
-	            }
-	            //load locale
-	            trans.setLanguage(appModel_1.appModel.getLanguage);
-	            trans.translations('de', de_1.team_de);
-	            trans.translations('en', en_1.team_en);
 	        });
 	    };
+	    MyApp.prototype.I18n = function (trans) {
+	        if (typeof navigator.globalization !== "undefined") {
+	            navigator.globalization.getPreferredLanguage(function (language) {
+	                alert('language: ' + language.value + '\n');
+	                appModel_1.appModel.setLanguage(language.value);
+	            }, function () {
+	                alert('Error getting language\n');
+	            });
+	        }
+	        else {
+	            appModel_1.appModel.setLanguage("de");
+	        }
+	        //load locale
+	        trans.setLanguage(appModel_1.appModel.getLanguage);
+	        trans.translations('de', de_1.team_de);
+	        trans.translations('en', en_1.team_en);
+	    };
+	    ;
 	    MyApp.prototype.openPage = function (page) {
 	        // close the menu when clicking a link from the menu
 	        this.app.getComponent('leftMenu').close();

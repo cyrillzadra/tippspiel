@@ -23,6 +23,10 @@ class MyApp {
 
     constructor(private app:IonicApp, private platform:Platform, private trans:Translate) {
 
+        document.addEventListener("deviceready", function () {
+            this.I18n(trans);
+        }, false);
+
         this.initializeApp(trans);
 
         // set our app's pages
@@ -33,7 +37,7 @@ class MyApp {
         ];
     }
 
-    initializeApp(trans:Translate) {
+    initializeApp() {
         this.platform.ready().then(() => {
             // The platform is now ready. Note: if this callback fails to fire, follow
             // the Troubleshooting guide for a number of possible solutions:
@@ -51,28 +55,29 @@ class MyApp {
             //if (typeof StatusBar !== 'undefined') {
             //  StatusBar.styleDefault();
             //}
-
-            if(typeof navigator.globalization !== "undefined") {
-                navigator.globalization.getPreferredLanguage(
-                    function (language) {
-                        alert('language: ' + language.value + '\n');
-                        appModel.setLanguage(language.value)
-                    },
-                    function () {
-                        alert('Error getting language\n');
-                    }
-                );
-            } else {
-                appModel.setLanguage("de")
-            }
-
-            //load locale
-            trans.setLanguage(appModel.getLanguage);
-            trans.translations('de', team_de);
-            trans.translations('en', team_en);
-
         });
     }
+
+    private I18n(trans:Translate) {
+        if (typeof navigator.globalization !== "undefined") {
+            navigator.globalization.getPreferredLanguage(
+                function (language) {
+                    alert('language: ' + language.value + '\n');
+                    appModel.setLanguage(language.value)
+                },
+                function () {
+                    alert('Error getting language\n');
+                }
+            );
+        } else {
+            appModel.setLanguage("de")
+        }
+
+        //load locale
+        trans.setLanguage(appModel.getLanguage);
+        trans.translations('de', team_de);
+        trans.translations('en', team_en);
+    };
 
     openPage(page) {
         // close the menu when clicking a link from the menu
