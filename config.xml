@@ -56,7 +56,4 @@
         <param name="ios-package" value="CDVGlobalization"/>
         <param name="android-package" value="org.apache.cordova.Globalization"/>
     </feature>
-    <feature name="debug-server" required="true" >
-        <param name="key" value="ch.euro2016.tippspiel"/>
-    </feature>
 </widget>
