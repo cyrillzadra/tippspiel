@@ -46,8 +46,8 @@
 		C5D34A136A374F06AEECAD05 /* IonicKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = ECE2FB13CDDA4FB8A35DFEFD /* IonicKeyboard.m */; };
 		028CB309CD514B988283E262 /* UIWebViewExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CE046A392C44557AA4BBD2B /* UIWebViewExtension.m */; };
 		2D65344AF144472DBE6E3CA0 /* CDVInAppBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 7037F227C5C24702BC972E65 /* CDVInAppBrowser.m */; };
-		4684E125C91247B688F6EFF4 /* CDVGlobalization.m in Sources */ = {isa = PBXBuildFile; fileRef = 193557BA36574F708CCDB8FF /* CDVGlobalization.m */; };
 		7F8E27D34D6D494C928B905A /* CDVStatusBar.m in Sources */ = {isa = PBXBuildFile; fileRef = CACD6EC221BB4DE6B9AEAE84 /* CDVStatusBar.m */; };
+		9A666B4FCC3742329A6E08A2 /* CDVGlobalization.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D7719AF06BC4AABBEE90B9C /* CDVGlobalization.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -127,10 +127,10 @@
 		C23356668A3C4E0A89571F53 /* UIWebViewExtension.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "UIWebViewExtension.h"; path = "ionic-plugin-keyboard/UIWebViewExtension.h"; sourceTree = "<group>"; fileEncoding = 4; };
 		7037F227C5C24702BC972E65 /* CDVInAppBrowser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "CDVInAppBrowser.m"; path = "cordova-plugin-inappbrowser/CDVInAppBrowser.m"; sourceTree = "<group>"; fileEncoding = 4; };
 		141A38FE73A84946B9745D3F /* CDVInAppBrowser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CDVInAppBrowser.h"; path = "cordova-plugin-inappbrowser/CDVInAppBrowser.h"; sourceTree = "<group>"; fileEncoding = 4; };
-		193557BA36574F708CCDB8FF /* CDVGlobalization.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "CDVGlobalization.m"; path = "cordova-plugin-globalization/CDVGlobalization.m"; sourceTree = "<group>"; fileEncoding = 4; };
-		4F7C9CDB73A84CE5A21672E4 /* CDVGlobalization.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CDVGlobalization.h"; path = "cordova-plugin-globalization/CDVGlobalization.h"; sourceTree = "<group>"; fileEncoding = 4; };
 		CACD6EC221BB4DE6B9AEAE84 /* CDVStatusBar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "CDVStatusBar.m"; path = "cordova-plugin-statusbar/CDVStatusBar.m"; sourceTree = "<group>"; fileEncoding = 4; };
 		EC64FAD394C84EDE96AD1B77 /* CDVStatusBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CDVStatusBar.h"; path = "cordova-plugin-statusbar/CDVStatusBar.h"; sourceTree = "<group>"; fileEncoding = 4; };
+		5D7719AF06BC4AABBEE90B9C /* CDVGlobalization.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "CDVGlobalization.m"; path = "cordova-plugin-globalization/CDVGlobalization.m"; sourceTree = "<group>"; fileEncoding = 4; };
+		D028B0ADF56E4D4BA86E2ABA /* CDVGlobalization.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CDVGlobalization.h"; path = "cordova-plugin-globalization/CDVGlobalization.h"; sourceTree = "<group>"; fileEncoding = 4; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -243,10 +243,10 @@
 				C23356668A3C4E0A89571F53 /* UIWebViewExtension.h */,
 				7037F227C5C24702BC972E65 /* CDVInAppBrowser.m */,
 				141A38FE73A84946B9745D3F /* CDVInAppBrowser.h */,
-				193557BA36574F708CCDB8FF /* CDVGlobalization.m */,
-				4F7C9CDB73A84CE5A21672E4 /* CDVGlobalization.h */,
 				CACD6EC221BB4DE6B9AEAE84 /* CDVStatusBar.m */,
 				EC64FAD394C84EDE96AD1B77 /* CDVStatusBar.h */,
+				5D7719AF06BC4AABBEE90B9C /* CDVGlobalization.m */,
+				D028B0ADF56E4D4BA86E2ABA /* CDVGlobalization.h */,
 			);
 			name = Plugins;
 			path = "Euro 2016/Plugins";
@@ -438,8 +438,8 @@
 				C5D34A136A374F06AEECAD05 /* IonicKeyboard.m in Sources */,
 				028CB309CD514B988283E262 /* UIWebViewExtension.m in Sources */,
 				2D65344AF144472DBE6E3CA0 /* CDVInAppBrowser.m in Sources */,
-				4684E125C91247B688F6EFF4 /* CDVGlobalization.m in Sources */,
 				7F8E27D34D6D494C928B905A /* CDVStatusBar.m in Sources */,
+				9A666B4FCC3742329A6E08A2 /* CDVGlobalization.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

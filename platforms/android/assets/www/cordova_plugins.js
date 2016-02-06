@@ -36,6 +36,13 @@ module.exports = [
         ]
     },
     {
+        "file": "plugins/cordova-plugin-statusbar/www/statusbar.js",
+        "id": "cordova-plugin-statusbar.statusbar",
+        "clobbers": [
+            "window.StatusBar"
+        ]
+    },
+    {
         "file": "plugins/cordova-plugin-globalization/www/GlobalizationError.js",
         "id": "cordova-plugin-globalization.GlobalizationError",
         "clobbers": [
@@ -48,13 +55,6 @@ module.exports = [
         "clobbers": [
             "navigator.globalization"
         ]
-    },
-    {
-        "file": "plugins/cordova-plugin-statusbar/www/statusbar.js",
-        "id": "cordova-plugin-statusbar.statusbar",
-        "clobbers": [
-            "window.StatusBar"
-        ]
     }
 ];
 module.exports.metadata = 
@@ -66,8 +66,8 @@ module.exports.metadata =
     "cordova-plugin-whitelist": "1.2.1",
     "ionic-plugin-keyboard": "1.0.8",
     "cordova-plugin-inappbrowser": "1.2.1",
-    "cordova-plugin-globalization": "1.0.2",
-    "cordova-plugin-statusbar": "2.1.0"
+    "cordova-plugin-statusbar": "2.1.0",
+    "cordova-plugin-globalization": "1.0.2"
 }
 // BOTTOM OF METADATA
 });

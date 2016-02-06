@@ -7104,7 +7104,7 @@
 }));
 // moment.js locale configuration
 // locale : Burmese (my)
-// author : Squar team_de, mysquar.com
+// author : Squar team, mysquar.com
 
 (function (factory) {
     factory(moment);
