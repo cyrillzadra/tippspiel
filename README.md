@@ -80,6 +80,8 @@ Ionic 2 Doc: http://ionicframework.com/docs/v2/
 Angular 2 TypeScript Doc: https://angular.io/docs/ts/latest/index.html
 Example Ionic 2 & Angular 2: http://www.toptal.com/front-end/building-multi-platform-real-time-mobile-applications-using-ionic-framework-and-firebase
 Example http://www.sitepoint.com/creating-firebase-powered-end-end-ionic-application/
+
+Debuggin : https://www.genuitec.com/products/gapdebug/
  
 
  

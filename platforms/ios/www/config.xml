@@ -29,10 +29,17 @@
     <preference name="android-minSdkVersion" value="16" />
     <preference name="BackupWebStorage" value="none" />
     <feature name="StatusBar">
-        <param name="ios-package" onload="true" value="CDVStatusBar" />
+        <param name="ios-package" onload="true" value="CDVStatusBar"/>
     </feature>
     <feature name="InAppBrowser">
-        <param name="android-package" value="org.apache.cordova.InAppBrowser" />
-        <param name="ios-package" value="CDVInAppBrowser" />
+        <param name="ios-package" value="CDVInAppBrowser"/>
+        <param name="android-package" value="org.apache.cordova.InAppBrowser"/>
+    </feature>
+    <feature name="SplashScreen">
+        <param name="ios-package" value="CDVSplashScreen"/>
+    </feature>
+    <feature name="Globalization">
+        <param name="ios-package" value="CDVGlobalization"/>
+        <param name="android-package" value="org.apache.cordova.Globalization"/>
     </feature>
 </widget>
