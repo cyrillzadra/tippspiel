@@ -3211,9 +3211,9 @@
 	var hello_ionic_1 = __webpack_require__(357);
 	var list_1 = __webpack_require__(358);
 	var login_1 = __webpack_require__(361);
-	var de_1 = __webpack_require__(363);
-	var en_1 = __webpack_require__(364);
-	var appModel_1 = __webpack_require__(365);
+	var de_1 = __webpack_require__(364);
+	var en_1 = __webpack_require__(365);
+	var appModel_1 = __webpack_require__(363);
 	var MyApp = (function () {
 	    function MyApp(app, platform, trans) {
 	        this.app = app;
@@ -3244,17 +3244,20 @@
 	            //
 	            // For example, we might change the StatusBar color. This one below is
 	            // good for dark backgrounds and light text:
-	            console.log(StatusBar);
-	            if (typeof StatusBar !== 'undefined') {
-	                StatusBar.styleDefault();
+	            //if (typeof StatusBar !== 'undefined') {
+	            //  StatusBar.styleDefault();
+	            //}
+	            appModel_1.appModel.setLanguage("en");
+	            if (typeof navigator.globalization !== "undefined") {
+	                navigator.globalization.getPreferredLanguage(function (language) {
+	                    alert('language: ' + language.value + '\n');
+	                    appModel_1.appModel.setLanguage(language.value);
+	                }, function () {
+	                    alert('Error getting language\n');
+	                });
 	            }
-	            console.log(window.cordova.plugins.Keyboard);
-	            console.log(navigator.globalization);
-	            var globalization = navigator.globalization;
-	            var language = globalization.getPreferedLanguage();
-	            appModel_1.appModel.setLanguage(language);
 	            //load locale
-	            trans.setLanguage(language);
+	            trans.setLanguage(appModel_1.appModel.getLanguage);
 	            trans.translations('de', de_1.team_de);
 	            trans.translations('en', en_1.team_en);
 	        });
@@ -62548,7 +62551,7 @@
 	var signup_1 = __webpack_require__(362);
 	var common_1 = __webpack_require__(173);
 	var list_1 = __webpack_require__(358);
-	var appModel_1 = __webpack_require__(365);
+	var appModel_1 = __webpack_require__(363);
 	var Firebase = __webpack_require__(360);
 	var LoginPage = (function () {
 	    function LoginPage(nav) {
@@ -62661,6 +62664,26 @@
 /***/ function(module, exports) {
 
 	"use strict";
+	/**
+	 * Created by tiezad on 06.02.2016.
+	 */
+	var AppModel = (function () {
+	    function AppModel() {
+	        this.language = "fr";
+	    }
+	    AppModel.prototype.getLanguage = function () { return this.language; };
+	    AppModel.prototype.setLanguage = function (language) { this.language = language; };
+	    return AppModel;
+	}());
+	exports.AppModel = AppModel;
+	exports.appModel = new AppModel();
+	//# sourceMappingURL=appModel.js.map
+
+/***/ },
+/* 364 */
+/***/ function(module, exports) {
+
+	"use strict";
 	exports.team_de = { "FRA": "Frankreich",
 	    "ROU": "Rumänien",
 	    "SUI": "Schweiz",
@@ -62688,7 +62711,7 @@
 	//# sourceMappingURL=de.js.map
 
 /***/ },
-/* 364 */
+/* 365 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -62718,25 +62741,6 @@
 	    'ISL': 'Island',
 	    'POR': 'Portugal' };
 	//# sourceMappingURL=en.js.map
-
-/***/ },
-/* 365 */
-/***/ function(module, exports) {
-
-	"use strict";
-	/**
-	 * Created by tiezad on 06.02.2016.
-	 */
-	var AppModel = (function () {
-	    function AppModel() {
-	    }
-	    AppModel.prototype.getLanguage = function () { return this.language; };
-	    AppModel.prototype.setLanguage = function (language) { this.language = language; };
-	    return AppModel;
-	}());
-	exports.AppModel = AppModel;
-	exports.appModel = new AppModel();
-	//# sourceMappingURL=appModel.js.map
 
 /***/ }
 /******/ ]);
