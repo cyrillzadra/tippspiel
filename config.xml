@@ -31,6 +31,10 @@
     <preference name="DisallowOverscroll" value="true"/>
     <preference name="android-minSdkVersion" value="16"/>
     <preference name="BackupWebStorage" value="none"/>
+    <feature name="Device">
+        <param name="android-package" value="org.apache.cordova.Device" />
+        <param name="ios-package" value="CDVDevice" />
+    </feature>
     <feature name="InAppBrowser">
         <param name="ios-package" value="CDVInAppBrowser"/>
         <param name="android-package" value="org.apache.cordova.InAppBrowser"/>
