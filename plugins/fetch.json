@@ -15,10 +15,10 @@
         "is_top_level": true,
         "variables": {}
     },
-    "cordova-plugin-whitelist": {
+    "cordova-plugin-globalization": {
         "source": {
             "type": "registry",
-            "id": "cordova-plugin-whitelist"
+            "id": "cordova-plugin-globalization"
         },
         "is_top_level": true,
         "variables": {}
@@ -31,10 +31,10 @@
         "is_top_level": true,
         "variables": {}
     },
-    "cordova-plugin-globalization": {
+    "cordova-plugin-whitelist": {
         "source": {
             "type": "registry",
-            "id": "cordova-plugin-globalization"
+            "id": "cordova-plugin-whitelist"
         },
         "is_top_level": true,
         "variables": {}
