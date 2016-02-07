@@ -17,7 +17,7 @@
        under the License.
  */
 
-package ch.euro2016;
+package ch.euro2016.tippspiel;
 
 import android.os.Bundle;
 import org.apache.cordova.*;

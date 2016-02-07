@@ -9,10 +9,9 @@
   <ion-list>
     <button ion-item *ngFor="#item of items" (click)="itemTapped($event, item)">
       <ion-icon name="{{item.icon}}" item-left></ion-icon>
-
       <div class="item-note" item-left>
-        {{item.homeTeam}} -
-        {{item.visitorTeam}}
+        {{ item.homeTeam | translate }} -
+        {{ item.visitorTeam | translate }}
       </div>
     </button>
   </ion-list>

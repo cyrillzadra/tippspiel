@@ -3211,12 +3211,20 @@
 	var hello_ionic_1 = __webpack_require__(357);
 	var list_1 = __webpack_require__(358);
 	var login_1 = __webpack_require__(361);
+	var de_1 = __webpack_require__(364);
+	var en_1 = __webpack_require__(365);
+	var appModel_1 = __webpack_require__(363);
 	var MyApp = (function () {
-	    function MyApp(app, platform) {
+	    function MyApp(app, platform, trans) {
 	        this.app = app;
 	        this.platform = platform;
+	        this.trans = trans;
 	        // make HelloIonicPage the root (or first) page
 	        this.rootPage = login_1.LoginPage;
+	        document.addEventListener("deviceready", function () {
+	            appModel_1.appModel.setDeviceReady(true);
+	            this.I18n(trans);
+	        }, false);
 	        this.initializeApp();
 	        // set our app's pages
 	        this.pages = [
@@ -3240,9 +3248,29 @@
 	            //
 	            // For example, we might change the StatusBar color. This one below is
 	            // good for dark backgrounds and light text:
-	            // StatusBar.setStyle(StatusBar.LIGHT_CONTENT)
+	            //if (typeof StatusBar !== 'undefined') {
+	            //  StatusBar.styleDefault();
+	            //}
 	        });
 	    };
+	    MyApp.prototype.I18n = function (trans) {
+	        if (typeof navigator.globalization !== "undefined") {
+	            navigator.globalization.getPreferredLanguage(function (language) {
+	                alert('language: ' + language.value + '\n');
+	                appModel_1.appModel.setLanguage(language.value);
+	            }, function () {
+	                alert('Error getting language\n');
+	            });
+	        }
+	        else {
+	            appModel_1.appModel.setLanguage("de");
+	        }
+	        //load locale
+	        trans.setLanguage(appModel_1.appModel.getLanguage);
+	        trans.translations('de', de_1.team_de);
+	        trans.translations('en', en_1.team_en);
+	    };
+	    ;
 	    MyApp.prototype.openPage = function (page) {
 	        // close the menu when clicking a link from the menu
 	        this.app.getComponent('leftMenu').close();
@@ -3255,7 +3283,7 @@
 	            templateUrl: 'build/app.html',
 	            config: {} // http://ionicframework.com/docs/v2/api/config/Config/
 	        }), 
-	        __metadata('design:paramtypes', [ionic_1.IonicApp, ionic_1.Platform])
+	        __metadata('design:paramtypes', [ionic_1.IonicApp, ionic_1.Platform, ionic_1.Translate])
 	    ], MyApp);
 	    return MyApp;
 	}());
@@ -62191,8 +62219,8 @@
 	            console.log(snapshot.val());
 	            snapshot.forEach(function (data) {
 	                list.items.push({
-	                    homeTeam: 'HomeTeam:' + data.val().visitorTeam,
-	                    visitorTeam: 'VisitorTeam: ' + data.val().visitorTeam,
+	                    homeTeam: data.val().homeTeam,
+	                    visitorTeam: data.val().visitorTeam,
 	                    icon: list.icons[Math.floor(Math.random() * list.icons.length)]
 	                });
 	            });
@@ -62208,7 +62236,8 @@
 	    };
 	    ListPage = __decorate([
 	        ionic_1.Page({
-	            templateUrl: 'build/pages/list/list.html'
+	            templateUrl: 'build/pages/list/list.html',
+	            pipes: [ionic_1.TranslatePipe]
 	        }), 
 	        __metadata('design:paramtypes', [ionic_1.NavController, ionic_1.NavParams])
 	    ], ListPage);
@@ -62531,6 +62560,7 @@
 	var signup_1 = __webpack_require__(362);
 	var common_1 = __webpack_require__(173);
 	var list_1 = __webpack_require__(358);
+	var appModel_1 = __webpack_require__(363);
 	var Firebase = __webpack_require__(360);
 	var LoginPage = (function () {
 	    function LoginPage(nav) {
@@ -62540,14 +62570,17 @@
 	            email: new common_1.Control("", common_1.Validators.required),
 	            password: new common_1.Control("", common_1.Validators.required)
 	        });
+	        this.model = appModel_1.appModel;
 	    }
 	    LoginPage.prototype.authGithub = function () {
+	        var login = this;
 	        var fbRef = new Firebase(fbConfig_1.fbName);
 	        fbRef.authWithOAuthPopup("github", function (error, authData) {
 	            if (error) {
 	                console.log("Login Failed!", error);
 	            }
 	            else {
+	                login.nav.push(list_1.ListPage, { uid: authData.uid });
 	                console.log("Authenticated successfully with payload:", authData);
 	            }
 	        });
@@ -62634,6 +62667,99 @@
 	}());
 	exports.SignupPage = SignupPage;
 	//# sourceMappingURL=signup.js.map
+
+/***/ },
+/* 363 */
+/***/ function(module, exports) {
+
+	"use strict";
+	/**
+	 * Created by tiezad on 06.02.2016.
+	 */
+	var AppModel = (function () {
+	    function AppModel() {
+	        this.deviceReady = false;
+	    }
+	    AppModel.prototype.getDeviceReady = function () {
+	        return this.deviceReady;
+	    };
+	    AppModel.prototype.setDeviceReady = function (deviceReady) {
+	        this.deviceReady = deviceReady;
+	    };
+	    AppModel.prototype.getLanguage = function () {
+	        return this.language;
+	    };
+	    AppModel.prototype.setLanguage = function (language) {
+	        this.language = language;
+	    };
+	    return AppModel;
+	}());
+	exports.AppModel = AppModel;
+	exports.appModel = new AppModel();
+	//# sourceMappingURL=appModel.js.map
+
+/***/ },
+/* 364 */
+/***/ function(module, exports) {
+
+	"use strict";
+	exports.team_de = { "FRA": "Frankreich",
+	    "ROU": "Rumänien",
+	    "SUI": "Schweiz",
+	    "ALB": "Albanien",
+	    "WAL": "Wales",
+	    "SVK": "Slowakei",
+	    "RUS": "Russland",
+	    "ENG": "England",
+	    "POL": "Polen",
+	    "NIR": "Nordirland",
+	    "UKR": "Ukraine",
+	    "GER": "Deutschland",
+	    "TUR": "Türkei",
+	    "ESP": "Spanien",
+	    "CZE": "Tschechien",
+	    "CRO": "Kroatien",
+	    "IRL": "Irland",
+	    "BEL": "Belgien",
+	    "SWE": "Schweden",
+	    "ITA": "Italien",
+	    "AUT": "Österreich",
+	    "HUN": "Ungarn",
+	    "ISL": "Island",
+	    "POR": "Portugal" };
+	//# sourceMappingURL=de.js.map
+
+/***/ },
+/* 365 */
+/***/ function(module, exports) {
+
+	"use strict";
+	exports.team_en = {
+	    'FRA': 'France',
+	    'ROU': 'Romania',
+	    'SUI': 'Switzerland',
+	    'ALB': 'Albania',
+	    'WAL': 'Wales',
+	    'SVK': 'Slovakia',
+	    'RUS': 'Russia',
+	    'ENG': 'England',
+	    'POL ': 'Poland',
+	    'NIR': 'Northern Ireland',
+	    'UKR': 'Ukraine',
+	    'GER': 'Germany',
+	    'TUR': 'Turkey',
+	    'ESP': 'Spain',
+	    'CZE': 'Czech Republic',
+	    'CRO': 'Croatia',
+	    'IRL': 'Ireland',
+	    'BEL': 'Belgium',
+	    'SWE': 'Schweden',
+	    'ITA': 'Italy',
+	    'AUT': 'Austria',
+	    'HUN': 'Hungary',
+	    'ISL': 'Island',
+	    'POR': 'Portugal' };
+	//# sourceMappingURL=en.js.map
 
 /***/ }
 /******/ ]);

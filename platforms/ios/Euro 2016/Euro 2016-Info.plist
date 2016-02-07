@@ -6,6 +6,8 @@
     <dict>
       <key>NSAllowsArbitraryLoads</key>
       <true/>
+      <key>NSExceptionDomains</key>
+      <dict/>
     </dict>
     <key>CFBundleDevelopmentRegion</key>
     <string>English</string>
@@ -54,7 +56,7 @@
       </dict>
     </dict>
     <key>CFBundleIdentifier</key>
-    <string>ch.euro2016</string>
+    <string>ch.euro2016.tippspiel</string>
     <key>CFBundleInfoDictionaryVersion</key>
     <string>6.0</string>
     <key>CFBundleName</key>
