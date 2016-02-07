@@ -3222,9 +3222,10 @@
 	        // make HelloIonicPage the root (or first) page
 	        this.rootPage = login_1.LoginPage;
 	        document.addEventListener("deviceready", function () {
+	            appModel_1.appModel.setDeviceReady(true);
 	            this.I18n(trans);
 	        }, false);
-	        this.initializeApp(trans);
+	        this.initializeApp();
 	        // set our app's pages
 	        this.pages = [
 	            { title: 'Hello Ionic', component: hello_ionic_1.HelloIonicPage },
@@ -62677,9 +62678,20 @@
 	 */
 	var AppModel = (function () {
 	    function AppModel() {
+	        this.deviceReady = false;
 	    }
-	    AppModel.prototype.getLanguage = function () { return this.language; };
-	    AppModel.prototype.setLanguage = function (language) { this.language = language; };
+	    AppModel.prototype.getDeviceReady = function () {
+	        return this.deviceReady;
+	    };
+	    AppModel.prototype.setDeviceReady = function (deviceReady) {
+	        this.deviceReady = deviceReady;
+	    };
+	    AppModel.prototype.getLanguage = function () {
+	        return this.language;
+	    };
+	    AppModel.prototype.setLanguage = function (language) {
+	        this.language = language;
+	    };
 	    return AppModel;
 	}());
 	exports.AppModel = AppModel;

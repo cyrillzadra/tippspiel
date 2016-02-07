@@ -24,10 +24,11 @@ class MyApp {
     constructor(private app:IonicApp, private platform:Platform, private trans:Translate) {
 
         document.addEventListener("deviceready", function () {
+            appModel.setDeviceReady(true)
             this.I18n(trans);
         }, false);
 
-        this.initializeApp(trans);
+        this.initializeApp();
 
         // set our app's pages
         this.pages = [

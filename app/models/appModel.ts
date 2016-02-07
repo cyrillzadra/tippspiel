@@ -3,11 +3,25 @@
  */
 export class AppModel {
 
-    language : string;
+    language:string;
 
-    getLanguage() : string { return this.language }
+    deviceReady:boolean = false;
 
-    setLanguage(language : string) : void { this.language = language }
+    getDeviceReady():boolean {
+        return this.deviceReady
+    }
+
+    setDeviceReady(deviceReady:boolean):void {
+        this.deviceReady = deviceReady
+    }
+
+    getLanguage():string {
+        return this.language
+    }
+
+    setLanguage(language:string):void {
+        this.language = language
+    }
 
 }
 
