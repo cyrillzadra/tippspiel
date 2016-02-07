@@ -7,12 +7,7 @@
         "files": {
             "framework": {
                 "parents": {
-                    "CoreGraphics.framework": [
-                        {
-                            "xml": false,
-                            "count": 1
-                        }
-                    ]
+                    "CoreGraphics.framework": []
                 }
             },
             "config.xml": {
@@ -20,18 +15,6 @@
                     "/*": [
                         {
                             "xml": "<feature name=\"InAppBrowser\"><param name=\"ios-package\" value=\"CDVInAppBrowser\" /></feature>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"StatusBar\"><param name=\"ios-package\" value=\"CDVStatusBar\" /><param name=\"onload\" value=\"true\" /></feature>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<preference name=\"StatusBarOverlaysWebView\" value=\"true\" />",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<preference name=\"StatusBarStyle\" value=\"lightcontent\" />",
                             "count": 1
                         },
                         {
@@ -50,19 +33,10 @@
         "cordova-plugin-device": {
             "PACKAGE_NAME": "io.ionic.starter"
         },
-        "cordova-plugin-splashscreen": {
-            "PACKAGE_NAME": "io.ionic.starter"
-        },
         "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "io.ionic.starter"
         },
-        "ionic-plugin-keyboard": {
-            "PACKAGE_NAME": "io.ionic.starter"
-        },
         "cordova-plugin-inappbrowser": {
-            "PACKAGE_NAME": "ch.euro2016"
-        },
-        "cordova-plugin-statusbar": {
             "PACKAGE_NAME": "ch.euro2016"
         },
         "cordova-plugin-globalization": {
