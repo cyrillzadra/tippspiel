@@ -3223,6 +3223,7 @@
 	        this.rootPage = login_1.LoginPage;
 	        document.addEventListener("deviceready", function () {
 	            appModel_1.appModel.setDeviceReady(true);
+	            appModel_1.appModel.setGlobalization(navigator.globalization);
 	            this.I18n(trans);
 	        }, false);
 	        this.initializeApp();
@@ -3256,10 +3257,10 @@
 	    MyApp.prototype.I18n = function (trans) {
 	        if (typeof navigator.globalization !== "undefined") {
 	            navigator.globalization.getPreferredLanguage(function (language) {
-	                alert('language: ' + language.value + '\n');
+	                console.log('language: ' + language.value + '\n');
 	                appModel_1.appModel.setLanguage(language.value);
 	            }, function () {
-	                alert('Error getting language\n');
+	                console.log('Error getting language\n');
 	            });
 	        }
 	        else {
@@ -62691,6 +62692,12 @@
 	    };
 	    AppModel.prototype.setLanguage = function (language) {
 	        this.language = language;
+	    };
+	    AppModel.prototype.setGlobalization = function (globalization) {
+	        this.globalization = globalization;
+	    };
+	    AppModel.prototype.getGlobalization = function () {
+	        return this.globalization;
 	    };
 	    return AppModel;
 	}());
