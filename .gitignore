@@ -4,3 +4,6 @@
 /app/**/*.js.map
 /.idea/
 /node_modules/
+/hooks/
+/platforms/
+/plugins/
