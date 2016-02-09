@@ -7,7 +7,7 @@
     <description>Euro 2016 Tippspiel</description>
     <author email="cyrill.zadra@gmail.com" href="https://github.com/cyrillzadra/tippspiel">Euro 2016 Tippspiel Team
     </author>
-    <content src="www/index.html"/>
+    <content src="index.html"/>
     <access origin="debug.phonegap.com"/>
     <access origin="debug3.phonegap.com"/>
     <access origin="*.phonegap.com"/>
