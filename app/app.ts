@@ -25,6 +25,7 @@ class MyApp {
 
         document.addEventListener("deviceready", function () {
             appModel.setDeviceReady(true)
+            appModel.setGlobalization(navigator.globalization)
             this.I18n(trans);
         }, false);
 

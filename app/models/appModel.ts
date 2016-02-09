@@ -7,6 +7,8 @@ export class AppModel {
 
     deviceReady:boolean = false;
 
+    globalization:any;
+
     getDeviceReady():boolean {
         return this.deviceReady
     }
@@ -23,6 +25,15 @@ export class AppModel {
         this.language = language
     }
 
+    setGlobalization(globalization:any):void {
+        this.globalization = globalization;
+    }
+
+    getGlobalization():any {
+        return this.globalization;
+    }
+
 }
 
 export var appModel = new AppModel()
+
