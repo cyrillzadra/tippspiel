@@ -63,11 +63,11 @@ class MyApp {
         if (typeof navigator.globalization !== "undefined") {
             navigator.globalization.getPreferredLanguage(
                 function (language) {
-                    alert('language: ' + language.value + '\n');
+                    console.log('language: ' + language.value + '\n');
                     appModel.setLanguage(language.value)
                 },
                 function () {
-                    alert('Error getting language\n');
+                    console.log('Error getting language\n');
                 }
             );
         } else {

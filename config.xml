@@ -8,9 +8,6 @@
     <author email="cyrill.zadra@gmail.com" href="https://github.com/cyrillzadra/tippspiel">Euro 2016 Tippspiel Team
     </author>
     <content src="index.html"/>
-    <access origin="debug.phonegap.com"/>
-    <access origin="debug3.phonegap.com"/>
-    <access origin="*.phonegap.com"/>
     <access origin="*"/>
     <allow-intent href="http://*/*"/>
     <allow-intent href="https://*/*"/>
@@ -18,7 +15,6 @@
     <allow-intent href="sms:*"/>
     <allow-intent href="mailto:*"/>
     <allow-intent href="geo:*"/>
-
     <platform name="android">
         <allow-intent href="market:*"/>
     </platform>
