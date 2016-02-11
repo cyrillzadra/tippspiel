@@ -3224,17 +3224,16 @@
 	        document.addEventListener("deviceready", function () {
 	            appModel_1.appModel.setDeviceReady(true);
 	            appModel_1.appModel.setGlobalization(navigator.globalization);
-	            this.I18n(trans);
 	        }, false);
-	        this.initializeApp();
+	        this.initializeApp(trans);
 	        // set our app's pages
 	        this.pages = [
-	            { title: 'Hello Ionic', component: hello_ionic_1.HelloIonicPage },
-	            { title: 'My First List', component: list_1.ListPage },
-	            { title: 'Login', component: login_1.LoginPage }
+	            { title: 'My Groups', component: hello_ionic_1.HelloIonicPage },
+	            { title: 'Schedules', component: list_1.ListPage },
 	        ];
 	    }
-	    MyApp.prototype.initializeApp = function () {
+	    MyApp.prototype.initializeApp = function (trans) {
+	        var _this = this;
 	        this.platform.ready().then(function () {
 	            // The platform is now ready. Note: if this callback fails to fire, follow
 	            // the Troubleshooting guide for a number of possible solutions:
@@ -3252,6 +3251,8 @@
 	            //if (typeof StatusBar !== 'undefined') {
 	            //  StatusBar.styleDefault();
 	            //}
+	            _this.I18n(trans);
+	            appModel_1.appModel.setGlobalization(navigator.globalization);
 	        });
 	    };
 	    MyApp.prototype.I18n = function (trans) {
@@ -3267,7 +3268,7 @@
 	            appModel_1.appModel.setLanguage("de");
 	        }
 	        //load locale
-	        trans.setLanguage(appModel_1.appModel.getLanguage);
+	        trans.setLanguage(appModel_1.appModel.getLanguage());
 	        trans.translations('de', de_1.team_de);
 	        trans.translations('en', en_1.team_en);
 	    };
@@ -62680,6 +62681,7 @@
 	var AppModel = (function () {
 	    function AppModel() {
 	        this.deviceReady = false;
+	        this.authenticated = false;
 	    }
 	    AppModel.prototype.getDeviceReady = function () {
 	        return this.deviceReady;
@@ -62698,6 +62700,12 @@
 	    };
 	    AppModel.prototype.getGlobalization = function () {
 	        return this.globalization;
+	    };
+	    AppModel.prototype.authenticated = function () {
+	        this.authenticated = true;
+	    };
+	    AppModel.prototype.isAuthenticated = function () {
+	        return this.authenticated;
 	    };
 	    return AppModel;
 	}());

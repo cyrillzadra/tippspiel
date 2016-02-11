@@ -61,6 +61,8 @@ export class LoginPage {
             } else {
                 console.log("Successfully created user account with uid:", userData.uid);
                 login.nav.push(ListPage, { uid: userData.uid });
+                //login.nav.setRoot(ListPage, { uid: userData.uid });
+                //login.nav.loadPage(ListPage, { uid: userData.uid });
             }
         });
     }

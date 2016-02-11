@@ -1,0 +1,62 @@
+{
+	"schedules" : {
+		"1": {
+			"gameTime": "10.06.2016 / 21:00",
+			"group": "A",
+			"homeTeam": "FRA",
+			"visitorTeam": "ROU",
+			"homeScore": null,
+			"visitorScore": null
+		},
+		..
+		..
+	},
+	"users"  :  {
+		"?key1?" : {
+			"name" : "Cyrill",
+			"email" : "test@mail.com",
+			"country" : "CH",
+			"my_groups" : { 
+				"group_key1" : true, 
+				"group_key2" : true
+			}
+		}, 
+		"?key2?" : {
+			"name" : "Cyrill",
+			"email" : "test@mail.com",
+			"country" : "CH",
+			"my_groups" : { 
+				"group_key1" : true, 
+				"group_key2" : true
+			}			
+		} 
+	} ,
+	"groups" : {
+		"?	?" : {
+			"name": "Test Group",
+			"description": "My own group for fun",
+			"password": "jada",
+			"members": {
+				"key1?": true
+			}
+		}
+	},
+	"tips" : {
+		"?group_key1?" : {
+			"key1?": { 
+				"1" : "0:0", //schedule tips
+				"2" : "0:0",
+				...
+				"b1": "YYY", //bonus tips
+				"b2": "YYY"
+				
+			},
+		 , "?group_key2?" : {
+			"key1?": { 
+				"1" : "0:0", 
+				"2" : "0:0",
+				...				
+			},
+		}
+	}	
+}

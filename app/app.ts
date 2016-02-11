@@ -26,20 +26,18 @@ class MyApp {
         document.addEventListener("deviceready", function () {
             appModel.setDeviceReady(true)
             appModel.setGlobalization(navigator.globalization)
-            this.I18n(trans);
         }, false);
 
-        this.initializeApp();
+        this.initializeApp(trans);
 
         // set our app's pages
         this.pages = [
-            {title: 'Hello Ionic', component: HelloIonicPage},
-            {title: 'My First List', component: ListPage},
-            {title: 'Login', component: LoginPage}
+            {title: 'My Groups', component: HelloIonicPage},
+            {title: 'Schedules', component: ListPage},
         ];
     }
 
-    initializeApp() {
+    initializeApp(trans:Translate) {
         this.platform.ready().then(() => {
             // The platform is now ready. Note: if this callback fails to fire, follow
             // the Troubleshooting guide for a number of possible solutions:
@@ -57,6 +55,9 @@ class MyApp {
             //if (typeof StatusBar !== 'undefined') {
             //  StatusBar.styleDefault();
             //}
+            this.I18n(trans);
+
+            appModel.setGlobalization(navigator.globalization)
         });
     }
 
@@ -76,7 +77,7 @@ class MyApp {
         }
 
         //load locale
-        trans.setLanguage(appModel.getLanguage);
+        trans.setLanguage(appModel.getLanguage());
         trans.translations('de', team_de);
         trans.translations('en', team_en);
     };

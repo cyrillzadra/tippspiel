@@ -9,6 +9,8 @@ export class AppModel {
 
     globalization:any;
 
+    authenticated:boolean = false;
+
     getDeviceReady():boolean {
         return this.deviceReady
     }
@@ -25,12 +27,20 @@ export class AppModel {
         this.language = language
     }
 
-    setGlobalization(globalization:any):void {
+    setGlobalization(globalization:string):void {
         this.globalization = globalization;
     }
 
-    getGlobalization():any {
+    getGlobalization():string {
         return this.globalization;
+    }
+
+    authenticated():void {
+        this.authenticated = true;
+    }
+
+    isAuthenticated():boolean {
+        return this.authenticated;
     }
 
 }
