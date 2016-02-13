@@ -35,7 +35,7 @@ export class AppModel {
         return this.globalization;
     }
 
-    authenticated():void {
+    setAuthenticated():void {
         this.authenticated = true;
     }
 
