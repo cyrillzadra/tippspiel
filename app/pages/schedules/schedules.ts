@@ -5,10 +5,10 @@ var Firebase = require('firebase');
 
 
 @Page({
-  templateUrl: 'build/pages/list/list.html',
+  templateUrl: 'build/pages/schedules/schedules.html',
   pipes: [TranslatePipe]
 })
-export class ListPage {
+export class SchedulesPage {
   selectedItem: any;
   icons: string[];
   items: Array<{homeTeam: string, visitorTeam: string, icon: string}>;
@@ -49,7 +49,7 @@ export class ListPage {
   }
 
   itemTapped(event, item) {
-    this.nav.push(ListPage, {
+    this.nav.push(SchedulesPage, {
       uid: '???',
       item: item
     });

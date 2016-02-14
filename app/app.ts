@@ -1,7 +1,8 @@
 import {App, IonicApp, Platform, Translate} from 'ionic-framework/ionic';
 
 import {HelloIonicPage} from './pages/hello-ionic/hello-ionic';
-import {ListPage} from './pages/list/list';
+import {SchedulesPage} from './pages/schedules/schedules';
+import {MainPage} from './pages/main/main';
 import {LoginPage} from './pages/login/login';
 
 // https://angular.io/docs/ts/latest/api/core/Type-interface.html
@@ -26,16 +27,15 @@ class MyApp {
         document.addEventListener("deviceready", function () {
             appModel.setDeviceReady(true)
             appModel.setGlobalization(navigator.globalization)
-
-            window.open = cordova.InAppBrowser.open;
         }, false);
 
         this.initializeApp(trans);
 
         // set our app's pages
         this.pages = [
+            {title: 'Main', component: MainPage},
             {title: 'My Groups', component: HelloIonicPage},
-            {title: 'Schedules', component: ListPage},
+            {title: 'Schedules', component: SchedulesPage},
         ];
     }
 

@@ -3187,7 +3187,8 @@
 	};
 	var ionic_1 = __webpack_require__(5);
 	var hello_ionic_1 = __webpack_require__(358);
-	var list_1 = __webpack_require__(359);
+	var schedules_1 = __webpack_require__(359);
+	var main_1 = __webpack_require__(367);
 	var login_1 = __webpack_require__(362);
 	var de_1 = __webpack_require__(365);
 	var en_1 = __webpack_require__(366);
@@ -3202,13 +3203,13 @@
 	        document.addEventListener("deviceready", function () {
 	            appModel_1.appModel.setDeviceReady(true);
 	            appModel_1.appModel.setGlobalization(navigator.globalization);
-	            window.open = cordova.InAppBrowser.open;
 	        }, false);
 	        this.initializeApp(trans);
 	        // set our app's pages
 	        this.pages = [
+	            { title: 'Main', component: main_1.MainPage },
 	            { title: 'My Groups', component: hello_ionic_1.HelloIonicPage },
-	            { title: 'Schedules', component: list_1.ListPage },
+	            { title: 'Schedules', component: schedules_1.SchedulesPage },
 	        ];
 	    }
 	    MyApp.prototype.initializeApp = function (trans) {
@@ -62120,8 +62121,8 @@
 	var ionic_1 = __webpack_require__(5);
 	var fbConfig_1 = __webpack_require__(360);
 	var Firebase = __webpack_require__(361);
-	var ListPage = (function () {
-	    function ListPage(nav, navParams) {
+	var SchedulesPage = (function () {
+	    function SchedulesPage(nav, navParams) {
 	        this.nav = nav;
 	        // If we navigated to this page, we will have an item available as a nav param
 	        this.selectedItem = navParams.get('item');
@@ -62146,23 +62147,23 @@
 	            console.log("The read failed: " + errorObject.code);
 	        });
 	    }
-	    ListPage.prototype.itemTapped = function (event, item) {
-	        this.nav.push(ListPage, {
+	    SchedulesPage.prototype.itemTapped = function (event, item) {
+	        this.nav.push(SchedulesPage, {
 	            uid: '???',
 	            item: item
 	        });
 	    };
-	    ListPage = __decorate([
+	    SchedulesPage = __decorate([
 	        ionic_1.Page({
-	            templateUrl: 'build/pages/list/list.html',
+	            templateUrl: 'build/pages/schedules/schedules.html',
 	            pipes: [ionic_1.TranslatePipe]
 	        }), 
 	        __metadata('design:paramtypes', [ionic_1.NavController, ionic_1.NavParams])
-	    ], ListPage);
-	    return ListPage;
+	    ], SchedulesPage);
+	    return SchedulesPage;
 	}());
-	exports.ListPage = ListPage;
-	//# sourceMappingURL=list.js.map
+	exports.SchedulesPage = SchedulesPage;
+	//# sourceMappingURL=schedules.js.map
 
 /***/ },
 /* 360 */
@@ -62477,7 +62478,7 @@
 	var fbConfig_1 = __webpack_require__(360);
 	var signup_1 = __webpack_require__(363);
 	var common_1 = __webpack_require__(172);
-	var list_1 = __webpack_require__(359);
+	var main_1 = __webpack_require__(367);
 	var appModel_1 = __webpack_require__(364);
 	var Firebase = __webpack_require__(361);
 	var LoginPage = (function () {
@@ -62502,7 +62503,7 @@
 	                if (!login.checkIfUserExists(authData.uid)) {
 	                    login.createUser(authData);
 	                }
-	                login.nav.push(list_1.ListPage, { uid: authData.uid });
+	                login.nav.setRoot(main_1.MainPage);
 	                console.log("Authenticated successfully with payload:", authData);
 	            }
 	        });
@@ -62519,7 +62520,7 @@
 	                if (!login.checkIfUserExists(authData.uid)) {
 	                    login.createUser(authData);
 	                }
-	                login.nav.push(list_1.ListPage, { uid: authData.uid });
+	                login.nav.setRoot(main_1.MainPage);
 	                console.log("Authenticated successfully with payload:", authData);
 	            }
 	        });
@@ -62541,7 +62542,7 @@
 	            else {
 	                appModel_1.appModel.setAuthData(authData);
 	                console.log("Successfully created user account with uid:", authData.uid);
-	                login.nav.push(list_1.ListPage, { uid: authData.uid });
+	                login.nav.setRoot(main_1.MainPage);
 	            }
 	        });
 	    };
@@ -62762,6 +62763,37 @@
 	    'ISL': 'Island',
 	    'POR': 'Portugal' };
 	//# sourceMappingURL=en.js.map
+
+/***/ },
+/* 367 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	var __metadata = (this && this.__metadata) || function (k, v) {
+	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+	};
+	var ionic_1 = __webpack_require__(5);
+	var MainPage = (function () {
+	    function MainPage(nav, navParams) {
+	        this.nav = nav;
+	    }
+	    MainPage = __decorate([
+	        ionic_1.Page({
+	            templateUrl: 'build/pages/main/main.html',
+	            pipes: [ionic_1.TranslatePipe]
+	        }), 
+	        __metadata('design:paramtypes', [ionic_1.NavController, ionic_1.NavParams])
+	    ], MainPage);
+	    return MainPage;
+	}());
+	exports.MainPage = MainPage;
+	//# sourceMappingURL=main.js.map
 
 /***/ }
 /******/ ]);

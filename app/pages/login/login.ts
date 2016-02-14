@@ -3,7 +3,7 @@ import {Page, NavController, IONIC_DIRECTIVES} from 'ionic-framework/ionic';
 import {fbName} from "../fbConfig";
 import {SignupPage} from "../signup/signup";
 import {ControlGroup, Validators, Control} from "angular2/common";
-import {ListPage} from "../list/list";
+import {MainPage} from "../main/main";
 import {appModel, AppModel} from "../../models/appModel"
 
 var Firebase = require('firebase');
@@ -42,7 +42,7 @@ export class LoginPage {
                 if (!login.checkIfUserExists(authData.uid)) {
                     login.createUser(authData);
                 }
-                login.nav.push(ListPage, {uid: authData.uid});
+                login.nav.setRoot(MainPage);
                 console.log("Authenticated successfully with payload:", authData);
             }
         });
@@ -60,7 +60,7 @@ export class LoginPage {
                 if (!login.checkIfUserExists(authData.uid)) {
                     login.createUser(authData);
                 }
-                login.nav.push(ListPage, {uid: authData.uid});
+                login.nav.setRoot(MainPage);
                 console.log("Authenticated successfully with payload:", authData);
             }
         });
@@ -83,7 +83,7 @@ export class LoginPage {
             } else {
                 appModel.setAuthData(authData);
                 console.log("Successfully created user account with uid:", authData.uid);
-                login.nav.push(ListPage, {uid: authData.uid});
+                login.nav.setRoot(MainPage);
             }
         });
     }
