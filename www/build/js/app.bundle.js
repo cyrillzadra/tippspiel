@@ -3230,6 +3230,7 @@
 	            //  StatusBar.styleDefault();
 	            //}
 	            _this.I18n(trans);
+	            appModel_1.appModel.setPlatformReady(true);
 	            appModel_1.appModel.setGlobalization(navigator.globalization);
 	        });
 	    };
@@ -62654,9 +62655,16 @@
 	    function AppModel() {
 	        this.deviceReady = false;
 	        this.authenticated = false;
+	        this.platformReady = false;
 	    }
 	    AppModel.prototype.getDeviceReady = function () {
 	        return this.deviceReady;
+	    };
+	    AppModel.prototype.setPlatformReady = function (platformReady) {
+	        this.platformReady = platformReady;
+	    };
+	    AppModel.prototype.getPlatformReady = function () {
+	        return this.platformReady;
 	    };
 	    AppModel.prototype.setDeviceReady = function (deviceReady) {
 	        this.deviceReady = deviceReady;

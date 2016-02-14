@@ -13,8 +13,18 @@ export class AppModel {
 
     authData:any;
 
+    platformReady:boolean = false;
+
     getDeviceReady():boolean {
         return this.deviceReady
+    }
+
+    setPlatformReady(platformReady:boolean):void {
+        this.platformReady = platformReady
+    }
+
+    getPlatformReady():boolean {
+        return this.platformReady
     }
 
     setDeviceReady(deviceReady:boolean):void {

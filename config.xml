@@ -7,9 +7,12 @@
     <description>Euro 2016 Tippspiel</description>
     <author email="cyrill.zadra@gmail.com" href="https://github.com/cyrillzadra/tippspiel">Euro 2016 Tippspiel Team</author>
     <content src="index.html"/>
+
     <access origin="*"/>
     <access origin="auth.firebase.com"/>
     <access origin="*.firebaseio.com"/>
+    <access origin="https://auth.firebase.com/"/>
+
     <allow-intent href="http://*/*"/>
     <allow-intent href="https://*/*"/>
     <allow-intent href="tel:*"/>

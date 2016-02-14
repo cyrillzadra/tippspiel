@@ -57,6 +57,8 @@ class MyApp {
             //}
             this.I18n(trans);
 
+            appModel.setPlatformReady(true)
+
             appModel.setGlobalization(navigator.globalization)
         });
     }
