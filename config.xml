@@ -5,8 +5,7 @@
         version="0.0.1">
     <name>Euro 2016</name>
     <description>Euro 2016 Tippspiel</description>
-    <author email="cyrill.zadra@gmail.com" href="https://github.com/cyrillzadra/tippspiel">Euro 2016 Tippspiel Team
-    </author>
+    <author email="cyrill.zadra@gmail.com" href="https://github.com/cyrillzadra/tippspiel">Euro 2016 Tippspiel Team</author>
     <content src="index.html"/>
     <access origin="*"/>
     <access origin="auth.firebase.com"/>
@@ -26,9 +25,7 @@
     </platform>
 
     <preference name="phonegap-version" value="cli-6.0.0" />
-    <preference name="webviewbounce" value="false"/>
-    <preference name="UIWebViewBounce" value="false"/>
-    <preference name="DisallowOverscroll" value="true"/>
+
     <preference name="android-minSdkVersion" value="16"/>
     <preference name="BackupWebStorage" value="none"/>
 
