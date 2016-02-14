@@ -26,6 +26,8 @@ class MyApp {
         document.addEventListener("deviceready", function () {
             appModel.setDeviceReady(true)
             appModel.setGlobalization(navigator.globalization)
+
+            window.open = cordova.InAppBrowser.open;
         }, false);
 
         this.initializeApp(trans);

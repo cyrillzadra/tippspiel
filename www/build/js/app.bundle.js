@@ -3202,6 +3202,7 @@
 	        document.addEventListener("deviceready", function () {
 	            appModel_1.appModel.setDeviceReady(true);
 	            appModel_1.appModel.setGlobalization(navigator.globalization);
+	            window.open = cordova.InAppBrowser.open;
 	        }, false);
 	        this.initializeApp(trans);
 	        // set our app's pages
