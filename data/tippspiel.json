@@ -19,7 +19,8 @@
 			"my_groups" : { 
 				"group_key1" : true, 
 				"group_key2" : true
-			}
+			},
+			"provider" : "twitter/facebook/google"
 		}, 
 		"?key2?" : {
 			"name" : "Cyrill",

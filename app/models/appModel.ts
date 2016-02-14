@@ -11,6 +11,8 @@ export class AppModel {
 
     authenticated:boolean = false;
 
+    authData:any;
+
     getDeviceReady():boolean {
         return this.deviceReady
     }
@@ -41,6 +43,14 @@ export class AppModel {
 
     isAuthenticated():boolean {
         return this.authenticated;
+    }
+
+    setAuthData(authData:any):void {
+        this.authData = authData;
+    }
+
+    getAuthData():any {
+        return this.authData;
     }
 
 }

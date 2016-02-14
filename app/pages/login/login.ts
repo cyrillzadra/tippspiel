@@ -1,4 +1,4 @@
-import {Page, NavController,IONIC_DIRECTIVES} from 'ionic-framework/ionic';
+import {Page, NavController, IONIC_DIRECTIVES} from 'ionic-framework/ionic';
 
 import {fbName} from "../fbConfig";
 import {SignupPage} from "../signup/signup";
@@ -14,70 +14,117 @@ var Firebase = require('firebase');
     directives: [IONIC_DIRECTIVES]
 })
 export class LoginPage {
-    form : ControlGroup;
-    email : string;
-    password : string;
+    form:ControlGroup;
+    email:string;
+    password:string;
 
-    errorMsg : string = "";
+    errorMsg:string = "";
 
-    model : AppModel;
+    model:AppModel;
 
-    constructor(private nav: NavController) {
+    constructor(private nav:NavController) {
         this.form = new ControlGroup({
-            email: new Control("",Validators.required),
-            password: new Control("",Validators.required)
+            email: new Control("", Validators.required),
+            password: new Control("", Validators.required)
         });
         this.model = appModel;
     }
 
-    authGithub()  {
+    authGithub() {
         var login = this;
         var fbRef = new Firebase(fbName);
 
-        fbRef.authWithOAuthPopup("github", function(error, authData) {
+        fbRef.authWithOAuthPopup("github", function (error, authData) {
             if (error) {
                 console.log("Login Failed!", error);
             } else {
-                login.nav.push(ListPage, { uid: authData.uid });
+                appModel.setAuthData(authData);
+                if (!login.checkIfUserExists(authData.uid)) {
+                    login.createUser(authData);
+                }
+                login.nav.push(ListPage, {uid: authData.uid});
                 console.log("Authenticated successfully with payload:", authData);
             }
         });
     }
 
-    authTwitter()  {
+    authTwitter() {
         var login = this;
         var fbRef = new Firebase(fbName);
 
-        fbRef.authWithOAuthPopup("twitter", function(error, authData) {
+        fbRef.authWithOAuthPopup("twitter", function (error, authData) {
             if (error) {
                 console.log("Login Failed!", error);
             } else {
-                login.nav.push(ListPage, { uid: authData.uid });
+                appModel.setAuthData(authData);
+                if (!login.checkIfUserExists(authData.uid)) {
+                    login.createUser(authData);
+                }
+                login.nav.push(ListPage, {uid: authData.uid});
                 console.log("Authenticated successfully with payload:", authData);
             }
         });
     }
 
-    signup() : void {
+    signup():void {
         this.nav.push(SignupPage)
     }
 
-    signin(event) : void {
+    signin(event):void {
         var login = this;
         var ref = new Firebase(fbName);
         ref.authWithPassword({
             email: this.email,
             password: this.password
-        }, function (error, userData) {
+        }, function (error, authData) {
             if (error) {
                 console.log("Invalid user or password:", error);
                 login.errorMsg = "Invalid user or password";
             } else {
-                console.log("Successfully created user account with uid:", userData.uid);
-                login.nav.push(ListPage, { uid: userData.uid });
-                //login.nav.setRoot(ListPage, { uid: userData.uid });
-                //login.nav.loadPage(ListPage, { uid: userData.uid });
+                appModel.setAuthData(authData);
+                console.log("Successfully created user account with uid:", authData.uid);
+                login.nav.push(ListPage, {uid: authData.uid});
             }
         });
+    }
+
+    createUser(authData:any):void {
+        var login = this;
+        var ref = new Firebase(fbName);
+        ref.onAuth(function (authData) {
+            if (authData) {
+                // save the user's profile into the database so we can list users,
+                // use them in Security and Firebase Rules, and show profiles
+                console.log(authData.provider);
+                ref.child("users").child(authData.uid).set({
+                    provider: authData.provider,
+                    name: login.getName(authData)
+                });
+            }
+        });
+    }
+
+    // Tests to see if /users/<userId> has any data.
+    checkIfUserExists(userId):boolean {
+        var usersRef = new Firebase(fbName + "/users/");
+        usersRef.child(userId).once('value', function (snapshot) {
+            console.log('user exists = ' + snapshot.val());
+            return (snapshot.val() !== null);
+        });
+    }
+
+
+    // find a suitable name based on the meta info given by each provider
+    getName(authData):string {
+        switch (authData.provider) {
+            case 'password':
+                return authData.password.email.replace(/@.*/, '');
+            case 'twitter':
+                return authData.twitter.displayName;
+            case 'facebook':
+                return authData.facebook.displayName;
+            case 'github':
+                return authData.github.displayName;
+        }
     }
 }

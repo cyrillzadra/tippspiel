@@ -62496,6 +62496,10 @@
 	                console.log("Login Failed!", error);
 	            }
 	            else {
+	                appModel_1.appModel.setAuthData(authData);
+	                if (!login.checkIfUserExists(authData.uid)) {
+	                    login.createUser(authData);
+	                }
 	                login.nav.push(list_1.ListPage, { uid: authData.uid });
 	                console.log("Authenticated successfully with payload:", authData);
 	            }
@@ -62509,6 +62513,10 @@
 	                console.log("Login Failed!", error);
 	            }
 	            else {
+	                appModel_1.appModel.setAuthData(authData);
+	                if (!login.checkIfUserExists(authData.uid)) {
+	                    login.createUser(authData);
+	                }
 	                login.nav.push(list_1.ListPage, { uid: authData.uid });
 	                console.log("Authenticated successfully with payload:", authData);
 	            }
@@ -62523,16 +62531,53 @@
 	        ref.authWithPassword({
 	            email: this.email,
 	            password: this.password
-	        }, function (error, userData) {
+	        }, function (error, authData) {
 	            if (error) {
 	                console.log("Invalid user or password:", error);
 	                login.errorMsg = "Invalid user or password";
 	            }
 	            else {
-	                console.log("Successfully created user account with uid:", userData.uid);
-	                login.nav.push(list_1.ListPage, { uid: userData.uid });
+	                appModel_1.appModel.setAuthData(authData);
+	                console.log("Successfully created user account with uid:", authData.uid);
+	                login.nav.push(list_1.ListPage, { uid: authData.uid });
 	            }
 	        });
+	    };
+	    LoginPage.prototype.createUser = function (authData) {
+	        var login = this;
+	        var ref = new Firebase(fbConfig_1.fbName);
+	        ref.onAuth(function (authData) {
+	            if (authData) {
+	                // save the user's profile into the database so we can list users,
+	                // use them in Security and Firebase Rules, and show profiles
+	                console.log(authData.provider);
+	                ref.child("users").child(authData.uid).set({
+	                    provider: authData.provider,
+	                    name: login.getName(authData)
+	                });
+	            }
+	        });
+	    };
+	    // Tests to see if /users/<userId> has any data.
+	    LoginPage.prototype.checkIfUserExists = function (userId) {
+	        var usersRef = new Firebase(fbConfig_1.fbName + "/users/");
+	        usersRef.child(userId).once('value', function (snapshot) {
+	            console.log('user exists = ' + snapshot.val());
+	            return (snapshot.val() !== null);
+	        });
+	    };
+	    // find a suitable name based on the meta info given by each provider
+	    LoginPage.prototype.getName = function (authData) {
+	        switch (authData.provider) {
+	            case 'password':
+	                return authData.password.email.replace(/@.*/, '');
+	            case 'twitter':
+	                return authData.twitter.displayName;
+	            case 'facebook':
+	                return authData.facebook.displayName;
+	            case 'github':
+	                return authData.github.displayName;
+	        }
 	    };
 	    LoginPage = __decorate([
 	        ionic_1.Page({
@@ -62633,6 +62678,12 @@
 	    };
 	    AppModel.prototype.isAuthenticated = function () {
 	        return this.authenticated;
+	    };
+	    AppModel.prototype.setAuthData = function (authData) {
+	        this.authData = authData;
+	    };
+	    AppModel.prototype.getAuthData = function () {
+	        return this.authData;
 	    };
 	    return AppModel;
 	}());

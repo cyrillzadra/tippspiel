@@ -29,6 +29,7 @@ export class SignupPage {
                 console.log("Error creating user:", error);
             } else {
                 console.log("Successfully created user account with uid:", userData.uid);
+                //TODO create User
             }
         });
 
