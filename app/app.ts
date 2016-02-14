@@ -2,6 +2,7 @@ import {App, IonicApp, Platform, Translate} from 'ionic-framework/ionic';
 
 import {HelloIonicPage} from './pages/hello-ionic/hello-ionic';
 import {SchedulesPage} from './pages/schedules/schedules';
+import {SettingsPage} from './pages/settings/settings';
 import {MainPage} from './pages/main/main';
 import {LoginPage} from './pages/login/login';
 
@@ -33,9 +34,10 @@ class MyApp {
 
         // set our app's pages
         this.pages = [
-            {title: 'Main', component: MainPage},
+            {title: 'Start', component: MainPage},
             {title: 'My Groups', component: HelloIonicPage},
             {title: 'Schedules', component: SchedulesPage},
+            {title: 'Settings', component: SettingsPage},
         ];
     }
 
