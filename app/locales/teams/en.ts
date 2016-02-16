@@ -22,4 +22,20 @@ export var team_en = {
   'AUT' : 'Austria',
   'HUN' : 'Hungary',
   'ISL' : 'Island',
-  'POR' : 'Portugal'};
+  'POR' : 'Portugal',
+
+  'menu' : 'Menu',
+  'menu.start' : 'Start',
+  'menu.schedules' : 'Schedules',
+  'menu.settings' : 'Settings',
+
+  'page.main.title' : 'Welcome',
+
+  'page.schedules.title' : "Schedules",
+
+  'page.settings.title' : 'Settings',
+  'page.settings.savebutton' : 'Save',
+  'page.settings.name' : 'Name',
+  'page.settings.country' : 'Country'
+
+};

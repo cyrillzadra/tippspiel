@@ -1,3 +1,4 @@
+import {User} from "./User";
 /**
  * Created by tiezad on 06.02.2016.
  */
@@ -14,6 +15,8 @@ export class AppModel {
     authData:any;
 
     platformReady:boolean = false;
+
+    user:User;
 
     getDeviceReady():boolean {
         return this.deviceReady
@@ -61,6 +64,15 @@ export class AppModel {
 
     getAuthData():any {
         return this.authData;
+    }
+
+
+    setUser(user:User):void {
+        this.user = user;
+    }
+
+    getUser():User {
+        return this.user;
     }
 
 }

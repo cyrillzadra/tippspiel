@@ -1,4 +1,4 @@
-import {App, IonicApp, Platform, Translate} from 'ionic-framework/ionic';
+import {App, IonicApp, Platform, Translate, TranslatePipe} from 'ionic-framework/ionic';
 
 import {HelloIonicPage} from './pages/hello-ionic/hello-ionic';
 import {SchedulesPage} from './pages/schedules/schedules';
@@ -16,7 +16,8 @@ import {appModel} from "./models/appModel"
 
 @App({
     templateUrl: 'build/app.html',
-    config: {} // http://ionicframework.com/docs/v2/api/config/Config/
+    config: {}, // http://ionicframework.com/docs/v2/api/config/Config/
+    pipes: [TranslatePipe]
 })
 class MyApp {
     // make HelloIonicPage the root (or first) page
@@ -34,35 +35,16 @@ class MyApp {
 
         // set our app's pages
         this.pages = [
-            {title: 'Start', component: MainPage},
-            {title: 'My Groups', component: HelloIonicPage},
-            {title: 'Schedules', component: SchedulesPage},
-            {title: 'Settings', component: SettingsPage},
-        ];
+            {title: 'menu.start', component: MainPage},
+            {title: 'menu.schedules', component: SchedulesPage},
+            {title: 'menu.settings', component: SettingsPage},
+    ];
     }
 
     initializeApp(trans:Translate) {
         this.platform.ready().then(() => {
-            // The platform is now ready. Note: if this callback fails to fire, follow
-            // the Troubleshooting guide for a number of possible solutions:
-            //
-            // Okay, so the platform is ready and our plugins are available.
-            // Here you can do any higher level native things you might need.
-            //
-            // First, let's hide the keyboard accessory bar (only works natively) since
-            // that's a better default:
-            //
-            // Keyboard.setAccessoryBarVisible(false);
-            //
-            // For example, we might change the StatusBar color. This one below is
-            // good for dark backgrounds and light text:
-            //if (typeof StatusBar !== 'undefined') {
-            //  StatusBar.styleDefault();
-            //}
             this.I18n(trans);
-
             appModel.setPlatformReady(true)
-
             appModel.setGlobalization(navigator.globalization)
         });
     }

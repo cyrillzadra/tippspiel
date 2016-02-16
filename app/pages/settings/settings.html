@@ -1,10 +1,27 @@
 <ion-navbar *navbar>
-  <button menuToggle>
-    <ion-icon name="menu"></ion-icon>
-  </button>
-  <ion-title>Settings</ion-title>
+    <button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Settings</ion-title>
 </ion-navbar>
 
 <ion-content>
-  <h1>Settings</h1>
+
+    <form (submit)="save($event)" [ngFormModel]="form">
+
+        <ion-item>
+            <ion-label fixed>{{ 'page.settings.name' | translate }}</ion-label>
+            <ion-input [(ngModel)]="user.name" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label fixed>{{ 'page.settings.country' | translate }}</ion-label>
+            <ion-input [(ngModel)]="user.country" type="text"></ion-input>
+        </ion-item>
+
+        <div padding>
+            <button block type="submit">{{ 'page.settings.savebutton' | translate }}</button>
+        </div>
+    </form>
+
 </ion-content>

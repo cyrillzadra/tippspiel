@@ -3186,14 +3186,13 @@
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	var ionic_1 = __webpack_require__(5);
-	var hello_ionic_1 = __webpack_require__(358);
-	var schedules_1 = __webpack_require__(359);
-	var settings_1 = __webpack_require__(368);
-	var main_1 = __webpack_require__(367);
-	var login_1 = __webpack_require__(362);
-	var de_1 = __webpack_require__(365);
-	var en_1 = __webpack_require__(366);
-	var appModel_1 = __webpack_require__(364);
+	var schedules_1 = __webpack_require__(358);
+	var settings_1 = __webpack_require__(362);
+	var main_1 = __webpack_require__(364);
+	var login_1 = __webpack_require__(365);
+	var de_1 = __webpack_require__(367);
+	var en_1 = __webpack_require__(368);
+	var appModel_1 = __webpack_require__(363);
 	var MyApp = (function () {
 	    function MyApp(app, platform, trans) {
 	        this.app = app;
@@ -3208,31 +3207,14 @@
 	        this.initializeApp(trans);
 	        // set our app's pages
 	        this.pages = [
-	            { title: 'Start', component: main_1.MainPage },
-	            { title: 'My Groups', component: hello_ionic_1.HelloIonicPage },
-	            { title: 'Schedules', component: schedules_1.SchedulesPage },
-	            { title: 'Settings', component: settings_1.SettingsPage },
+	            { title: 'menu.start', component: main_1.MainPage },
+	            { title: 'menu.schedules', component: schedules_1.SchedulesPage },
+	            { title: 'menu.settings', component: settings_1.SettingsPage },
 	        ];
 	    }
 	    MyApp.prototype.initializeApp = function (trans) {
 	        var _this = this;
 	        this.platform.ready().then(function () {
-	            // The platform is now ready. Note: if this callback fails to fire, follow
-	            // the Troubleshooting guide for a number of possible solutions:
-	            //
-	            // Okay, so the platform is ready and our plugins are available.
-	            // Here you can do any higher level native things you might need.
-	            //
-	            // First, let's hide the keyboard accessory bar (only works natively) since
-	            // that's a better default:
-	            //
-	            // Keyboard.setAccessoryBarVisible(false);
-	            //
-	            // For example, we might change the StatusBar color. This one below is
-	            // good for dark backgrounds and light text:
-	            //if (typeof StatusBar !== 'undefined') {
-	            //  StatusBar.styleDefault();
-	            //}
 	            _this.I18n(trans);
 	            appModel_1.appModel.setPlatformReady(true);
 	            appModel_1.appModel.setGlobalization(navigator.globalization);
@@ -3266,7 +3248,8 @@
 	    MyApp = __decorate([
 	        ionic_1.App({
 	            templateUrl: 'build/app.html',
-	            config: {} // http://ionicframework.com/docs/v2/api/config/Config/
+	            config: {},
+	            pipes: [ionic_1.TranslatePipe]
 	        }), 
 	        __metadata('design:paramtypes', [ionic_1.IonicApp, ionic_1.Platform, ionic_1.Translate])
 	    ], MyApp);
@@ -62092,36 +62075,7 @@
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	var ionic_1 = __webpack_require__(5);
-	var HelloIonicPage = (function () {
-	    function HelloIonicPage() {
-	    }
-	    HelloIonicPage = __decorate([
-	        ionic_1.Page({
-	            templateUrl: 'build/pages/hello-ionic/hello-ionic.html'
-	        }), 
-	        __metadata('design:paramtypes', [])
-	    ], HelloIonicPage);
-	    return HelloIonicPage;
-	}());
-	exports.HelloIonicPage = HelloIonicPage;
-	//# sourceMappingURL=hello-ionic.js.map
-
-/***/ },
-/* 359 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-	    return c > 3 && r && Object.defineProperty(target, key, r), r;
-	};
-	var __metadata = (this && this.__metadata) || function (k, v) {
-	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-	};
-	var ionic_1 = __webpack_require__(5);
-	var fbConfig_1 = __webpack_require__(360);
+	var fbConfig_1 = __webpack_require__(359);
 	var Firebase = __webpack_require__(361);
 	var SchedulesPage = (function () {
 	    function SchedulesPage(nav, navParams) {
@@ -62168,15 +62122,75 @@
 	//# sourceMappingURL=schedules.js.map
 
 /***/ },
+/* 359 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var User_1 = __webpack_require__(360);
+	/**
+	 * Created by tiezad on 30.01.2016.
+	 */
+	exports.fbName = 'https://resplendent-torch-9631.firebaseio.com/';
+	exports.FB_USERS = exports.fbName + 'users/';
+	exports.FB_SCHEDULES = exports.fbName + 'schedules/';
+	exports.FB_GROUPS = exports.fbName + 'groups/';
+	exports.FB_TIPS = exports.fbName + 'tips/';
+	var Firebase = __webpack_require__(361);
+	var FireBaseService = (function () {
+	    function FireBaseService() {
+	    }
+	    FireBaseService.prototype.getUser = function (userId) {
+	        console.log('getUser ' + userId);
+	        var user = null;
+	        var usersRef = new Firebase(exports.FB_USERS);
+	        usersRef.child(userId).once('value', function (snapshot) {
+	            var u = snapshot.val();
+	            var user = (u.name != undefined) ? u.name : "";
+	            var email = (u.email != undefined) ? u.email : "";
+	            var country = (u.country != undefined) ? u.country : "";
+	            var provider = (u.provider != undefined) ? u.provider : "";
+	            console.log('user exists = ' + user);
+	            this.user = new User_1.User(user, email, country, provider);
+	        });
+	        return user;
+	    };
+	    FireBaseService.prototype.updateUser = function (user) {
+	        var usersRef = new Firebase(exports.FB_USERS);
+	        usersRef.onAuth(function (authData) {
+	            console.log(authData);
+	            console.log(user);
+	            if (authData) {
+	                usersRef.child(authData.uid).set(user);
+	            }
+	        });
+	    };
+	    FireBaseService.prototype.createUser = function (uid, user) {
+	        //implement
+	    };
+	    return FireBaseService;
+	}());
+	exports.FireBaseService = FireBaseService;
+	//# sourceMappingURL=fbConfig.js.map
+
+/***/ },
 /* 360 */
 /***/ function(module, exports) {
 
 	"use strict";
 	/**
-	 * Created by tiezad on 30.01.2016.
+	 * Created by tiezad on 15.02.2016.
 	 */
-	exports.fbName = 'https://resplendent-torch-9631.firebaseio.com/';
-	//# sourceMappingURL=fbConfig.js.map
+	var User = (function () {
+	    function User(name, email, country, provider) {
+	        this.name = name;
+	        this.email = email;
+	        this.country = country;
+	        this.provider = provider;
+	    }
+	    return User;
+	}());
+	exports.User = User;
+	//# sourceMappingURL=User.js.map
 
 /***/ },
 /* 361 */
@@ -62477,178 +62491,38 @@
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	var ionic_1 = __webpack_require__(5);
-	var fbConfig_1 = __webpack_require__(360);
-	var signup_1 = __webpack_require__(363);
 	var common_1 = __webpack_require__(172);
-	var main_1 = __webpack_require__(367);
-	var appModel_1 = __webpack_require__(364);
+	var appModel_1 = __webpack_require__(363);
+	var fbConfig_1 = __webpack_require__(359);
 	var Firebase = __webpack_require__(361);
-	var LoginPage = (function () {
-	    function LoginPage(nav) {
+	var SettingsPage = (function () {
+	    function SettingsPage(nav, navParams) {
 	        this.nav = nav;
-	        this.errorMsg = "";
+	        this.user = appModel_1.appModel.getUser();
 	        this.form = new common_1.ControlGroup({
+	            ame: new common_1.Control("", common_1.Validators.required),
 	            email: new common_1.Control("", common_1.Validators.required),
-	            password: new common_1.Control("", common_1.Validators.required)
+	            country: new common_1.Control("", common_1.Validators.required)
 	        });
-	        this.model = appModel_1.appModel;
 	    }
-	    LoginPage.prototype.authGithub = function () {
-	        var login = this;
-	        var fbRef = new Firebase(fbConfig_1.fbName);
-	        fbRef.authWithOAuthPopup("github", function (error, authData) {
-	            if (error) {
-	                console.log("Login Failed!", error);
-	            }
-	            else {
-	                appModel_1.appModel.setAuthData(authData);
-	                if (!login.checkIfUserExists(authData.uid)) {
-	                    login.createUser(authData);
-	                }
-	                login.nav.setRoot(main_1.MainPage);
-	                console.log("Authenticated successfully with payload:", authData);
-	            }
-	        });
+	    SettingsPage.prototype.save = function (event) {
+	        console.log('save');
+	        new fbConfig_1.FireBaseService().updateUser(this.user);
 	    };
-	    LoginPage.prototype.authTwitter = function () {
-	        var login = this;
-	        var fbRef = new Firebase(fbConfig_1.fbName);
-	        fbRef.authWithOAuthPopup("twitter", function (error, authData) {
-	            if (error) {
-	                console.log("Login Failed!", error);
-	            }
-	            else {
-	                appModel_1.appModel.setAuthData(authData);
-	                if (!login.checkIfUserExists(authData.uid)) {
-	                    login.createUser(authData);
-	                }
-	                login.nav.setRoot(main_1.MainPage);
-	                console.log("Authenticated successfully with payload:", authData);
-	            }
-	        });
-	    };
-	    LoginPage.prototype.signup = function () {
-	        this.nav.push(signup_1.SignupPage);
-	    };
-	    LoginPage.prototype.signin = function (event) {
-	        var login = this;
-	        var ref = new Firebase(fbConfig_1.fbName);
-	        ref.authWithPassword({
-	            email: this.email,
-	            password: this.password
-	        }, function (error, authData) {
-	            if (error) {
-	                console.log("Invalid user or password:", error);
-	                login.errorMsg = "Invalid user or password";
-	            }
-	            else {
-	                appModel_1.appModel.setAuthData(authData);
-	                console.log("Successfully created user account with uid:", authData.uid);
-	                login.nav.setRoot(main_1.MainPage);
-	            }
-	        });
-	    };
-	    LoginPage.prototype.createUser = function (authData) {
-	        var login = this;
-	        var ref = new Firebase(fbConfig_1.fbName);
-	        ref.onAuth(function (authData) {
-	            if (authData) {
-	                // save the user's profile into the database so we can list users,
-	                // use them in Security and Firebase Rules, and show profiles
-	                console.log(authData.provider);
-	                ref.child("users").child(authData.uid).set({
-	                    provider: authData.provider,
-	                    name: login.getName(authData)
-	                });
-	            }
-	        });
-	    };
-	    // Tests to see if /users/<userId> has any data.
-	    LoginPage.prototype.checkIfUserExists = function (userId) {
-	        var usersRef = new Firebase(fbConfig_1.fbName + "/users/");
-	        usersRef.child(userId).once('value', function (snapshot) {
-	            console.log('user exists = ' + snapshot.val());
-	            return (snapshot.val() !== null);
-	        });
-	    };
-	    // find a suitable name based on the meta info given by each provider
-	    LoginPage.prototype.getName = function (authData) {
-	        switch (authData.provider) {
-	            case 'password':
-	                return authData.password.email.replace(/@.*/, '');
-	            case 'twitter':
-	                return authData.twitter.displayName;
-	            case 'facebook':
-	                return authData.facebook.displayName;
-	            case 'github':
-	                return authData.github.displayName;
-	        }
-	    };
-	    LoginPage = __decorate([
+	    SettingsPage = __decorate([
 	        ionic_1.Page({
-	            selector: 'login',
-	            templateUrl: 'build/pages/login/login.html',
-	            directives: [ionic_1.IONIC_DIRECTIVES]
+	            templateUrl: 'build/pages/settings/settings.html',
+	            pipes: [ionic_1.TranslatePipe]
 	        }), 
-	        __metadata('design:paramtypes', [ionic_1.NavController])
-	    ], LoginPage);
-	    return LoginPage;
+	        __metadata('design:paramtypes', [ionic_1.NavController, ionic_1.NavParams])
+	    ], SettingsPage);
+	    return SettingsPage;
 	}());
-	exports.LoginPage = LoginPage;
-	//# sourceMappingURL=login.js.map
+	exports.SettingsPage = SettingsPage;
+	//# sourceMappingURL=settings.js.map
 
 /***/ },
 /* 363 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-	    return c > 3 && r && Object.defineProperty(target, key, r), r;
-	};
-	var __metadata = (this && this.__metadata) || function (k, v) {
-	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-	};
-	var ionic_1 = __webpack_require__(5);
-	var fbConfig_1 = __webpack_require__(360);
-	var common_1 = __webpack_require__(172);
-	var Firebase = __webpack_require__(361);
-	var SignupPage = (function () {
-	    function SignupPage() {
-	        this.form = new common_1.ControlGroup({
-	            email: new common_1.Control("", common_1.Validators.required),
-	            password: new common_1.Control("", common_1.Validators.required)
-	        });
-	    }
-	    SignupPage.prototype.signup = function (event) {
-	        var ref = new Firebase(fbConfig_1.fbName);
-	        ref.createUser({
-	            email: this.email,
-	            password: this.password
-	        }, function (error, userData) {
-	            if (error) {
-	                console.log("Error creating user:", error);
-	            }
-	            else {
-	                console.log("Successfully created user account with uid:", userData.uid);
-	            }
-	        });
-	    };
-	    SignupPage = __decorate([
-	        ionic_1.Page({
-	            templateUrl: 'build/pages/signup/signup.html'
-	        }), 
-	        __metadata('design:paramtypes', [])
-	    ], SignupPage);
-	    return SignupPage;
-	}());
-	exports.SignupPage = SignupPage;
-	//# sourceMappingURL=signup.js.map
-
-/***/ },
-/* 364 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -62697,6 +62571,12 @@
 	    AppModel.prototype.getAuthData = function () {
 	        return this.authData;
 	    };
+	    AppModel.prototype.setUser = function (user) {
+	        this.user = user;
+	    };
+	    AppModel.prototype.getUser = function () {
+	        return this.user;
+	    };
 	    return AppModel;
 	}());
 	exports.AppModel = AppModel;
@@ -62704,70 +62584,7 @@
 	//# sourceMappingURL=appModel.js.map
 
 /***/ },
-/* 365 */
-/***/ function(module, exports) {
-
-	"use strict";
-	exports.team_de = { "FRA": "Frankreich",
-	    "ROU": "Rumänien",
-	    "SUI": "Schweiz",
-	    "ALB": "Albanien",
-	    "WAL": "Wales",
-	    "SVK": "Slowakei",
-	    "RUS": "Russland",
-	    "ENG": "England",
-	    "POL": "Polen",
-	    "NIR": "Nordirland",
-	    "UKR": "Ukraine",
-	    "GER": "Deutschland",
-	    "TUR": "Türkei",
-	    "ESP": "Spanien",
-	    "CZE": "Tschechien",
-	    "CRO": "Kroatien",
-	    "IRL": "Irland",
-	    "BEL": "Belgien",
-	    "SWE": "Schweden",
-	    "ITA": "Italien",
-	    "AUT": "Österreich",
-	    "HUN": "Ungarn",
-	    "ISL": "Island",
-	    "POR": "Portugal" };
-	//# sourceMappingURL=de.js.map
-
-/***/ },
-/* 366 */
-/***/ function(module, exports) {
-
-	"use strict";
-	exports.team_en = {
-	    'FRA': 'France',
-	    'ROU': 'Romania',
-	    'SUI': 'Switzerland',
-	    'ALB': 'Albania',
-	    'WAL': 'Wales',
-	    'SVK': 'Slovakia',
-	    'RUS': 'Russia',
-	    'ENG': 'England',
-	    'POL ': 'Poland',
-	    'NIR': 'Northern Ireland',
-	    'UKR': 'Ukraine',
-	    'GER': 'Germany',
-	    'TUR': 'Turkey',
-	    'ESP': 'Spain',
-	    'CZE': 'Czech Republic',
-	    'CRO': 'Croatia',
-	    'IRL': 'Ireland',
-	    'BEL': 'Belgium',
-	    'SWE': 'Schweden',
-	    'ITA': 'Italy',
-	    'AUT': 'Austria',
-	    'HUN': 'Hungary',
-	    'ISL': 'Island',
-	    'POR': 'Portugal' };
-	//# sourceMappingURL=en.js.map
-
-/***/ },
-/* 367 */
+/* 364 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -62798,7 +62615,7 @@
 	//# sourceMappingURL=main.js.map
 
 /***/ },
-/* 368 */
+/* 365 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -62812,22 +62629,266 @@
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	var ionic_1 = __webpack_require__(5);
-	var SettingsPage = (function () {
-	    function SettingsPage(nav, navParams) {
-	        // If we navigated to this page, we will have an item available as a nav param
+	var fbConfig_1 = __webpack_require__(359);
+	var signup_1 = __webpack_require__(366);
+	var common_1 = __webpack_require__(172);
+	var main_1 = __webpack_require__(364);
+	var appModel_1 = __webpack_require__(363);
+	var User_1 = __webpack_require__(360);
+	var Firebase = __webpack_require__(361);
+	var LoginPage = (function () {
+	    function LoginPage(nav) {
 	        this.nav = nav;
+	        this.errorMsg = "";
+	        this.form = new common_1.ControlGroup({
+	            email: new common_1.Control("", common_1.Validators.required),
+	            password: new common_1.Control("", common_1.Validators.required)
+	        });
+	        this.model = appModel_1.appModel;
 	    }
-	    SettingsPage = __decorate([
+	    LoginPage.prototype.authGithub = function () {
+	        var login = this;
+	        var fbRef = new Firebase(fbConfig_1.fbName);
+	        fbRef.authWithOAuthPopup("github", function (error, authData) {
+	            if (error) {
+	                console.log("Login Failed!", error);
+	            }
+	            else {
+	                appModel_1.appModel.setAuthData(authData);
+	                if (!login.checkIfUserExists(authData.uid)) {
+	                    console.log('before create user');
+	                    login.createUser(authData);
+	                }
+	                login.nav.setRoot(main_1.MainPage);
+	                console.log("Authenticated successfully with payload:", authData);
+	            }
+	        });
+	    };
+	    LoginPage.prototype.authTwitter = function () {
+	        var login = this;
+	        var fbRef = new Firebase(fbConfig_1.fbName);
+	        fbRef.authWithOAuthPopup("twitter", function (error, authData) {
+	            if (error) {
+	                console.log("Login Failed!", error);
+	            }
+	            else {
+	                appModel_1.appModel.setAuthData(authData);
+	                if (!login.checkIfUserExists(authData.uid)) {
+	                    console.log('before create user');
+	                    login.createUser(authData);
+	                }
+	                login.nav.setRoot(main_1.MainPage);
+	                console.log("Authenticated successfully with payload:", authData);
+	            }
+	        });
+	    };
+	    LoginPage.prototype.signup = function () {
+	        this.nav.push(signup_1.SignupPage);
+	    };
+	    LoginPage.prototype.signin = function (event) {
+	        var login = this;
+	        var ref = new Firebase(fbConfig_1.fbName);
+	        ref.authWithPassword({
+	            email: this.email,
+	            password: this.password
+	        }, function (error, authData) {
+	            if (error) {
+	                console.log("Invalid user or password:", error);
+	                login.errorMsg = "Invalid user or password";
+	            }
+	            else {
+	                appModel_1.appModel.setAuthData(authData);
+	                console.log("Successfully created user account with uid:", authData.uid);
+	                login.nav.setRoot(main_1.MainPage);
+	            }
+	        });
+	    };
+	    LoginPage.prototype.createUser = function (authData) {
+	        var login = this;
+	        var ref = new Firebase(fbConfig_1.fbName);
+	        ref.onAuth(function (authData) {
+	            if (authData) {
+	                // save the user's profile into the database so we can list users,
+	                // use them in Security and Firebase Rules, and show profiles
+	                console.log(authData.provider);
+	                var user = new User_1.User(login.getName(authData), "", "", authData.provider);
+	                ref.child("users").child(authData.uid).set(user);
+	                appModel_1.appModel.setUser(user);
+	            }
+	        });
+	    };
+	    // Tests to see if /users/<userId> has any data.
+	    LoginPage.prototype.checkIfUserExists = function (userId) {
+	        var usersRef = new Firebase(fbConfig_1.fbName + "/users/");
+	        var userExists = false;
+	        usersRef.child(userId).once('value', function (snapshot) {
+	            console.log('user exists (snapshot.val())= ' + snapshot.val());
+	            userExists = (snapshot.val() !== null);
+	            console.log('user exists = ' + userExists);
+	        });
+	        return userExists;
+	    };
+	    // find a suitable name based on the meta info given by each provider
+	    LoginPage.prototype.getName = function (authData) {
+	        switch (authData.provider) {
+	            case 'password':
+	                return authData.password.email.replace(/@.*/, '');
+	            case 'twitter':
+	                return authData.twitter.displayName;
+	            case 'facebook':
+	                return authData.facebook.displayName;
+	            case 'github':
+	                return (authData.github.displayName != null) ? authData.github.displayName : "";
+	        }
+	    };
+	    LoginPage = __decorate([
 	        ionic_1.Page({
-	            templateUrl: 'build/pages/settings/settings.html',
-	            pipes: [ionic_1.TranslatePipe]
+	            selector: 'login',
+	            templateUrl: 'build/pages/login/login.html',
+	            directives: [ionic_1.IONIC_DIRECTIVES]
 	        }), 
-	        __metadata('design:paramtypes', [ionic_1.NavController, ionic_1.NavParams])
-	    ], SettingsPage);
-	    return SettingsPage;
+	        __metadata('design:paramtypes', [ionic_1.NavController])
+	    ], LoginPage);
+	    return LoginPage;
 	}());
-	exports.SettingsPage = SettingsPage;
-	//# sourceMappingURL=settings.js.map
+	exports.LoginPage = LoginPage;
+	//# sourceMappingURL=login.js.map
+
+/***/ },
+/* 366 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	var __metadata = (this && this.__metadata) || function (k, v) {
+	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+	};
+	var ionic_1 = __webpack_require__(5);
+	var fbConfig_1 = __webpack_require__(359);
+	var common_1 = __webpack_require__(172);
+	var Firebase = __webpack_require__(361);
+	var SignupPage = (function () {
+	    function SignupPage() {
+	        this.form = new common_1.ControlGroup({
+	            email: new common_1.Control("", common_1.Validators.required),
+	            password: new common_1.Control("", common_1.Validators.required)
+	        });
+	    }
+	    SignupPage.prototype.signup = function (event) {
+	        var ref = new Firebase(fbConfig_1.fbName);
+	        ref.createUser({
+	            email: this.email,
+	            password: this.password
+	        }, function (error, userData) {
+	            if (error) {
+	                console.log("Error creating user:", error);
+	            }
+	            else {
+	                console.log("Successfully created user account with uid:", userData.uid);
+	            }
+	        });
+	    };
+	    SignupPage = __decorate([
+	        ionic_1.Page({
+	            templateUrl: 'build/pages/signup/signup.html'
+	        }), 
+	        __metadata('design:paramtypes', [])
+	    ], SignupPage);
+	    return SignupPage;
+	}());
+	exports.SignupPage = SignupPage;
+	//# sourceMappingURL=signup.js.map
+
+/***/ },
+/* 367 */
+/***/ function(module, exports) {
+
+	"use strict";
+	exports.team_de = {
+	    'FRA': 'Frankreich',
+	    'ROU': 'Rumänien',
+	    'SUI': 'Schweiz',
+	    'ALB': 'Albanien',
+	    'WAL': 'Wales',
+	    'SVK': 'Slowakei',
+	    'RUS': 'Russland',
+	    'ENG': 'England',
+	    'POL': 'Polen',
+	    'NIR': 'Nordirland',
+	    'UKR': 'Ukraine',
+	    'GER': 'Deutschland',
+	    'TUR': 'Türkei',
+	    'ESP': 'Spanien',
+	    'CZE': 'Tschechien',
+	    'CRO': 'Kroatien',
+	    'IRL': 'Irland',
+	    'BEL': 'Belgien',
+	    'SWE': 'Schweden',
+	    'ITA': 'Italien',
+	    'AUT': 'Österreich',
+	    'HUN': 'Ungarn',
+	    'ISL': 'Island',
+	    'POR': 'Portugal',
+	    'menu': 'Menu',
+	    'menu.start': 'Start',
+	    'menu.schedules': 'Spielzeiten',
+	    'menu.settings': 'Einstellung',
+	    'page.main.title': 'Willkommen',
+	    'page.schedules.title': "Spielzeiten",
+	    'page.settings.title': 'Einstellung',
+	    'page.settings.savebutton': 'Save',
+	    'page.settings.name': 'Name',
+	    'page.settings.country': 'Country'
+	};
+	//# sourceMappingURL=de.js.map
+
+/***/ },
+/* 368 */
+/***/ function(module, exports) {
+
+	"use strict";
+	exports.team_en = {
+	    'FRA': 'France',
+	    'ROU': 'Romania',
+	    'SUI': 'Switzerland',
+	    'ALB': 'Albania',
+	    'WAL': 'Wales',
+	    'SVK': 'Slovakia',
+	    'RUS': 'Russia',
+	    'ENG': 'England',
+	    'POL ': 'Poland',
+	    'NIR': 'Northern Ireland',
+	    'UKR': 'Ukraine',
+	    'GER': 'Germany',
+	    'TUR': 'Turkey',
+	    'ESP': 'Spain',
+	    'CZE': 'Czech Republic',
+	    'CRO': 'Croatia',
+	    'IRL': 'Ireland',
+	    'BEL': 'Belgium',
+	    'SWE': 'Schweden',
+	    'ITA': 'Italy',
+	    'AUT': 'Austria',
+	    'HUN': 'Hungary',
+	    'ISL': 'Island',
+	    'POR': 'Portugal',
+	    'menu': 'Menu',
+	    'menu.start': 'Start',
+	    'menu.schedules': 'Schedules',
+	    'menu.settings': 'Settings',
+	    'page.main.title': 'Welcome',
+	    'page.schedules.title': "Schedules",
+	    'page.settings.title': 'Settings',
+	    'page.settings.savebutton': 'Save',
+	    'page.settings.name': 'Name',
+	    'page.settings.country': 'Country'
+	};
+	//# sourceMappingURL=en.js.map
 
 /***/ }
 /******/ ]);

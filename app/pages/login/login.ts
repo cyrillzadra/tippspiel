@@ -5,6 +5,7 @@ import {SignupPage} from "../signup/signup";
 import {ControlGroup, Validators, Control} from "angular2/common";
 import {MainPage} from "../main/main";
 import {appModel, AppModel} from "../../models/appModel"
+import {User} from "../../models/User";
 
 var Firebase = require('firebase');
 
@@ -40,6 +41,7 @@ export class LoginPage {
             } else {
                 appModel.setAuthData(authData);
                 if (!login.checkIfUserExists(authData.uid)) {
+                    console.log('before create user');
                     login.createUser(authData);
                 }
                 login.nav.setRoot(MainPage);
@@ -58,6 +60,7 @@ export class LoginPage {
             } else {
                 appModel.setAuthData(authData);
                 if (!login.checkIfUserExists(authData.uid)) {
+                    console.log('before create user');
                     login.createUser(authData);
                 }
                 login.nav.setRoot(MainPage);
@@ -96,10 +99,9 @@ export class LoginPage {
                 // save the user's profile into the database so we can list users,
                 // use them in Security and Firebase Rules, and show profiles
                 console.log(authData.provider);
-                ref.child("users").child(authData.uid).set({
-                    provider: authData.provider,
-                    name: login.getName(authData)
-                });
+                var user : User = new User(login.getName(authData), "", "", authData.provider);
+                ref.child("users").child(authData.uid).set(user);
+                appModel.setUser(user);
             }
         });
     }
@@ -107,10 +109,13 @@ export class LoginPage {
     // Tests to see if /users/<userId> has any data.
     checkIfUserExists(userId):boolean {
         var usersRef = new Firebase(fbName + "/users/");
+        var userExists : boolean = false;
         usersRef.child(userId).once('value', function (snapshot) {
-            console.log('user exists = ' + snapshot.val());
-            return (snapshot.val() !== null);
+            console.log('user exists (snapshot.val())= ' + snapshot.val());
+            userExists = (snapshot.val() !== null);
+            console.log('user exists = ' + userExists);
         });
+        return userExists;
     }
 
 
@@ -124,7 +129,7 @@ export class LoginPage {
             case 'facebook':
                 return authData.facebook.displayName;
             case 'github':
-                return authData.github.displayName;
+                return (authData.github.displayName != null) ? authData.github.displayName : "";
         }
     }
 }

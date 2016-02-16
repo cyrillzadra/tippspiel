@@ -1,13 +1,14 @@
 <ion-menu id="leftMenu" [content]="content">
 
   <ion-toolbar>
-    <ion-title>Pages</ion-title>
+    <ion-title>{{ 'menu.title'  | translate }}</ion-title>
   </ion-toolbar>
 
   <ion-content>
     <ion-list>
       <button ion-item *ngFor="#p of pages" (click)="openPage(p)">
-        {{p.title}}
+        {{ p.title }}
+        {{p.title | translate }}
       </button>
     </ion-list>
   </ion-content>
