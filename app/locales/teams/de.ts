@@ -31,6 +31,12 @@ export var team_de = {
 
   'page.main.title' : 'Willkommen',
 
+  'page.main.addgroup.name' : 'Name',
+  'page.main.addgroup.shared' : 'Öffentlich',
+  'page.main.addgroup.password' : 'Passwort',
+  'page.main.addgroup.worldranking' : 'Weltrangliste',
+  'page.main.addgroup.savebtn' : 'Speichern',
+
   'page.schedules.title' : "Spielzeiten",
 
   'page.settings.title' : 'Einstellung',

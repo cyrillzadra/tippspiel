@@ -17,7 +17,7 @@ export var team_en = {
   'CRO' : 'Croatia',
   'IRL' : 'Ireland',
   'BEL' : 'Belgium',
-  'SWE' : 'Schweden',
+  'SWE' : 'Schweden', 
   'ITA' : 'Italy',
   'AUT' : 'Austria',
   'HUN' : 'Hungary',
@@ -30,6 +30,12 @@ export var team_en = {
   'menu.settings' : 'Settings',
 
   'page.main.title' : 'Welcome',
+
+  'page.main.addgroup.name' : 'Name',
+  'page.main.addgroup.shared' : 'Shared',
+  'page.main.addgroup.password' : 'Password',
+  'page.main.addgroup.worldranking' : 'Worldranking',
+  'page.main.addgroup.savebtn' : 'Save',
 
   'page.schedules.title' : "Schedules",
 

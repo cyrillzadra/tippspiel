@@ -62818,9 +62818,12 @@
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	var ionic_1 = __webpack_require__(5);
+	var common_1 = __webpack_require__(174);
 	var MainPage = (function () {
 	    function MainPage(nav, navParams) {
 	        this.nav = nav;
+	        this.tab1 = ListGroupContentPage;
+	        this.tab2 = AddGroupContentPage;
 	    }
 	    MainPage = __decorate([
 	        ionic_1.Page({
@@ -62832,6 +62835,36 @@
 	    return MainPage;
 	}());
 	exports.MainPage = MainPage;
+	var ListGroupContentPage = (function () {
+	    function ListGroupContentPage() {
+	    }
+	    ListGroupContentPage = __decorate([
+	        ionic_1.Page({
+	            templateUrl: 'build/pages/main/listgroup.html',
+	            pipes: [ionic_1.TranslatePipe]
+	        }), 
+	        __metadata('design:paramtypes', [])
+	    ], ListGroupContentPage);
+	    return ListGroupContentPage;
+	}());
+	var AddGroupContentPage = (function () {
+	    function AddGroupContentPage() {
+	        this.form = new common_1.ControlGroup({
+	            name: new common_1.Control("", common_1.Validators.required),
+	            shared: new common_1.Control("", common_1.Validators.required),
+	            password: new common_1.Control("", common_1.Validators.required),
+	            worldranking: new common_1.Control("", common_1.Validators.required)
+	        });
+	    }
+	    AddGroupContentPage = __decorate([
+	        ionic_1.Page({
+	            templateUrl: 'build/pages/main/addgroup.html',
+	            pipes: [ionic_1.TranslatePipe]
+	        }), 
+	        __metadata('design:paramtypes', [])
+	    ], AddGroupContentPage);
+	    return AddGroupContentPage;
+	}());
 	//# sourceMappingURL=main.js.map
 
 /***/ },
@@ -63141,6 +63174,11 @@
 	    'menu.schedules': 'Spielzeiten',
 	    'menu.settings': 'Einstellung',
 	    'page.main.title': 'Willkommen',
+	    'page.main.addgroup.name': 'Name',
+	    'page.main.addgroup.shared': 'Öffentlich',
+	    'page.main.addgroup.password': 'Passwort',
+	    'page.main.addgroup.worldranking': 'Weltrangliste',
+	    'page.main.addgroup.savebtn': 'Speichern',
 	    'page.schedules.title': "Spielzeiten",
 	    'page.settings.title': 'Einstellung',
 	    'page.settings.savebutton': 'Save',
@@ -63194,6 +63232,11 @@
 	    'menu.schedules': 'Schedules',
 	    'menu.settings': 'Settings',
 	    'page.main.title': 'Welcome',
+	    'page.main.addgroup.name': 'Name',
+	    'page.main.addgroup.shared': 'Shared',
+	    'page.main.addgroup.password': 'Password',
+	    'page.main.addgroup.worldranking': 'Worldranking',
+	    'page.main.addgroup.savebtn': 'Save',
 	    'page.schedules.title': "Schedules",
 	    'page.settings.title': 'Settings',
 	    'page.settings.savebutton': 'Save',

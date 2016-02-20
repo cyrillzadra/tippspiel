@@ -1,0 +1,9 @@
+<ion-content>
+  <ion-list>
+    <button ion-item *ngFor="#item of items">
+      <div class="item-note" item-left>
+        {{ item.group | translate }}
+      </div>
+    </button>
+  </ion-list>
+</ion-content>

@@ -6,11 +6,8 @@
 </ion-navbar>
 
 <ion-content>
-  <ion-list>
-    <button ion-item *ngFor="#item of items">
-      <div class="item-note" item-left>
-        {{ item.group | translate }}
-      </div>
-    </button>
-  </ion-list>
+  <ion-tabs>
+    <ion-tab tabIcon="list" [root]="tab1"></ion-tab>
+    <ion-tab tabIcon="add" [root]="tab2"></ion-tab>
+  </ion-tabs>
 </ion-content>
