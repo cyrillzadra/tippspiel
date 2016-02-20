@@ -1,18 +1,18 @@
-import {Page, NavController, IONIC_DIRECTIVES} from 'ionic-framework/ionic';
+import {Page, NavController, IONIC_DIRECTIVES, TranslatePipe} from 'ionic-framework/ionic';
 
+import {appModel, AppModel} from "../../models/appModel"
 import {fbName} from "../fbConfig";
 import {SignupPage} from "../signup/signup";
 import {ControlGroup, Validators, Control} from "angular2/common";
 import {MainPage} from "../main/main";
-import {appModel, AppModel} from "../../models/appModel"
 import {User} from "../../models/User";
 
 var Firebase = require('firebase');
 
 @Page({
-    selector: 'login',
     templateUrl: 'build/pages/login/login.html',
-    directives: [IONIC_DIRECTIVES]
+    directives: [IONIC_DIRECTIVES],
+    pipes: [TranslatePipe]
 })
 export class LoginPage {
     form:ControlGroup;
@@ -77,8 +77,8 @@ export class LoginPage {
         var login = this;
         var ref = new Firebase(fbName);
         ref.authWithPassword({
-            email: this.email,
-            password: this.password
+            email: this.form.value.email,
+            password: this.form.value.password
         }, function (error, authData) {
             if (error) {
                 console.log("Invalid user or password:", error);
@@ -99,7 +99,7 @@ export class LoginPage {
                 // save the user's profile into the database so we can list users,
                 // use them in Security and Firebase Rules, and show profiles
                 console.log(authData.provider);
-                var user : User = new User(login.getName(authData), "", "", authData.provider);
+                var user:User = new User(login.getName(authData), "", "", authData.provider);
                 ref.child("users").child(authData.uid).set(user);
                 appModel.setUser(user);
             }
@@ -109,7 +109,7 @@ export class LoginPage {
     // Tests to see if /users/<userId> has any data.
     checkIfUserExists(userId):boolean {
         var usersRef = new Firebase(fbName + "/users/");
-        var userExists : boolean = false;
+        var userExists:boolean = false;
         usersRef.child(userId).once('value', function (snapshot) {
             console.log('user exists (snapshot.val())= ' + snapshot.val());
             userExists = (snapshot.val() !== null);

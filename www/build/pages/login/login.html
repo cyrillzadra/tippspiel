@@ -1,24 +1,24 @@
 <ion-navbar *navbar>
-    <ion-title>Login</ion-title>
+    <ion-title>{{ 'page.signin.title' | translate }}</ion-title>
 </ion-navbar>
 
 <ion-content padding class="getting-started">
 
     <form (submit)="signin($event)" [ngFormModel]="form">
         <ion-item>
-            <ion-label fixed>User</ion-label>
-            <ion-input ngControl="email" [(ngModel)]="email" type="email" placeholder="user@mail.com"></ion-input>
+            <ion-label fixed>{{ 'page.signin.email' | translate }}</ion-label>
+            <ion-input ngControl="email" type="email" placeholder="user@mail.com"></ion-input>
         </ion-item>
 
         <ion-item>
-            <ion-label fixed>Password</ion-label>
-            <ion-input ngControl="password" [(ngModel)]="password" type="password"></ion-input>
+            <ion-label fixed>{{ 'page.signin.password' | translate }}</ion-label>
+            <ion-input ngControl="password" type="password"></ion-input>
         </ion-item>
 
         <label padding>{{errorMsg}}</label>
 
         <div padding>
-            <button block type="submit">SignIn</button>
+            <button block type="submit">{{ 'page.signin.signinbtn' | translate }}</button>
         </div>
 
     </form>

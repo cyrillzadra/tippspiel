@@ -40,6 +40,16 @@ export var team_de = {
 
   'page.rules.title' : 'Rules',
 
+  'page.signin.title' : 'Login',
+  'page.signin.email' : 'Email',
+  'page.signin.password' : 'Password',
+  'page.signin.signinbtn' : 'SignIn',
+
+  'page.signup.title' : 'SignUp',
+  'page.signup.email' : 'Email',
+  'page.signup.password' : 'Password',
+  'page.signup.signupbtn' : 'SignUp',
+
   'page.about.title' : 'About'
 
 };

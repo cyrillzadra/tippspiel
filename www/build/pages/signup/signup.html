@@ -2,24 +2,24 @@
     <button menuToggle>
         <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Signup</ion-title>
+    <ion-title>{{ 'page.signup.title' | translate }}</ion-title>
 </ion-navbar>
 
 <ion-content padding class="getting-started">
     <form (submit)="signup($event)" [ngFormModel]="form">
 
         <ion-item>
-            <ion-label fixed>Email address</ion-label>
+            <ion-label fixed>{{ 'page.signup.email' | translate }}</ion-label>
             <ion-input ngControl="email" type="email"></ion-input>
         </ion-item>
 
         <ion-item>
-            <ion-label fixed>Password</ion-label>
+            <ion-label fixed>{{ 'page.signup.password' | translate }}</ion-label>
             <ion-input ngControl="password" type="password"></ion-input>
         </ion-item>
 
         <div padding>
-            <button block type="submit">Signup</button>
+            <button block type="submit">{{ 'page.signup.signupbtn' | translate }}</button>
         </div>
     </form>
 </ion-content>

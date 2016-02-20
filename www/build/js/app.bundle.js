@@ -62347,8 +62347,45 @@
 	            }
 	        });
 	    };
-	    FireBaseService.prototype.createUser = function (uid, user) {
-	        //implement
+	    FireBaseService.prototype.createUser = function (authData) {
+	        var login = this;
+	        var ref = new Firebase(exports.fbName);
+	        ref.onAuth(function (authData) {
+	            if (authData) {
+	                console.log(authData.provider);
+	                var user = new User_1.User(login.getName(authData), login.getEmail(authData), "", authData.provider);
+	                ref.child("users").child(authData.uid).set(user);
+	            }
+	        });
+	    };
+	    // find a suitable name based on the meta info given by each provider
+	    FireBaseService.prototype.getName = function (authData) {
+	        switch (authData.provider) {
+	            case 'password':
+	                return authData.password.email.replace(/@.*/, '');
+	            case 'twitter':
+	                return authData.twitter.displayName;
+	            case 'google':
+	                return authData.google.displayName;
+	            case 'facebook':
+	                return authData.facebook.displayName;
+	            case 'github':
+	                return (authData.github.displayName != null) ? authData.github.displayName : "";
+	        }
+	    };
+	    FireBaseService.prototype.getEmail = function (authData) {
+	        switch (authData.provider) {
+	            case 'password':
+	                return authData.password.email;
+	            case 'twitter':
+	                return authData.twitter.email;
+	            case 'google':
+	                return authData.google.email;
+	            case 'facebook':
+	                return authData.facebook.email;
+	            case 'github':
+	                return (authData.github.email != null) ? authData.github.email : "";
+	        }
 	    };
 	    return FireBaseService;
 	}());
@@ -62683,7 +62720,7 @@
 	        this.nav = nav;
 	        this.user = appModel_1.appModel.getUser();
 	        this.form = new common_1.ControlGroup({
-	            ame: new common_1.Control("", common_1.Validators.required),
+	            name: new common_1.Control("", common_1.Validators.required),
 	            email: new common_1.Control("", common_1.Validators.required),
 	            country: new common_1.Control("", common_1.Validators.required)
 	        });
@@ -62812,11 +62849,11 @@
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	var ionic_1 = __webpack_require__(5);
+	var appModel_1 = __webpack_require__(365);
 	var fbConfig_1 = __webpack_require__(361);
 	var signup_1 = __webpack_require__(368);
 	var common_1 = __webpack_require__(174);
 	var main_1 = __webpack_require__(366);
-	var appModel_1 = __webpack_require__(365);
 	var User_1 = __webpack_require__(362);
 	var Firebase = __webpack_require__(363);
 	var LoginPage = (function () {
@@ -62872,8 +62909,8 @@
 	        var login = this;
 	        var ref = new Firebase(fbConfig_1.fbName);
 	        ref.authWithPassword({
-	            email: this.email,
-	            password: this.password
+	            email: this.form.value.email,
+	            password: this.form.value.password
 	        }, function (error, authData) {
 	            if (error) {
 	                console.log("Invalid user or password:", error);
@@ -62926,9 +62963,9 @@
 	    };
 	    LoginPage = __decorate([
 	        ionic_1.Page({
-	            selector: 'login',
 	            templateUrl: 'build/pages/login/login.html',
-	            directives: [ionic_1.IONIC_DIRECTIVES]
+	            directives: [ionic_1.IONIC_DIRECTIVES],
+	            pipes: [ionic_1.TranslatePipe]
 	        }), 
 	        __metadata('design:paramtypes', [ionic_1.NavController])
 	    ], LoginPage);
@@ -62954,33 +62991,53 @@
 	var ionic_1 = __webpack_require__(5);
 	var fbConfig_1 = __webpack_require__(361);
 	var common_1 = __webpack_require__(174);
+	var main_1 = __webpack_require__(366);
 	var Firebase = __webpack_require__(363);
 	var SignupPage = (function () {
-	    function SignupPage() {
+	    function SignupPage(nav) {
+	        this.nav = nav;
 	        this.form = new common_1.ControlGroup({
 	            email: new common_1.Control("", common_1.Validators.required),
 	            password: new common_1.Control("", common_1.Validators.required)
 	        });
 	    }
 	    SignupPage.prototype.signup = function (event) {
+	        var signup = this;
 	        var ref = new Firebase(fbConfig_1.fbName);
 	        ref.createUser({
 	            email: this.form.value.email,
 	            password: this.form.value.password
-	        }, function (error, userData) {
+	        }, function (error, authData) {
+	            console.log('provider : ' + authData.provider);
 	            if (error) {
 	                console.log("Error creating user:", error);
 	            }
 	            else {
-	                console.log("Successfully created user account with uid:", userData.uid);
+	                console.log("Successfully created user account with uid:", authData);
+	                console.log("Successfully created user account with uid:", authData.uid);
+	                ref.authWithPassword({
+	                    email: signup.form.value.email,
+	                    password: signup.form.value.password
+	                }, function (error, authData) {
+	                    if (error) {
+	                        console.log("Invalid user or password:", error);
+	                        signup.errorMsg = "Invalid user or password";
+	                    }
+	                    else {
+	                        console.log("create user");
+	                        new fbConfig_1.FireBaseService().createUser(authData);
+	                        signup.nav.setRoot(main_1.MainPage);
+	                    }
+	                });
 	            }
 	        });
 	    };
 	    SignupPage = __decorate([
 	        ionic_1.Page({
-	            templateUrl: 'build/pages/signup/signup.html'
+	            templateUrl: 'build/pages/signup/signup.html',
+	            pipes: [ionic_1.TranslatePipe]
 	        }), 
-	        __metadata('design:paramtypes', [])
+	        __metadata('design:paramtypes', [ionic_1.NavController])
 	    ], SignupPage);
 	    return SignupPage;
 	}());
@@ -63090,6 +63147,14 @@
 	    'page.settings.name': 'Name',
 	    'page.settings.country': 'Country',
 	    'page.rules.title': 'Rules',
+	    'page.signin.title': 'Login',
+	    'page.signin.email': 'Email',
+	    'page.signin.password': 'Password',
+	    'page.signin.signinbtn': 'SignIn',
+	    'page.signup.title': 'SignUp',
+	    'page.signup.email': 'Email',
+	    'page.signup.password': 'Password',
+	    'page.signup.signupbtn': 'SignUp',
 	    'page.about.title': 'About'
 	};
 	//# sourceMappingURL=de.js.map
@@ -63135,6 +63200,14 @@
 	    'page.settings.name': 'Name',
 	    'page.settings.country': 'Country',
 	    'page.rules.title': 'Rules',
+	    'page.signin.title': 'Login',
+	    'page.signin.email': 'Email',
+	    'page.signin.password': 'Password',
+	    'page.signin.signinbtn': 'SignIn',
+	    'page.signup.title': 'SignUp',
+	    'page.signup.email': 'Email',
+	    'page.signup.password': 'Password',
+	    'page.signup.signupbtn': 'SignUp',
 	    'page.about.title': 'About'
 	};
 	//# sourceMappingURL=en.js.map

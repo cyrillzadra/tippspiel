@@ -18,7 +18,7 @@ export class SettingsPage {
 
     constructor(private nav:NavController, navParams:NavParams) {
         this.form = new ControlGroup({
-            ame: new Control("", Validators.required),
+            name: new Control("", Validators.required), 
             email: new Control("", Validators.required),
             country: new Control("", Validators.required)
         });

@@ -1,4 +1,4 @@
-import {Page, NavController, NavParams, Translate, TranslatePipe} from 'ionic-framework/ionic';
+import {Page, NavController, NavParams, TranslatePipe} from 'ionic-framework/ionic';
 import {fbName} from "../fbConfig";
 
 var Firebase = require('firebase');

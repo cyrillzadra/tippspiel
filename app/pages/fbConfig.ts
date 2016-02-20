@@ -42,8 +42,47 @@ export class FireBaseService {
         });
     }
 
-    createUser(uid:string, user:User):void {
-        //implement
+    createUser(authData:any):void {
+        var login = this;
+        var ref = new Firebase(fbName);
+        ref.onAuth(function (authData) {
+            if (authData) {
+                console.log(authData.provider);
+                var user:User = new User(login.getName(authData), login.getEmail(authData), "", authData.provider);
+                ref.child("users").child(authData.uid).set(user);
+            }
+        });
+    }
+
+    // find a suitable name based on the meta info given by each provider
+    getName(authData):string {
+        switch (authData.provider) {
+            case 'password':
+                return authData.password.email.replace(/@.*/, '');
+            case 'twitter':
+                return authData.twitter.displayName;
+            case 'google':
+                return authData.google.displayName;
+            case 'facebook':
+                return authData.facebook.displayName;
+            case 'github':
+                return (authData.github.displayName != null) ? authData.github.displayName : "";
+        }
+    }
+
+    private getEmail(authData):string {
+        switch (authData.provider) {
+            case 'password':
+                return authData.password.email;
+            case 'twitter':
+                return authData.twitter.email;
+            case 'google':
+                return authData.google.email;
+            case 'facebook':
+                return authData.facebook.email;
+            case 'github':
+                return (authData.github.email != null) ? authData.github.email : "";
+        }
     }
 
 

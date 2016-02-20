@@ -2,10 +2,10 @@
  * Created by tiezad on 15.02.2016.
  */
 export class User {
-    private name:string;
-    private email:string;
-    private country:string;
-    private provider:string;
+    public name:string;
+    public email:string;
+    public country:string;
+    public provider:string;
 
     constructor(name:string, email:string, country:string, provider:string) {
         this.name = name;
