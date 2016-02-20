@@ -3198,10 +3198,10 @@
 	var settings_1 = __webpack_require__(364);
 	var main_1 = __webpack_require__(366);
 	var login_1 = __webpack_require__(367);
-	var about_1 = __webpack_require__(371);
-	var rules_1 = __webpack_require__(372);
-	var de_1 = __webpack_require__(369);
-	var en_1 = __webpack_require__(370);
+	var about_1 = __webpack_require__(369);
+	var rules_1 = __webpack_require__(370);
+	var de_1 = __webpack_require__(371);
+	var en_1 = __webpack_require__(372);
 	var appModel_1 = __webpack_require__(365);
 	var MyApp = (function () {
 	    function MyApp(app, platform, trans) {
@@ -62965,8 +62965,8 @@
 	    SignupPage.prototype.signup = function (event) {
 	        var ref = new Firebase(fbConfig_1.fbName);
 	        ref.createUser({
-	            email: this.email,
-	            password: this.password
+	            email: this.form.value.email,
+	            password: this.form.value.password
 	        }, function (error, userData) {
 	            if (error) {
 	                console.log("Error creating user:", error);
@@ -62989,6 +62989,68 @@
 
 /***/ },
 /* 369 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	var __metadata = (this && this.__metadata) || function (k, v) {
+	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+	};
+	var ionic_1 = __webpack_require__(5);
+	var AboutPage = (function () {
+	    function AboutPage(nav, navParams) {
+	        this.nav = nav;
+	    }
+	    AboutPage = __decorate([
+	        ionic_1.Page({
+	            templateUrl: 'build/pages/about/about.html',
+	            pipes: [ionic_1.TranslatePipe]
+	        }), 
+	        __metadata('design:paramtypes', [ionic_1.NavController, ionic_1.NavParams])
+	    ], AboutPage);
+	    return AboutPage;
+	}());
+	exports.AboutPage = AboutPage;
+	//# sourceMappingURL=about.js.map
+
+/***/ },
+/* 370 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	var __metadata = (this && this.__metadata) || function (k, v) {
+	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+	};
+	var ionic_1 = __webpack_require__(5);
+	var RulesPage = (function () {
+	    function RulesPage(nav, navParams) {
+	        this.nav = nav;
+	    }
+	    RulesPage = __decorate([
+	        ionic_1.Page({
+	            templateUrl: 'build/pages/rules/rules.html',
+	            pipes: [ionic_1.TranslatePipe]
+	        }), 
+	        __metadata('design:paramtypes', [ionic_1.NavController, ionic_1.NavParams])
+	    ], RulesPage);
+	    return RulesPage;
+	}());
+	exports.RulesPage = RulesPage;
+	//# sourceMappingURL=rules.js.map
+
+/***/ },
+/* 371 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -63033,7 +63095,7 @@
 	//# sourceMappingURL=de.js.map
 
 /***/ },
-/* 370 */
+/* 372 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -63076,68 +63138,6 @@
 	    'page.about.title': 'About'
 	};
 	//# sourceMappingURL=en.js.map
-
-/***/ },
-/* 371 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-	    return c > 3 && r && Object.defineProperty(target, key, r), r;
-	};
-	var __metadata = (this && this.__metadata) || function (k, v) {
-	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-	};
-	var ionic_1 = __webpack_require__(5);
-	var AboutPage = (function () {
-	    function AboutPage(nav, navParams) {
-	        this.nav = nav;
-	    }
-	    AboutPage = __decorate([
-	        ionic_1.Page({
-	            templateUrl: 'build/pages/about/about.html',
-	            pipes: [ionic_1.TranslatePipe]
-	        }), 
-	        __metadata('design:paramtypes', [ionic_1.NavController, ionic_1.NavParams])
-	    ], AboutPage);
-	    return AboutPage;
-	}());
-	exports.AboutPage = AboutPage;
-	//# sourceMappingURL=about.js.map
-
-/***/ },
-/* 372 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-	    return c > 3 && r && Object.defineProperty(target, key, r), r;
-	};
-	var __metadata = (this && this.__metadata) || function (k, v) {
-	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-	};
-	var ionic_1 = __webpack_require__(5);
-	var RulesPage = (function () {
-	    function RulesPage(nav, navParams) {
-	        this.nav = nav;
-	    }
-	    RulesPage = __decorate([
-	        ionic_1.Page({
-	            templateUrl: 'build/pages/rules/rules.html',
-	            pipes: [ionic_1.TranslatePipe]
-	        }), 
-	        __metadata('design:paramtypes', [ionic_1.NavController, ionic_1.NavParams])
-	    ], RulesPage);
-	    return RulesPage;
-	}());
-	exports.RulesPage = RulesPage;
-	//# sourceMappingURL=rules.js.map
 
 /***/ }
 /******/ ]);

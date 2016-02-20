@@ -9,8 +9,6 @@ var Firebase = require('firebase');
 })
 export class SignupPage {
     form:ControlGroup;
-    email:string;
-    password:string;
 
     constructor() {
         this.form = new ControlGroup({
@@ -22,8 +20,8 @@ export class SignupPage {
     signup(event):void {
         var ref = new Firebase(fbName);
         ref.createUser({
-            email: this.email,
-            password: this.password
+            email: this.form.value.email,
+            password: this.form.value.password
         }, function (error, userData) {
             if (error) {
                 console.log("Error creating user:", error);
