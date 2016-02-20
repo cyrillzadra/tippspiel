@@ -25,7 +25,7 @@ export var team_de = {
   'POR' : 'Portugal',
 
   'menu' : 'Menu',
-  'menu.start' : 'Start',
+  'menu.start' : 'Tippspiel',
   'menu.schedules' : 'Spielzeiten',
   'menu.settings' : 'Einstellung',
 
@@ -36,6 +36,10 @@ export var team_de = {
   'page.settings.title' : 'Einstellung',
   'page.settings.savebutton' : 'Save',
   'page.settings.name' : 'Name',
-  'page.settings.country' : 'Country'
+  'page.settings.country' : 'Country',
+
+  'page.rules.title' : 'Rules',
+
+  'page.about.title' : 'About'
 
 };

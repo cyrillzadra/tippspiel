@@ -5,6 +5,8 @@ import {SchedulesPage} from './pages/schedules/schedules';
 import {SettingsPage} from './pages/settings/settings';
 import {MainPage} from './pages/main/main';
 import {LoginPage} from './pages/login/login';
+import {AboutPage} from './pages/about/about';
+import {RulesPage} from './pages/rules/rules';
 
 // https://angular.io/docs/ts/latest/api/core/Type-interface.html
 import {Type} from 'angular2/core';
@@ -36,8 +38,10 @@ class MyApp {
         // set our app's pages
         this.pages = [
             {title: 'menu.start', component: MainPage},
+            {title: 'menu.rules', component: RulesPage},
             {title: 'menu.schedules', component: SchedulesPage},
             {title: 'menu.settings', component: SettingsPage},
+            {title: 'menu.about', component: AboutPage},
     ];
     }
 
