@@ -1,12 +1,22 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0"
+<widget xmlns="http://www.w3.org/ns/widgets"
+        xmlns:cdv="http://cordova.apache.org/ns/1.0"
+        xmlns:gap = "http://phonegap.com/ns/1.0"
         id="ch.euro2016.tippspiel"
         versionCode="1"
         version="0.0.1">
+
     <name>Euro 2016</name>
     <description>Euro 2016 Tippspiel</description>
     <author email="cyrill.zadra@gmail.com" href="https://github.com/cyrillzadra/tippspiel">Euro 2016 Tippspiel Team</author>
     <content src="index.html"/>
+
+    <!-- Core plugins -->
+    <gap:plugin name="org.apache.cordova.console" />
+    <gap:plugin name="org.apache.cordova.device" />
+    <gap:plugin name="org.apache.cordova.globalization" />
+    <gap:plugin name="org.apache.cordova.inappbrowser" />
+    <gap:plugin name="org.apache.cordova.splashscreen" />
 
     <access origin="*"/>
     <access origin="auth.firebase.com"/>
@@ -32,16 +42,4 @@
     <preference name="android-minSdkVersion" value="16"/>
     <preference name="BackupWebStorage" value="none"/>
 
-    <feature name="Device">
-        <param name="android-package" value="org.apache.cordova.Device" />
-        <param name="ios-package" value="CDVDevice" />
-    </feature>
-    <feature name="Globalization">
-        <param name="android-package" value="org.apache.cordova.Globalization"/>
-        <param name="ios-package" value="CDVGlobalization"/>
-    </feature>
-    <feature name="InAppBrowser">
-        <param name="android-package" value="org.apache.cordova.InAppBrowser"/>
-        <param name="ios-package" value="CDVInAppBrowser"/>
-    </feature>
 </widget>

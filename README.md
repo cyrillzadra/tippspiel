@@ -82,6 +82,7 @@ Example Ionic 2 & Angular 2: http://www.toptal.com/front-end/building-multi-plat
 Example http://www.sitepoint.com/creating-firebase-powered-end-end-ionic-application/
 
 Debugging : https://www.genuitec.com/products/gapdebug/
+Phonegap Config.xml : https://github.com/phonegap/phonegap-start/blob/master/www/config.xml
  
 
  
