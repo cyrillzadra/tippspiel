@@ -10,6 +10,9 @@
     "rxjs": "5.0.0-beta.2",
     "zone.js": "0.5.15"
   },
+  "exclude": [
+    "node_modules"
+  ],
   "devDependencies": {
     "awesome-typescript-loader": "^0.15.9",
     "strip-sourcemap-loader": "0.0.1",

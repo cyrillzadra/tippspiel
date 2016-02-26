@@ -1,4 +1,5 @@
 import {User} from "../models/User";
+import {Group} from "../models/Group";
 /**
  * Created by tiezad on 30.01.2016.
  */
@@ -83,6 +84,35 @@ export class FireBaseService {
             case 'github':
                 return (authData.github.email != null) ? authData.github.email : "";
         }
+    }
+
+    getMyGroups(authData:any):Array<{groupKey: boolean}> {
+        console.log('getMyGroups: ', authData);
+        var ref = new Firebase(FB_USERS);
+        var myGroups: Array<{groupKey: boolean}>;
+
+        ref.onAuth(function (authData) {
+            var myMyGroups = myGroups;
+            if (authData) {
+                ref.child(authData.uid).child('mygroups').once('value',function(data) {
+                    // do some stuff once
+                    console.log('data ', data);
+                    myMyGroups = data.val();
+                });
+            }
+        });
+        console.log('mygroups:' , myGroups);
+        return myGroups;
+    }
+
+    createGroup(group: Group, authData:any):void {
+        var ref = new Firebase(FB_GROUPS);
+        ref.onAuth(function (authData) {
+            if (authData) {
+                var newGroupRef = ref.push(group);
+                console.log(newGroupRef)
+            }
+        });
     }
 
 

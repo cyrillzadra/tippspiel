@@ -3,14 +3,18 @@
  */
 export class Group {
     public name:string;
+    public description:string;
     public shared:boolean;
     public password:string;
-    public worldranking:boolean;
+    public worldRanking:boolean;
+    public creator:string;
+    public members:string; //TODO handle members
 
-    constructor(name:string, shared:boolean, password:string, worldranking:boolean) {
+    constructor(name:string, description:string, shared:boolean, password:string, worldRanking:boolean) {
         this.name = name;
+        this.description = description;
         this.shared = shared;
         this.password = password;
-        this.worldranking = worldranking;
+        this.worldRanking = worldRanking;
     }
 }

@@ -34,7 +34,7 @@ export var team_de = {
   'page.main.addgroup.name' : 'Name',
   'page.main.addgroup.shared' : 'Öffentlich',
   'page.main.addgroup.password' : 'Passwort',
-  'page.main.addgroup.worldranking' : 'Weltrangliste',
+  'page.main.addgroup.worldRanking' : 'Weltrangliste',
   'page.main.addgroup.savebtn' : 'Speichern',
 
   'page.schedules.title' : "Spielzeiten",

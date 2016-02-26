@@ -4,22 +4,22 @@
 
         <ion-item>
             <ion-label fixed>{{ 'page.main.addgroup.name' | translate }}</ion-label>
-            <ion-input type="text"></ion-input>
+            <ion-input ngControl="name" type="text"></ion-input>
         </ion-item>
 
         <ion-item>
             <ion-label fixed>{{ 'page.main.addgroup.shared' | translate }}</ion-label>
-            <ion-toggle disabled checked="false"></ion-toggle>
+            <ion-toggle ngControl="shared" checked="false"></ion-toggle>
         </ion-item>
 
         <ion-item>
             <ion-label fixed>{{ 'page.main.addgroup.password' | translate }}</ion-label>
-            <ion-input type="password"></ion-input>
+            <ion-input ngControl="password"  type="password"></ion-input>
         </ion-item>
 
         <ion-item>
-            <ion-label fixed>{{ 'page.main.addgroup.worldranking' | translate }}</ion-label>
-            <ion-toggle disabled checked="false"></ion-toggle>
+            <ion-label fixed>{{ 'page.main.addgroup.worldRanking' | translate }}</ion-label>
+            <ion-toggle ngControl="worldRanking"  checked="false"></ion-toggle>
         </ion-item>
 
         <div padding>

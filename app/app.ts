@@ -21,7 +21,7 @@ import {appModel} from "./models/appModel"
     config: {}, // http://ionicframework.com/docs/v2/api/config/Config/
     pipes: [TranslatePipe]
 })
-class MyApp {
+export class MyApp {
     // make HelloIonicPage the root (or first) page
     rootPage:Type = LoginPage;
     pages:Array<{title: string, component: Type}>;
@@ -57,10 +57,18 @@ class MyApp {
         if (typeof navigator.globalization !== "undefined") {
             navigator.globalization.getPreferredLanguage(
                 function (language) {
-                    console.log('language: ' + language.value + '\n');
-                    appModel.setLanguage(language.value)
+                    var lang : string = "";
+                    if(device.platform == "Android") {
+                        lang =  language.value;
+                        lang = lang.substring(0,2);
+                    } else {
+                        lang =  language.value;
+                    }
+                    console.log('language: ' + lang + '\n');
+                    appModel.setLanguage(lang)
                 },
                 function () {
+                    appModel.setLanguage("en");
                     console.log('Error getting language\n');
                 }
             );
