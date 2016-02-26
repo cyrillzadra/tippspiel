@@ -6,8 +6,8 @@
         versionCode="1"
         version="0.0.1">
 
-    <name>Euro 2016</name>
-    <description>Euro 2016 Tippspiel</description>
+    <name>Euro2016Tipster</name>
+    <description>Euro 2016 Tipster</description>
     <author email="cyrill.zadra@gmail.com" href="https://github.com/cyrillzadra/tippspiel">Euro 2016 Tippspiel Team</author>
     <content src="index.html"/>
 
