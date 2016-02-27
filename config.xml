@@ -9,9 +9,11 @@
     <name>Euro 2016 Tipster</name>
     <description>Euro 2016 Tipster</description>
     <author email="cyrill.zadra@gmail.com" href="https://github.com/cyrillzadra/tippspiel">Euro 2016 Tippspiel Team</author>
+    <content src="index.html"/>
 
     <!-- Core plugins -->
     <gap:plugin name="org.apache.cordova.device" />
+    <gap:plugin name="org.apache.cordova.globalization" />
     <gap:plugin name="org.apache.cordova.inappbrowser" />
     <gap:plugin name="org.apache.cordova.splashscreen" />
 
