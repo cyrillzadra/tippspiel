@@ -1,7 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget xmlns="http://www.w3.org/ns/widgets"
-        xmlns:cdv="http://cordova.apache.org/ns/1.0"
-        xmlns:gap = "http://phonegap.com/ns/1.0"
         id="ch.euro2016.tippspiel"
         versionCode="1"
         version="0.0.1">
@@ -12,9 +10,9 @@
     <content src="index.html"/>
 
     <!-- Core plugins -->
-    <gap:plugin name="org.apache.cordova.device" />
-    <gap:plugin name="org.apache.cordova.globalization" />
-    <gap:plugin name="org.apache.cordova.inappbrowser" />
+    <plugin name="org.apache.cordova.device" />
+    <plugin name="org.apache.cordova.globalization" />
+    <plugin name="org.apache.cordova.inappbrowser" />
 
     <feature name="Device">
         <param name="android-package" value="org.apache.cordova.Device" />
