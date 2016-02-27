@@ -33,9 +33,6 @@
         "cordova-plugin-device": {
             "PACKAGE_NAME": "ch.euro2016.tippspiel"
         },
-        "cordova-plugin-console": {
-            "PACKAGE_NAME": "ch.euro2016.tippspiel"
-        },
         "cordova-plugin-globalization": {
             "PACKAGE_NAME": "ch.euro2016.tippspiel"
         },

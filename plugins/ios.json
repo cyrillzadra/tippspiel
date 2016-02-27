@@ -23,10 +23,6 @@
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"Console\"><param name=\"ios-package\" value=\"CDVLogger\" /></feature>",
-                            "count": 1
-                        },
-                        {
                             "xml": "<feature name=\"Globalization\"><param name=\"ios-package\" value=\"CDVGlobalization\" /></feature>",
                             "count": 1
                         },
@@ -41,9 +37,6 @@
     },
     "installed_plugins": {
         "cordova-plugin-device": {
-            "PACKAGE_NAME": "ch.euro2016.tippspiel"
-        },
-        "cordova-plugin-console": {
             "PACKAGE_NAME": "ch.euro2016.tippspiel"
         },
         "cordova-plugin-globalization": {
