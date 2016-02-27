@@ -7,7 +7,7 @@
     <name>Euro2016</name>
     <description>Euro 2016 Tipster</description>
     <author email="cyrill.zadra@gmail.com" href="https://github.com/cyrillzadra/tippspiel">Euro 2016 Tipster Team</author>
-    <content src="index.html"/>
+    <content src="www/index.html"/>
 
     <!-- Core plugins -->
     <plugin name="org.apache.cordova.device" spec="1.1.1" source="npm" />
