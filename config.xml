@@ -14,19 +14,6 @@
     <plugin name="org.apache.cordova.globalization" />
     <plugin name="org.apache.cordova.inappbrowser" />
 
-    <feature name="Device">
-        <param name="android-package" value="org.apache.cordova.Device" />
-        <param name="ios-package" value="CDVDevice" />
-    </feature>
-    <feature name="Globalization">
-        <param name="android-package" value="org.apache.cordova.Globalization"/>
-        <param name="ios-package" value="CDVGlobalization"/>
-    </feature>
-    <feature name="InAppBrowser">
-        <param name="android-package" value="org.apache.cordova.InAppBrowser"/>
-        <param name="ios-package" value="CDVInAppBrowser"/>
-    </feature>
-
     <access origin="*"/>
     <access origin="auth.firebase.com"/>
     <access origin="*.firebaseio.com"/>
