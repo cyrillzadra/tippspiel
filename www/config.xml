@@ -10,9 +10,9 @@
     <content src="index.html"/>
 
     <!-- Core plugins -->
-    <plugin name="org.apache.cordova.device" />
-    <plugin name="org.apache.cordova.globalization" />
-    <plugin name="org.apache.cordova.inappbrowser" />
+    <plugin name="org.apache.cordova.device" spec="1.1.1" source="npm" />
+    <plugin name="org.apache.cordova.globalization" spec="1.0.2" source="npm" />
+    <plugin name="org.apache.cordova.inappbrowser" spec="1.2.0" source="npm" />
 
     <access origin="*"/>
     <access origin="auth.firebase.com"/>
