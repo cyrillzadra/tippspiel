@@ -62414,12 +62414,30 @@
 	        console.log('mygroups:', myGroups);
 	        return myGroups;
 	    };
+	    FireBaseService.prototype.getGroups = function (authData) {
+	        console.log('getMyGroups: ', authData);
+	        var ref = new Firebase(exports.FB_GROUPS);
+	        var myGroups;
+	        ref.onAuth(function (authData) {
+	            var myMyGroups = myGroups;
+	            if (authData) {
+	                ref.once('value', function (data) {
+	                    // do some stuff once
+	                    console.log('data ', data);
+	                    myMyGroups = data.val();
+	                });
+	            }
+	        });
+	        console.log('mygroups:', myGroups);
+	        return myGroups;
+	    };
 	    FireBaseService.prototype.createGroup = function (group, authData) {
 	        var ref = new Firebase(exports.FB_GROUPS);
 	        ref.onAuth(function (authData) {
 	            if (authData) {
-	                var newGroupRef = ref.push(group);
+	                var newGroupRef = ref.push();
 	                console.log(newGroupRef);
+	                newGroupRef.set(group);
 	            }
 	        });
 	    };
@@ -62881,7 +62899,7 @@
 	    function ListGroupContentPage() {
 	        //TODO assign result to items
 	        console.log('load groups');
-	        new fbConfig_1.FireBaseService().getMyGroups(appModel_1.appModel.getAuthData());
+	        new fbConfig_1.FireBaseService().getGroups(appModel_1.appModel.getAuthData());
 	    }
 	    ListGroupContentPage = __decorate([
 	        ionic_1.Page({
@@ -62896,18 +62914,18 @@
 	    function AddGroupContentPage() {
 	        this.form = new common_1.ControlGroup({
 	            name: new common_1.Control("", common_1.Validators.required),
-	            shared: new common_1.Control("", common_1.Validators.required),
+	            shared: new common_1.Control(false, common_1.Validators.required),
 	            password: new common_1.Control("", common_1.Validators.required),
-	            worldRanking: new common_1.Control("", common_1.Validators.required)
+	            worldRanking: new common_1.Control(false, common_1.Validators.required)
 	        });
 	    }
-	    AddGroupContentPage.prototype.save = function (event) {
+	    AddGroupContentPage.prototype.createGroup = function (event) {
 	        var name = this.form.value.name;
 	        var shared = this.form.value.shared;
 	        var password = this.form.value.password;
 	        var worldRanking = this.form.value.worldRanking;
 	        console.log('save name=', name);
-	        var group = new Group_1.Group(name, shared, password, worldRanking);
+	        var group = new Group_1.Group(name, "", shared, password, worldRanking);
 	        console.log('group ', group);
 	        new fbConfig_1.FireBaseService().createGroup(group, appModel_1.appModel.getAuthData());
 	    };

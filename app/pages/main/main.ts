@@ -29,7 +29,7 @@ class ListGroupContentPage {
     constructor() {
         //TODO assign result to items
         console.log('load groups');
-        new FireBaseService().getMyGroups(appModel.getAuthData());
+        new FireBaseService().getGroups(appModel.getAuthData());
     }
 }
 
@@ -44,13 +44,13 @@ class AddGroupContentPage {
     constructor() {
         this.form = new ControlGroup({
             name: new Control("", Validators.required),
-            shared: new Control("", Validators.required),
+            shared: new Control(false, Validators.required),
             password: new Control("", Validators.required),
-            worldRanking: new Control("", Validators.required)
+            worldRanking: new Control(false, Validators.required)
         });
     }
 
-    save(event):void {
+    createGroup(event):void {
         var name:string = this.form.value.name;
         var shared:boolean = this.form.value.shared;
         var password:string = this.form.value.password;
@@ -58,7 +58,7 @@ class AddGroupContentPage {
 
         console.log('save name=',name);
 
-        var group:Group = new Group(name, shared, password, worldRanking);
+        var group:Group = new Group(name, "", shared, password, worldRanking);
         console.log('group ', group);
         new FireBaseService().createGroup(group, appModel.getAuthData());
     }

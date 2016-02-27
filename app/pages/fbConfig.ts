@@ -105,12 +105,32 @@ export class FireBaseService {
         return myGroups;
     }
 
+    getGroups(authData:any):Array<{groupKey: boolean}> {
+        console.log('getMyGroups: ', authData);
+        var ref = new Firebase(FB_GROUPS);
+        var myGroups: Array<{groupKey: boolean}>;
+
+        ref.onAuth(function (authData) {
+            var myMyGroups = myGroups;
+            if (authData) {
+                ref.once('value',function(data) {
+                    // do some stuff once
+                    console.log('data ', data);
+                    myMyGroups = data.val();
+                });
+            }
+        });
+        console.log('mygroups:' , myGroups);
+        return myGroups;
+    }
+
     createGroup(group: Group, authData:any):void {
         var ref = new Firebase(FB_GROUPS);
         ref.onAuth(function (authData) {
             if (authData) {
-                var newGroupRef = ref.push(group);
+                var newGroupRef = ref.push();
                 console.log(newGroupRef)
+                newGroupRef.set(group);
             }
         });
     }
