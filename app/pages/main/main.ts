@@ -29,11 +29,29 @@ class ListGroupContentPage {
 
     groups:Array<Group>;
 
-    constructor() {
+    constructor(private nav:NavController) {
         //TODO assign result to items
         console.log('load groups');
         this.groups = new Array<Group>();
         new FireBaseService().getGroups(appModel.getAuthData(), this.groups);
+    }
+
+    openGroupDetails(event, group) {
+        this.nav.push(GroupDetailsPage, { group: group });
+    }
+}
+
+@Page({
+    templateUrl: 'build/pages/main/groupdetails.html',
+    pipes: [TranslatePipe]
+})
+class GroupDetailsPage {
+    group:Group;
+
+    constructor(params: NavParams) {
+        this.group = params.data.group;
+        console.log(this.group);
+
     }
 }
 
@@ -50,7 +68,8 @@ class AddGroupContentPage {
             name: new Control("", Validators.required),
             shared: new Control(false, Validators.required),
             password: new Control("", Validators.required),
-            worldRanking: new Control(false, Validators.required)
+            worldRanking: new Control(false, Validators.required),
+            description: new Control("")
         });
     }
 
@@ -59,10 +78,12 @@ class AddGroupContentPage {
         var shared:boolean = this.form.value.shared;
         var password:string = this.form.value.password;
         var worldRanking:boolean = this.form.value.worldRanking;
+        var description:string = this.form.value.description;
+
 
         console.log('save name=', name);
 
-        var group:Group = new Group(name, "", shared, password, worldRanking);
+        var group:Group = new Group(name, description, shared, password, worldRanking, appModel.getAuthData().uid);
         console.log('group ', group);
         new FireBaseService().createGroup(group, appModel.getAuthData());
 

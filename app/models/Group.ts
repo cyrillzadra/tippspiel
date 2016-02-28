@@ -7,14 +7,15 @@ export class Group {
     public shared:boolean;
     public password:string;
     public worldRanking:boolean;
-    public creator:string;
-    public members:string; //TODO handle members
+    public admin:string;
 
-    constructor(name:string, description:string, shared:boolean, password:string, worldRanking:boolean) {
+    constructor(name:string, description:string, shared:boolean,
+                password:string, worldRanking:boolean, admin:string) {
         this.name = name;
         this.description = description;
         this.shared = shared;
         this.password = password;
         this.worldRanking = worldRanking;
+        this.admin = admin;
     }
 }

@@ -31,10 +31,13 @@ export var team_de = {
 
   'page.main.title' : 'Willkommen',
 
+  'page.main.listgroup.delete' : 'Löschen',
+
   'page.main.addgroup.name' : 'Name',
   'page.main.addgroup.shared' : 'Öffentlich',
   'page.main.addgroup.password' : 'Passwort',
   'page.main.addgroup.worldRanking' : 'Weltrangliste',
+  'page.main.addgroup.description' : "Beschreibung",
   'page.main.addgroup.savebtn' : 'Speichern',
 
   'page.schedules.title' : "Spielzeiten",

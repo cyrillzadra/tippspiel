@@ -62443,6 +62443,26 @@
 	            }
 	        });
 	    };
+	    FireBaseService.prototype.addMember = function (group, authData) {
+	        var ref = new Firebase(exports.FB_GROUPS);
+	        ref.onAuth(function (authData) {
+	            if (authData) {
+	                var newGroupRef = ref.push();
+	                console.log(newGroupRef);
+	                newGroupRef.set(group);
+	            }
+	        });
+	    };
+	    FireBaseService.prototype.removeMember = function (group, authData) {
+	        var ref = new Firebase(exports.FB_GROUPS);
+	        ref.onAuth(function (authData) {
+	            if (authData) {
+	                var newGroupRef = ref.push();
+	                console.log(newGroupRef);
+	                newGroupRef.set(group);
+	            }
+	        });
+	    };
 	    return FireBaseService;
 	}());
 	exports.FireBaseService = FireBaseService;
@@ -62898,20 +62918,38 @@
 	}());
 	exports.MainPage = MainPage;
 	var ListGroupContentPage = (function () {
-	    function ListGroupContentPage() {
+	    function ListGroupContentPage(nav) {
+	        this.nav = nav;
 	        //TODO assign result to items
 	        console.log('load groups');
 	        this.groups = new Array();
 	        new fbConfig_1.FireBaseService().getGroups(appModel_1.appModel.getAuthData(), this.groups);
 	    }
+	    ListGroupContentPage.prototype.openGroupDetails = function (event, group) {
+	        this.nav.push(GroupDetailsPage, { group: group });
+	    };
 	    ListGroupContentPage = __decorate([
 	        ionic_1.Page({
 	            templateUrl: 'build/pages/main/listgroup.html',
 	            pipes: [ionic_1.TranslatePipe]
 	        }), 
-	        __metadata('design:paramtypes', [])
+	        __metadata('design:paramtypes', [ionic_1.NavController])
 	    ], ListGroupContentPage);
 	    return ListGroupContentPage;
+	}());
+	var GroupDetailsPage = (function () {
+	    function GroupDetailsPage(params) {
+	        this.group = params.data.group;
+	        console.log(this.group);
+	    }
+	    GroupDetailsPage = __decorate([
+	        ionic_1.Page({
+	            templateUrl: 'build/pages/main/groupdetails.html',
+	            pipes: [ionic_1.TranslatePipe]
+	        }), 
+	        __metadata('design:paramtypes', [ionic_1.NavParams])
+	    ], GroupDetailsPage);
+	    return GroupDetailsPage;
 	}());
 	var AddGroupContentPage = (function () {
 	    function AddGroupContentPage(nav, navParams) {
@@ -62920,7 +62958,8 @@
 	            name: new common_1.Control("", common_1.Validators.required),
 	            shared: new common_1.Control(false, common_1.Validators.required),
 	            password: new common_1.Control("", common_1.Validators.required),
-	            worldRanking: new common_1.Control(false, common_1.Validators.required)
+	            worldRanking: new common_1.Control(false, common_1.Validators.required),
+	            description: new common_1.Control("")
 	        });
 	    }
 	    AddGroupContentPage.prototype.createGroup = function (event) {
@@ -62928,8 +62967,9 @@
 	        var shared = this.form.value.shared;
 	        var password = this.form.value.password;
 	        var worldRanking = this.form.value.worldRanking;
+	        var description = this.form.value.description;
 	        console.log('save name=', name);
-	        var group = new Group_1.Group(name, "", shared, password, worldRanking);
+	        var group = new Group_1.Group(name, description, shared, password, worldRanking, appModel_1.appModel.getAuthData().uid);
 	        console.log('group ', group);
 	        new fbConfig_1.FireBaseService().createGroup(group, appModel_1.appModel.getAuthData());
 	        this.nav.push(ListGroupContentPage);
@@ -62954,12 +62994,13 @@
 	 * Created by tiezad on 15.02.2016.
 	 */
 	var Group = (function () {
-	    function Group(name, description, shared, password, worldRanking) {
+	    function Group(name, description, shared, password, worldRanking, admin) {
 	        this.name = name;
 	        this.description = description;
 	        this.shared = shared;
 	        this.password = password;
 	        this.worldRanking = worldRanking;
+	        this.admin = admin;
 	    }
 	    return Group;
 	}());
@@ -63273,10 +63314,12 @@
 	    'menu.schedules': 'Spielzeiten',
 	    'menu.settings': 'Einstellung',
 	    'page.main.title': 'Willkommen',
+	    'page.main.listgroup.delete': 'Löschen',
 	    'page.main.addgroup.name': 'Name',
 	    'page.main.addgroup.shared': 'Öffentlich',
 	    'page.main.addgroup.password': 'Passwort',
 	    'page.main.addgroup.worldRanking': 'Weltrangliste',
+	    'page.main.addgroup.description': "Beschreibung",
 	    'page.main.addgroup.savebtn': 'Speichern',
 	    'page.schedules.title': "Spielzeiten",
 	    'page.settings.title': 'Einstellung',
@@ -63331,10 +63374,12 @@
 	    'menu.schedules': 'Schedules',
 	    'menu.settings': 'Settings',
 	    'page.main.title': 'Welcome',
+	    'page.main.listgroup.delete': 'Delete',
 	    'page.main.addgroup.name': 'Name',
 	    'page.main.addgroup.shared': 'Shared',
 	    'page.main.addgroup.password': 'Password',
 	    'page.main.addgroup.worldRanking': 'Worldranking',
+	    'page.main.addgroup.description': "Description",
 	    'page.main.addgroup.savebtn': 'Save',
 	    'page.schedules.title': "Schedules",
 	    'page.settings.title': 'Settings',

@@ -137,6 +137,28 @@ export class FireBaseService {
         });
     }
 
+    addMember(group: Group, authData:any):void {
+        var ref = new Firebase(FB_GROUPS);
+        ref.onAuth(function (authData) {
+            if (authData) {
+                var newGroupRef = ref.push();
+                console.log(newGroupRef)
+                newGroupRef.set(group);
+            }
+        });
+    }
+
+    removeMember(group: Group, authData:any):void {
+        var ref = new Firebase(FB_GROUPS);
+        ref.onAuth(function (authData) {
+            if (authData) {
+                var newGroupRef = ref.push();
+                console.log(newGroupRef)
+                newGroupRef.set(group);
+            }
+        });
+    }
+
 
 }
 

@@ -31,10 +31,13 @@ export var team_en = {
 
   'page.main.title' : 'Welcome',
 
+  'page.main.listgroup.delete' : 'Delete',
+
   'page.main.addgroup.name' : 'Name',
   'page.main.addgroup.shared' : 'Shared',
   'page.main.addgroup.password' : 'Password',
   'page.main.addgroup.worldRanking' : 'Worldranking',
+  'page.main.addgroup.description' : "Description",
   'page.main.addgroup.savebtn' : 'Save',
 
   'page.schedules.title' : "Schedules",
