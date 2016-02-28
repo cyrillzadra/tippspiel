@@ -1,9 +1,13 @@
 <ion-content>
   <ion-list>
+
     <button ion-item *ngFor="#group of groups">
       <div class="item-note" item-left>
-          {{ group.name }}
+        {{ group.name }}
       </div>
+      <ion-badge item-right>5</ion-badge>
+      <ion-badge item-right>10</ion-badge>
     </button>
+
   </ion-list>
 </ion-content>
