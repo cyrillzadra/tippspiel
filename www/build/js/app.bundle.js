@@ -62414,22 +62414,24 @@
 	        console.log('mygroups:', myGroups);
 	        return myGroups;
 	    };
-	    FireBaseService.prototype.getGroups = function (authData) {
+	    FireBaseService.prototype.getGroups = function (authData, groups) {
 	        console.log('getMyGroups: ', authData);
 	        var ref = new Firebase(exports.FB_GROUPS);
-	        var myGroups;
+	        var myGroups = groups;
 	        ref.onAuth(function (authData) {
 	            var myMyGroups = myGroups;
 	            if (authData) {
-	                ref.once('value', function (data) {
+	                ref.on('value', function (list) {
 	                    // do some stuff once
-	                    console.log('data ', data);
-	                    myMyGroups = data.val();
+	                    console.log('list ', list.val());
+	                    list.forEach(function (group) {
+	                        myMyGroups.push(group.val());
+	                    });
+	                }, function (error) {
+	                    console.log("read failed", error);
 	                });
 	            }
 	        });
-	        console.log('mygroups:', myGroups);
-	        return myGroups;
 	    };
 	    FireBaseService.prototype.createGroup = function (group, authData) {
 	        var ref = new Firebase(exports.FB_GROUPS);
@@ -62899,7 +62901,8 @@
 	    function ListGroupContentPage() {
 	        //TODO assign result to items
 	        console.log('load groups');
-	        new fbConfig_1.FireBaseService().getGroups(appModel_1.appModel.getAuthData());
+	        this.groups = new Array();
+	        new fbConfig_1.FireBaseService().getGroups(appModel_1.appModel.getAuthData(), this.groups);
 	    }
 	    ListGroupContentPage = __decorate([
 	        ionic_1.Page({
@@ -62911,7 +62914,8 @@
 	    return ListGroupContentPage;
 	}());
 	var AddGroupContentPage = (function () {
-	    function AddGroupContentPage() {
+	    function AddGroupContentPage(nav, navParams) {
+	        this.nav = nav;
 	        this.form = new common_1.ControlGroup({
 	            name: new common_1.Control("", common_1.Validators.required),
 	            shared: new common_1.Control(false, common_1.Validators.required),
@@ -62928,13 +62932,14 @@
 	        var group = new Group_1.Group(name, "", shared, password, worldRanking);
 	        console.log('group ', group);
 	        new fbConfig_1.FireBaseService().createGroup(group, appModel_1.appModel.getAuthData());
+	        this.nav.push(ListGroupContentPage);
 	    };
 	    AddGroupContentPage = __decorate([
 	        ionic_1.Page({
 	            templateUrl: 'build/pages/main/addgroup.html',
 	            pipes: [ionic_1.TranslatePipe]
 	        }), 
-	        __metadata('design:paramtypes', [])
+	        __metadata('design:paramtypes', [ionic_1.NavController, ionic_1.NavParams])
 	    ], AddGroupContentPage);
 	    return AddGroupContentPage;
 	}());

@@ -105,23 +105,25 @@ export class FireBaseService {
         return myGroups;
     }
 
-    getGroups(authData:any):Array<{groupKey: boolean}> {
+    getGroups(authData:any, groups:Array<Group>) : void {
         console.log('getMyGroups: ', authData);
         var ref = new Firebase(FB_GROUPS);
-        var myGroups: Array<{groupKey: boolean}>;
+        var myGroups: Array<Group> = groups;
 
         ref.onAuth(function (authData) {
             var myMyGroups = myGroups;
             if (authData) {
-                ref.once('value',function(data) {
+                ref.on('value', function(list) {
                     // do some stuff once
-                    console.log('data ', data);
-                    myMyGroups = data.val();
+                    console.log('list ', list.val());
+                    list.forEach( function(group) {
+                        myMyGroups.push(group.val());
+                    });
+                }, function(error) {
+                    console.log("read failed", error);
                 });
             }
         });
-        console.log('mygroups:' , myGroups);
-        return myGroups;
     }
 
     createGroup(group: Group, authData:any):void {

@@ -40,7 +40,6 @@ export class SchedulesPage {
           visitorTeam: data.val().visitorTeam,
           icon: list.icons[Math.floor(Math.random() * list.icons.length)]
         });
-
       });
 
     }, function (errorObject) {

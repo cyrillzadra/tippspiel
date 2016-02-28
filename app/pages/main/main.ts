@@ -11,6 +11,9 @@ import {appModel} from "../../models/appModel";
 
 export class MainPage {
 
+    tab1:ListGroupContentPage;
+    tab2:AddGroupContentPage;
+
     constructor(private nav:NavController, navParams:NavParams) {
         this.tab1 = ListGroupContentPage;
         this.tab2 = AddGroupContentPage;
@@ -24,12 +27,13 @@ export class MainPage {
 })
 class ListGroupContentPage {
 
-    items:Array<{group: string}>;
+    groups:Array<Group>;
 
     constructor() {
         //TODO assign result to items
         console.log('load groups');
-        new FireBaseService().getGroups(appModel.getAuthData());
+        this.groups = new Array<Group>();
+        new FireBaseService().getGroups(appModel.getAuthData(), this.groups);
     }
 }
 
@@ -41,7 +45,7 @@ class AddGroupContentPage {
 
     form:ControlGroup;
 
-    constructor() {
+    constructor(private nav:NavController, navParams:NavParams) {
         this.form = new ControlGroup({
             name: new Control("", Validators.required),
             shared: new Control(false, Validators.required),
@@ -56,10 +60,12 @@ class AddGroupContentPage {
         var password:string = this.form.value.password;
         var worldRanking:boolean = this.form.value.worldRanking;
 
-        console.log('save name=',name);
+        console.log('save name=', name);
 
         var group:Group = new Group(name, "", shared, password, worldRanking);
         console.log('group ', group);
         new FireBaseService().createGroup(group, appModel.getAuthData());
+
+        this.nav.push(ListGroupContentPage);
     }
 }
