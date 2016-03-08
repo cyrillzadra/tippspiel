@@ -1,4 +1,4 @@
-import {Page, TranslatePipe, NavController} from 'ionic-framework/ionic';
+import {Page, TranslatePipe, NavController} from 'ionic-angular';
 
 import {fbName, FireBaseService} from "../fbConfig";
 import {ControlGroup, Control, Validators} from "angular2/common";

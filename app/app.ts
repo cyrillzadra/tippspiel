@@ -1,6 +1,5 @@
-import {App, IonicApp, Platform, Translate, TranslatePipe} from 'ionic-framework/ionic';
+import {App, IonicApp, Platform, Translate, TranslatePipe} from 'ionic-angular';
 
-import {HelloIonicPage} from './pages/hello-ionic/hello-ionic';
 import {SchedulesPage} from './pages/schedules/schedules';
 import {SettingsPage} from './pages/settings/settings';
 import {MainPage} from './pages/main/main';

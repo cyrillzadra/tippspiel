@@ -1,4 +1,4 @@
-import {Page, NavController, NavParams, TranslatePipe} from "ionic-framework/ionic";
+import {Page, NavController, NavParams, TranslatePipe} from 'ionic-angular';
 import {Validators, ControlGroup, Control} from "angular2/common";
 import {User} from "../../models/User";
 import {appModel} from "../../models/appModel";

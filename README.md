@@ -43,6 +43,8 @@ http://cordova.apache.org/docs/en/latest/guide/platforms/ios/index.html
 
 ### Setup Tutorial
 
+ * npm clean
+ * 
  * npm install -g ionic@beta
  * ionic start MyIonic2Project tutorial --v2 --ts
  * ionic run android

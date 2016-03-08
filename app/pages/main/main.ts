@@ -1,20 +1,20 @@
-import {Page, NavController, NavParams, TranslatePipe} from "ionic-framework/ionic";
+import {Page, NavController, NavParams, TranslatePipe} from 'ionic-angular';
 import {ControlGroup, Validators, Control} from "angular2/common";
 import {Group} from "../../models/Group";
 import {FireBaseService} from "../fbConfig";
 import {appModel} from "../../models/appModel";
+import {Inject} from "angular2/core";
 
 @Page({
     templateUrl: 'build/pages/main/main.html',
     pipes: [TranslatePipe]
 })
-
 export class MainPage {
 
     tab1:ListGroupContentPage;
     tab2:AddGroupContentPage;
 
-    constructor(private nav:NavController, navParams:NavParams) {
+    constructor(nav:NavController, navParams:NavParams) {
         this.tab1 = ListGroupContentPage;
         this.tab2 = AddGroupContentPage;
     }

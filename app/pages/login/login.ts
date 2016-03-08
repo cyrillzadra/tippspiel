@@ -1,4 +1,4 @@
-import {Page, NavController, IONIC_DIRECTIVES, TranslatePipe} from 'ionic-framework/ionic';
+import {Page, NavController, IONIC_DIRECTIVES, TranslatePipe} from 'ionic-angular';
 
 import {appModel, AppModel} from "../../models/appModel"
 import {fbName} from "../fbConfig";
