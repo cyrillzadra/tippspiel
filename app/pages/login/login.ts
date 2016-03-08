@@ -40,11 +40,7 @@ export class LoginPage {
                 console.log("Login Failed!", error);
             } else {
                 appModel.setAuthData(authData);
-                if (!login.checkIfUserExists(authData.uid)) {
-                    console.log('before create user');
-                    login.createUser(authData);
-                }
-                login.nav.setRoot(MainPage);
+                login.checkIfUserExists(authData);
                 console.log("Authenticated successfully with payload:", authData);
             }
         });
@@ -53,17 +49,12 @@ export class LoginPage {
     authTwitter() {
         var login = this;
         var fbRef = new Firebase(fbName);
-
         fbRef.authWithOAuthPopup("twitter", function (error, authData) {
             if (error) {
                 console.log("Login Failed!", error);
             } else {
                 appModel.setAuthData(authData);
-                if (!login.checkIfUserExists(authData.uid)) {
-                    console.log('before create user');
-                    login.createUser(authData);
-                }
-                login.nav.setRoot(MainPage);
+                login.checkIfUserExists(authData);
                 console.log("Authenticated successfully with payload:", authData);
             }
         });
@@ -102,20 +93,28 @@ export class LoginPage {
                 var user:User = new User(login.getName(authData), "", "", authData.provider);
                 ref.child("users").child(authData.uid).set(user);
                 appModel.setUser(user);
+                login.nav.setRoot(MainPage);
             }
         });
     }
 
     // Tests to see if /users/<userId> has any data.
-    checkIfUserExists(userId):boolean {
+    checkIfUserExists(authData:any):void {
+        var login = this;
+        var userId:string = authData.uid;
         var usersRef = new Firebase(fbName + "/users/");
         var userExists:boolean = false;
         usersRef.child(userId).once('value', function (snapshot) {
             console.log('user exists (snapshot.val())= ' + snapshot.val());
             userExists = (snapshot.val() !== null);
             console.log('user exists = ' + userExists);
+            if(!userExists) {
+                this.createUser(authData);
+            } else {
+                appModel.setUser(snapshot.val());
+                login.nav.setRoot(MainPage);
+            }
         });
-        return userExists;
     }
 
 

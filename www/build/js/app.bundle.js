@@ -63216,7 +63216,7 @@
 	            console.log(authData);
 	            console.log(user);
 	            if (authData) {
-	                usersRef.child(authData.uid).set(user);
+	                usersRef.child(authData.uid).update(user);
 	            }
 	        });
 	    };
@@ -63910,11 +63910,7 @@
 	            }
 	            else {
 	                appModel_1.appModel.setAuthData(authData);
-	                if (!login.checkIfUserExists(authData.uid)) {
-	                    console.log('before create user');
-	                    login.createUser(authData);
-	                }
-	                login.nav.setRoot(main_1.MainPage);
+	                login.checkIfUserExists(authData);
 	                console.log("Authenticated successfully with payload:", authData);
 	            }
 	        });
@@ -63928,11 +63924,7 @@
 	            }
 	            else {
 	                appModel_1.appModel.setAuthData(authData);
-	                if (!login.checkIfUserExists(authData.uid)) {
-	                    console.log('before create user');
-	                    login.createUser(authData);
-	                }
-	                login.nav.setRoot(main_1.MainPage);
+	                login.checkIfUserExists(authData);
 	                console.log("Authenticated successfully with payload:", authData);
 	            }
 	        });
@@ -63969,19 +63961,28 @@
 	                var user = new User_1.User(login.getName(authData), "", "", authData.provider);
 	                ref.child("users").child(authData.uid).set(user);
 	                appModel_1.appModel.setUser(user);
+	                login.nav.setRoot(main_1.MainPage);
 	            }
 	        });
 	    };
 	    // Tests to see if /users/<userId> has any data.
-	    LoginPage.prototype.checkIfUserExists = function (userId) {
+	    LoginPage.prototype.checkIfUserExists = function (authData) {
+	        var login = this;
+	        var userId = authData.uid;
 	        var usersRef = new Firebase(fbConfig_1.fbName + "/users/");
 	        var userExists = false;
 	        usersRef.child(userId).once('value', function (snapshot) {
 	            console.log('user exists (snapshot.val())= ' + snapshot.val());
 	            userExists = (snapshot.val() !== null);
 	            console.log('user exists = ' + userExists);
+	            if (!userExists) {
+	                this.createUser(authData);
+	            }
+	            else {
+	                appModel_1.appModel.setUser(snapshot.val());
+	                login.nav.setRoot(main_1.MainPage);
+	            }
 	        });
-	        return userExists;
 	    };
 	    // find a suitable name based on the meta info given by each provider
 	    LoginPage.prototype.getName = function (authData) {

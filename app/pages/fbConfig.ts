@@ -38,7 +38,7 @@ export class FireBaseService {
             console.log(authData);
             console.log(user)
             if (authData) {
-                usersRef.child(authData.uid).set(user);
+                usersRef.child(authData.uid).update(user);
             }
         });
     }
