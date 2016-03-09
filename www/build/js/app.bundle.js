@@ -63908,17 +63908,12 @@
 	            var success = false;
 	            if (error) {
 	                if (error.code === "TRANSPORT_UNAVAILABLE") {
-	                    fbRef.authWithOAuthRedirect("github", function (error, authData) {
-	                        appModel_1.appModel.setAuthData(authData);
-	                        login.checkIfUserExists(authData);
-	                        console.log("Authenticated successfully with payload:", authData);
+	                    fbRef.authWithOAuthRedirect("github", function (error) {
+	                        console.log("error auth", error);
 	                    });
 	                }
-	                else {
-	                    console.log("Login Failed!", error);
-	                }
 	            }
-	            else {
+	            else if (authData) {
 	                appModel_1.appModel.setAuthData(authData);
 	                login.checkIfUserExists(authData);
 	                console.log("Authenticated successfully with payload:", authData);
