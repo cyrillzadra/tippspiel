@@ -10,11 +10,20 @@
     <content src="index.html"/>
 
     <!-- Core plugins -->
-    <plugin name="org.apache.cordova.device" spec="1.1.1" source="npm" />
-    <plugin name="org.apache.cordova.globalization" spec="1.0.2" source="npm" />
-    <plugin name="org.apache.cordova.inappbrowser" spec="1.2.0" source="npm" />
+    <plugin name="cordova-plugin-device" spec="1.1.1" source="npm" />
+    <plugin name="cordova-plugin-globalization" spec="1.0.2" source="npm" />
+    <plugin name="cordova-plugin-inappbrowser" spec="1.2.0" source="npm" />
     <plugin name="cordova-plugin-whitelist" source="npm" />
 
+    <feature name="Device">
+        <param name="ios-package" value="CDVDevice" />
+    </feature>
+    <feature name="InAppBrowser">
+        <param name="ios-package" value="CDVInAppBrowser" />
+    </feature>
+    <feature name="Globalization">
+        <param name="ios-package" value="CDVGlobalization" />
+    </feature>
 
     <access origin="*"/>
     <access origin="auth.firebase.com"/>
