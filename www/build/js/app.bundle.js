@@ -63905,8 +63905,18 @@
 	        var login = this;
 	        var fbRef = new Firebase(fbConfig_1.fbName);
 	        fbRef.authWithOAuthPopup("github", function (error, authData) {
+	            var success = false;
 	            if (error) {
-	                console.log("Login Failed!", error);
+	                if (error.code === "TRANSPORT_UNAVAILABLE") {
+	                    fbRef.authWithOAuthRedirect("github", function (error, authData) {
+	                        appModel_1.appModel.setAuthData(authData);
+	                        login.checkIfUserExists(authData);
+	                        console.log("Authenticated successfully with payload:", authData);
+	                    });
+	                }
+	                else {
+	                    console.log("Login Failed!", error);
+	                }
 	            }
 	            else {
 	                appModel_1.appModel.setAuthData(authData);
@@ -63918,7 +63928,7 @@
 	    LoginPage.prototype.authTwitter = function () {
 	        var login = this;
 	        var fbRef = new Firebase(fbConfig_1.fbName);
-	        fbRef.authWithOAuthPopup("twitter", function (error, authData) {
+	        fbRef.authWithOAuthRedirect("twitter", function (error, authData) {
 	            if (error) {
 	                console.log("Login Failed!", error);
 	            }

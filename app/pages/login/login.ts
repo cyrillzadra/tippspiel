@@ -36,8 +36,17 @@ export class LoginPage {
         var fbRef = new Firebase(fbName);
 
         fbRef.authWithOAuthPopup("github", function (error, authData) {
+            var success : boolean = false;
             if (error) {
-                console.log("Login Failed!", error);
+                if (error.code === "TRANSPORT_UNAVAILABLE") {
+                    fbRef.authWithOAuthRedirect("github", function(error, authData) {
+                        appModel.setAuthData(authData);
+                        login.checkIfUserExists(authData);
+                        console.log("Authenticated successfully with payload:", authData);
+                    });
+                } else {
+                    console.log("Login Failed!", error);
+                }
             } else {
                 appModel.setAuthData(authData);
                 login.checkIfUserExists(authData);
@@ -49,7 +58,7 @@ export class LoginPage {
     authTwitter() {
         var login = this;
         var fbRef = new Firebase(fbName);
-        fbRef.authWithOAuthPopup("twitter", function (error, authData) {
+        fbRef.authWithOAuthRedirect("twitter", function (error, authData) {
             if (error) {
                 console.log("Login Failed!", error);
             } else {
