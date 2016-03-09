@@ -13,7 +13,7 @@
     <plugin name="org.apache.cordova.device" spec="1.1.1" source="npm" />
     <plugin name="org.apache.cordova.globalization" spec="1.0.2" source="npm" />
     <plugin name="org.apache.cordova.inappbrowser" spec="1.2.0" source="npm" />
-    <plugin name="org.apache.cordova.whitelist" source="npm" />
+    <plugin name="cordova-plugin-whitelist" source="npm" />
 
 
     <access origin="*"/>
