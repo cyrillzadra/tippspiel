@@ -36,7 +36,6 @@ export class LoginPage {
         var fbRef = new Firebase(fbName);
 
         fbRef.authWithOAuthPopup("github", function (error, authData) {
-            var success : boolean = false;
             if (error) {
                 if (error.code === "TRANSPORT_UNAVAILABLE") {
                     fbRef.authWithOAuthRedirect("github", function(error) {

@@ -63905,7 +63905,6 @@
 	        var login = this;
 	        var fbRef = new Firebase(fbConfig_1.fbName);
 	        fbRef.authWithOAuthPopup("github", function (error, authData) {
-	            var success = false;
 	            if (error) {
 	                if (error.code === "TRANSPORT_UNAVAILABLE") {
 	                    fbRef.authWithOAuthRedirect("github", function (error) {
