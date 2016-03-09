@@ -19,15 +19,15 @@
                 "parents": {
                     "/*": [
                         {
-                            "xml": "<feature name=\"Device\"><param name=\"ios-package\" value=\"CDVDevice\" /></feature>",
-                            "count": 1
-                        },
-                        {
                             "xml": "<feature name=\"Globalization\"><param name=\"ios-package\" value=\"CDVGlobalization\" /></feature>",
                             "count": 1
                         },
                         {
                             "xml": "<feature name=\"InAppBrowser\"><param name=\"ios-package\" value=\"CDVInAppBrowser\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Device\"><param name=\"ios-package\" value=\"CDVDevice\" /></feature>",
                             "count": 1
                         }
                     ]
@@ -39,13 +39,13 @@
         "cordova-plugin-device": {
             "PACKAGE_NAME": "ch.euro2016.tippspiel"
         },
-        "cordova-plugin-globalization": {
-            "PACKAGE_NAME": "ch.euro2016.tippspiel"
-        },
         "cordova-plugin-inappbrowser": {
             "PACKAGE_NAME": "ch.euro2016.tippspiel"
         },
         "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "ch.euro2016.tippspiel"
+        },
+        "cordova-plugin-globalization": {
             "PACKAGE_NAME": "ch.euro2016.tippspiel"
         }
     },
