@@ -40,7 +40,7 @@ export var team_de = {
   'page.main.addgroup.description' : "Beschreibung",
   'page.main.addgroup.savebtn' : 'Speichern',
 
-  'page.schedules.title' : "Spielzeiten",
+  'page.schedules.title' : "Spielzeiten adsfasdf",
 
   'page.settings.title' : 'Einstellung',
   'page.settings.savebutton' : 'Save',
