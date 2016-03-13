@@ -85,6 +85,7 @@ Example http://www.sitepoint.com/creating-firebase-powered-end-end-ionic-applica
 
 Debugging : https://www.genuitec.com/products/gapdebug/
 Phonegap Config.xml : https://github.com/phonegap/phonegap-start/blob/master/www/config.xml
+Auth/Login: https://ionicthemes.com/product/login3-ionic-auth-component
  
 
  

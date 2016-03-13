@@ -50,10 +50,31 @@ export class LoginPage {
         });
     }
 
+
+    authGoogle() {
+        var login = this;
+        var fbRef = new Firebase(fbName);
+
+        fbRef.authWithOAuthPopup("google", function (error, authData) {
+            if (error) {
+                console.log("error auth", error);
+                if (error.code === "TRANSPORT_UNAVAILABLE") {
+                     fbRef.authWithOAuthRedirect("github", function(error) {
+                         console.log("error auth", error);
+                     });
+                }
+            } else if(authData) {
+                appModel.setAuthData(authData);
+                login.checkIfUserExists(authData);
+                console.log("Authenticated successfully with payload:", authData);
+            }
+        });
+    }
+
     authTwitter() {
         var login = this;
         var fbRef = new Firebase(fbName);
-        fbRef.authWithOAuthRedirect("twitter", function (error, authData) {
+        fbRef.authWithOAuthPopup("twitter", function (error, authData) {
             if (error) {
                 console.log("Login Failed!", error);
             } else {
@@ -109,11 +130,11 @@ export class LoginPage {
         var usersRef = new Firebase(fbName + "/users/");
         var userExists:boolean = false;
         usersRef.child(userId).once('value', function (snapshot) {
-            console.log('user exists (snapshot.val())= ' + snapshot.val());
+            console.log('user exists (snapshot.val())= ', snapshot.val());
             userExists = (snapshot.val() !== null);
-            console.log('user exists = ' + userExists);
+            console.log('user exists = ', userExists);
             if(!userExists) {
-                this.createUser(authData);
+                login.createUser(authData);
             } else {
                 appModel.setUser(snapshot.val());
                 login.nav.setRoot(MainPage);
@@ -131,6 +152,8 @@ export class LoginPage {
                 return authData.twitter.displayName;
             case 'facebook':
                 return authData.facebook.displayName;
+            case 'google':
+                return authData.google.displayName;
             case 'github':
                 return (authData.github.displayName != null) ? authData.github.displayName : "";
         }
