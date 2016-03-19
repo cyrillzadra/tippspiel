@@ -3195,14 +3195,14 @@
 	};
 	var ionic_angular_1 = __webpack_require__(5);
 	var schedules_1 = __webpack_require__(370);
-	var settings_1 = __webpack_require__(374);
+	var settings_1 = __webpack_require__(375);
 	var main_1 = __webpack_require__(376);
 	var login_1 = __webpack_require__(378);
 	var about_1 = __webpack_require__(380);
 	var rules_1 = __webpack_require__(381);
 	var de_1 = __webpack_require__(382);
 	var en_1 = __webpack_require__(383);
-	var appModel_1 = __webpack_require__(375);
+	var appModel_1 = __webpack_require__(373);
 	var MyApp = (function () {
 	    function MyApp(app, platform, trans) {
 	        this.app = app;
@@ -64519,7 +64519,7 @@
 	};
 	var ionic_angular_1 = __webpack_require__(5);
 	var fbConfig_1 = __webpack_require__(371);
-	var Firebase = __webpack_require__(373);
+	var Firebase = __webpack_require__(374);
 	var SchedulesPage = (function () {
 	    function SchedulesPage(nav, navParams) {
 	        this.nav = nav;
@@ -64570,6 +64570,8 @@
 
 	"use strict";
 	var User_1 = __webpack_require__(372);
+	var Group_1 = __webpack_require__(377);
+	var appModel_1 = __webpack_require__(373);
 	/**
 	 * Created by tiezad on 30.01.2016.
 	 */
@@ -64578,7 +64580,7 @@
 	exports.FB_SCHEDULES = exports.fbName + 'schedules/';
 	exports.FB_GROUPS = exports.fbName + 'groups/';
 	exports.FB_TIPS = exports.fbName + 'tips/';
-	var Firebase = __webpack_require__(373);
+	var Firebase = __webpack_require__(374);
 	var FireBaseService = (function () {
 	    function FireBaseService() {
 	    }
@@ -64647,22 +64649,25 @@
 	                return (authData.github.email != null) ? authData.github.email : "";
 	        }
 	    };
-	    FireBaseService.prototype.getMyGroups = function (authData) {
+	    FireBaseService.prototype.getMyGroups = function (authData, groups) {
 	        console.log('getMyGroups: ', authData);
 	        var ref = new Firebase(exports.FB_USERS);
-	        var myGroups;
+	        var myGroups = groups;
 	        ref.onAuth(function (authData) {
 	            var myMyGroups = myGroups;
 	            if (authData) {
-	                ref.child(authData.uid).child('mygroups').once('value', function (data) {
-	                    // do some stuff once
-	                    console.log('data ', data);
-	                    myMyGroups = data.val();
+	                ref.child(authData.uid).child('mygroups').once('value', function (list) {
+	                    console.log('list ', list.val());
+	                    list.forEach(function (groupData) {
+	                        var g = new Group_1.Group(groupData.val().name, groupData.val().description, groupData.val().shared, groupData.val().password, groupData.val().wordlRanking, groupData.val().admin);
+	                        g.id = groupData.key();
+	                        myMyGroups.push(g);
+	                    });
+	                }, function (error) {
+	                    console.log("read failed", error);
 	                });
 	            }
 	        });
-	        console.log('mygroups:', myGroups);
-	        return myGroups;
 	    };
 	    FireBaseService.prototype.getGroups = function (authData, groups) {
 	        console.log('getMyGroups: ', authData);
@@ -64690,10 +64695,28 @@
 	                var newGroupRef = ref.push();
 	                console.log(newGroupRef);
 	                newGroupRef.set(group);
+	                newGroupRef.child('members').child(authData.uid).set(appModel_1.appModel.getUser());
+	                var groupId = newGroupRef.key();
+	                console.log('groupId ', groupId);
+	                var userRef = new Firebase(exports.FB_USERS);
+	                userRef.onAuth(function (authData) {
+	                    if (authData) {
+	                        userRef.child(authData.uid).child('mygroups').child(groupId).set(group);
+	                    }
+	                });
 	            }
 	        });
 	    };
-	    FireBaseService.prototype.addMember = function (group, authData) {
+	    FireBaseService.prototype.joinGroup = function (group, authData) {
+	        var ref = new Firebase(exports.FB_GROUPS);
+	        ref.onAuth(function (authData) {
+	            if (authData) {
+	                var groupRef = ref.child(group.id);
+	                groupRef.child('members').child(authData.uid).set(true);
+	            }
+	        });
+	    };
+	    FireBaseService.prototype.leaveGroup = function (group, authData) {
 	        var ref = new Firebase(exports.FB_GROUPS);
 	        ref.onAuth(function (authData) {
 	            if (authData) {
@@ -64703,13 +64726,21 @@
 	            }
 	        });
 	    };
-	    FireBaseService.prototype.removeMember = function (group, authData) {
+	    FireBaseService.prototype.getMembersOfGroup = function (authData, members, group) {
+	        console.log('getMyGroups: ', authData);
 	        var ref = new Firebase(exports.FB_GROUPS);
+	        var membersOfGroup = members;
 	        ref.onAuth(function (authData) {
+	            var myMembersOfGroup = membersOfGroup;
 	            if (authData) {
-	                var newGroupRef = ref.push();
-	                console.log(newGroupRef);
-	                newGroupRef.set(group);
+	                ref.child(group.id).child('members').once('value', function (list) {
+	                    console.log('list ', list.val());
+	                    list.forEach(function (user) {
+	                        myMembersOfGroup.push(user.val());
+	                    });
+	                }, function (error) {
+	                    console.log("read failed", error);
+	                });
 	            }
 	        });
 	    };
@@ -64727,13 +64758,11 @@
 	 * Created by tiezad on 15.02.2016.
 	 */
 	var User = (function () {
-	    //public mygroups:Array;
 	    function User(name, email, country, provider) {
 	        this.name = name;
 	        this.email = email;
 	        this.country = country;
 	        this.provider = provider;
-	        //  this.mygroups = mygroups;
 	    }
 	    return User;
 	}());
@@ -64742,6 +64771,68 @@
 
 /***/ },
 /* 373 */
+/***/ function(module, exports) {
+
+	"use strict";
+	/**
+	 * Created by tiezad on 06.02.2016.
+	 */
+	var AppModel = (function () {
+	    function AppModel() {
+	        this.deviceReady = false;
+	        this.authenticated = false;
+	        this.platformReady = false;
+	    }
+	    AppModel.prototype.getDeviceReady = function () {
+	        return this.deviceReady;
+	    };
+	    AppModel.prototype.setPlatformReady = function (platformReady) {
+	        this.platformReady = platformReady;
+	    };
+	    AppModel.prototype.getPlatformReady = function () {
+	        return this.platformReady;
+	    };
+	    AppModel.prototype.setDeviceReady = function (deviceReady) {
+	        this.deviceReady = deviceReady;
+	    };
+	    AppModel.prototype.getLanguage = function () {
+	        return this.language;
+	    };
+	    AppModel.prototype.setLanguage = function (language) {
+	        this.language = language;
+	    };
+	    AppModel.prototype.setGlobalization = function (globalization) {
+	        this.globalization = globalization;
+	    };
+	    AppModel.prototype.getGlobalization = function () {
+	        return this.globalization;
+	    };
+	    AppModel.prototype.setAuthenticated = function () {
+	        this.authenticated = true;
+	    };
+	    AppModel.prototype.isAuthenticated = function () {
+	        return this.authenticated;
+	    };
+	    AppModel.prototype.setAuthData = function (authData) {
+	        this.authData = authData;
+	    };
+	    AppModel.prototype.getAuthData = function () {
+	        return this.authData;
+	    };
+	    AppModel.prototype.setUser = function (user) {
+	        this.user = user;
+	    };
+	    AppModel.prototype.getUser = function () {
+	        return this.user;
+	    };
+	    return AppModel;
+	}());
+	exports.AppModel = AppModel;
+	exports.appModel = new AppModel();
+	//# sourceMappingURL=appModel.js.map
+
+/***/ },
+/* 374 */
 /***/ function(module, exports) {
 
 	/*! @license Firebase v2.4.1
@@ -65026,7 +65117,7 @@
 
 
 /***/ },
-/* 374 */
+/* 375 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -65041,9 +65132,9 @@
 	};
 	var ionic_angular_1 = __webpack_require__(5);
 	var common_1 = __webpack_require__(176);
-	var appModel_1 = __webpack_require__(375);
+	var appModel_1 = __webpack_require__(373);
 	var fbConfig_1 = __webpack_require__(371);
-	var Firebase = __webpack_require__(373);
+	var Firebase = __webpack_require__(374);
 	var SettingsPage = (function () {
 	    function SettingsPage(nav, navParams) {
 	        this.nav = nav;
@@ -65071,68 +65162,6 @@
 	//# sourceMappingURL=settings.js.map
 
 /***/ },
-/* 375 */
-/***/ function(module, exports) {
-
-	"use strict";
-	/**
-	 * Created by tiezad on 06.02.2016.
-	 */
-	var AppModel = (function () {
-	    function AppModel() {
-	        this.deviceReady = false;
-	        this.authenticated = false;
-	        this.platformReady = false;
-	    }
-	    AppModel.prototype.getDeviceReady = function () {
-	        return this.deviceReady;
-	    };
-	    AppModel.prototype.setPlatformReady = function (platformReady) {
-	        this.platformReady = platformReady;
-	    };
-	    AppModel.prototype.getPlatformReady = function () {
-	        return this.platformReady;
-	    };
-	    AppModel.prototype.setDeviceReady = function (deviceReady) {
-	        this.deviceReady = deviceReady;
-	    };
-	    AppModel.prototype.getLanguage = function () {
-	        return this.language;
-	    };
-	    AppModel.prototype.setLanguage = function (language) {
-	        this.language = language;
-	    };
-	    AppModel.prototype.setGlobalization = function (globalization) {
-	        this.globalization = globalization;
-	    };
-	    AppModel.prototype.getGlobalization = function () {
-	        return this.globalization;
-	    };
-	    AppModel.prototype.setAuthenticated = function () {
-	        this.authenticated = true;
-	    };
-	    AppModel.prototype.isAuthenticated = function () {
-	        return this.authenticated;
-	    };
-	    AppModel.prototype.setAuthData = function (authData) {
-	        this.authData = authData;
-	    };
-	    AppModel.prototype.getAuthData = function () {
-	        return this.authData;
-	    };
-	    AppModel.prototype.setUser = function (user) {
-	        this.user = user;
-	    };
-	    AppModel.prototype.getUser = function () {
-	        return this.user;
-	    };
-	    return AppModel;
-	}());
-	exports.AppModel = AppModel;
-	exports.appModel = new AppModel();
-	//# sourceMappingURL=appModel.js.map
-
-/***/ },
 /* 376 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -65150,7 +65179,7 @@
 	var common_1 = __webpack_require__(176);
 	var Group_1 = __webpack_require__(377);
 	var fbConfig_1 = __webpack_require__(371);
-	var appModel_1 = __webpack_require__(375);
+	var appModel_1 = __webpack_require__(373);
 	var MainPage = (function () {
 	    function MainPage(nav, navParams) {
 	        this.tab1 = ListGroupContentPage;
@@ -65172,7 +65201,7 @@
 	        //TODO assign result to items
 	        console.log('load groups');
 	        this.groups = new Array();
-	        new fbConfig_1.FireBaseService().getGroups(appModel_1.appModel.getAuthData(), this.groups);
+	        new fbConfig_1.FireBaseService().getMyGroups(appModel_1.appModel.getAuthData(), this.groups);
 	    }
 	    ListGroupContentPage.prototype.openGroupDetails = function (event, group) {
 	        this.nav.push(GroupDetailsPage, { group: group });
@@ -65189,7 +65218,9 @@
 	var GroupDetailsPage = (function () {
 	    function GroupDetailsPage(params) {
 	        this.group = params.data.group;
+	        this.users = new Array();
 	        console.log(this.group);
+	        new fbConfig_1.FireBaseService().getMembersOfGroup(appModel_1.appModel.getAuthData(), this.users, this.group);
 	    }
 	    GroupDetailsPage = __decorate([
 	        ionic_angular_1.Page({
@@ -65271,13 +65302,13 @@
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	var ionic_angular_1 = __webpack_require__(5);
-	var appModel_1 = __webpack_require__(375);
+	var appModel_1 = __webpack_require__(373);
 	var fbConfig_1 = __webpack_require__(371);
 	var signup_1 = __webpack_require__(379);
 	var common_1 = __webpack_require__(176);
 	var main_1 = __webpack_require__(376);
 	var User_1 = __webpack_require__(372);
-	var Firebase = __webpack_require__(373);
+	var Firebase = __webpack_require__(374);
 	var LoginPage = (function () {
 	    function LoginPage(nav) {
 	        this.nav = nav;
@@ -65389,7 +65420,9 @@
 	                login.createUser(authData);
 	            }
 	            else {
-	                appModel_1.appModel.setUser(snapshot.val());
+	                var user = new User_1.User(snapshot.val().name, snapshot.val().email, snapshot.val().country, snapshot.val().provider);
+	                user.id = snapshot.key();
+	                appModel_1.appModel.setUser(user);
 	                login.nav.setRoot(main_1.MainPage);
 	            }
 	        });
@@ -65440,7 +65473,7 @@
 	var fbConfig_1 = __webpack_require__(371);
 	var common_1 = __webpack_require__(176);
 	var main_1 = __webpack_require__(376);
-	var Firebase = __webpack_require__(373);
+	var Firebase = __webpack_require__(374);
 	var SignupPage = (function () {
 	    function SignupPage(nav) {
 	        this.nav = nav;

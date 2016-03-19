@@ -136,7 +136,9 @@ export class LoginPage {
             if(!userExists) {
                 login.createUser(authData);
             } else {
-                appModel.setUser(snapshot.val());
+                var user : User = new User(snapshot.val().name,snapshot.val().email,snapshot.val().country,snapshot.val().provider);
+                user.id = snapshot.key();
+                appModel.setUser(user);
                 login.nav.setRoot(MainPage);
             }
         });

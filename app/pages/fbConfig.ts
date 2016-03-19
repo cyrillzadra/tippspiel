@@ -1,5 +1,6 @@
 import {User} from "../models/User";
 import {Group} from "../models/Group";
+import {appModel} from "../models/appModel";
 /**
  * Created by tiezad on 30.01.2016.
  */
@@ -86,23 +87,27 @@ export class FireBaseService {
         }
     }
 
-    getMyGroups(authData:any):Array<{groupKey: boolean}> {
+    getMyGroups(authData:any, groups:Array<Group>) : void {
         console.log('getMyGroups: ', authData);
         var ref = new Firebase(FB_USERS);
-        var myGroups: Array<{groupKey: boolean}>;
+        var myGroups: Array<Group> = groups;
 
         ref.onAuth(function (authData) {
             var myMyGroups = myGroups;
             if (authData) {
-                ref.child(authData.uid).child('mygroups').once('value',function(data) {
-                    // do some stuff once
-                    console.log('data ', data);
-                    myMyGroups = data.val();
+                ref.child(authData.uid).child('mygroups').once('value', function(list) {
+                    console.log('list ', list.val());
+                    list.forEach( function(groupData) {
+                        var g : Group = new Group(groupData.val().name, groupData.val().description,
+                            groupData.val().shared, groupData.val().password, groupData.val().wordlRanking, groupData.val().admin);
+                        g.id = groupData.key();
+                        myMyGroups.push(g);
+                    });
+                }, function(error) {
+                    console.log("read failed", error);
                 });
             }
         });
-        console.log('mygroups:' , myGroups);
-        return myGroups;
     }
 
     getGroups(authData:any, groups:Array<Group>) : void {
@@ -133,11 +138,31 @@ export class FireBaseService {
                 var newGroupRef = ref.push();
                 console.log(newGroupRef)
                 newGroupRef.set(group);
+                newGroupRef.child('members').child(authData.uid).set(appModel.getUser());
+                var groupId = newGroupRef.key();
+                console.log('groupId ', groupId);
+
+                var userRef = new Firebase(FB_USERS);
+                userRef.onAuth(function (authData) {
+                    if(authData) {
+                        userRef.child(authData.uid).child('mygroups').child(groupId).set(group);
+                    }
+                });
             }
         });
     }
 
-    addMember(group: Group, authData:any):void {
+    joinGroup(group: Group, authData:any):void {
+        var ref = new Firebase(FB_GROUPS);
+        ref.onAuth(function (authData) {
+            if (authData) {
+                var groupRef = ref.child(group.id)
+                groupRef.child('members').child(authData.uid).set(true);
+            }
+        });
+    }
+
+    leaveGroup(group: Group, authData:any):void {
         var ref = new Firebase(FB_GROUPS);
         ref.onAuth(function (authData) {
             if (authData) {
@@ -148,13 +173,22 @@ export class FireBaseService {
         });
     }
 
-    removeMember(group: Group, authData:any):void {
+    getMembersOfGroup(authData:any, members:Array<User>, group:Group) : void {
+        console.log('getMyGroups: ', authData);
         var ref = new Firebase(FB_GROUPS);
+        var membersOfGroup: Array<User> = members;
+
         ref.onAuth(function (authData) {
+            var myMembersOfGroup : Array<User> = membersOfGroup;
             if (authData) {
-                var newGroupRef = ref.push();
-                console.log(newGroupRef)
-                newGroupRef.set(group);
+                ref.child(group.id).child('members').once('value', function(list) {
+                    console.log('list ', list.val());
+                    list.forEach( function(user) {
+                        myMembersOfGroup.push(user.val());
+                    });
+                }, function(error) {
+                    console.log("read failed", error);
+                });
             }
         });
     }

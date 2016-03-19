@@ -1,7 +1,6 @@
 <ion-content>
 
     <ion-card>
-
         <ion-card-content>
             <h2 class="card-title">
                 {{ group.name }}
@@ -10,7 +9,25 @@
                 {{ group.description }}
             </p>
         </ion-card-content>
-
     </ion-card>
 
+
+    <ion-list>
+        <ion-item-sliding *ngFor="#user of users">
+            <button ion-item (click)="openGroupDetails($event, group)">
+                <div class="item-note" item-left>
+                    {{ user.name }}
+                </div>
+                <ion-badge item-right>5</ion-badge>
+                <ion-badge item-right>10</ion-badge>
+            </button>
+
+            <ion-item-options>
+                <button danger>
+                    <ion-icon name="trash"></ion-icon>
+                    {{ 'page.main.groupdetails.deletemember' | translate }}
+                </button>
+            </ion-item-options>
+        </ion-item-sliding>
+    </ion-list>
 </ion-content>

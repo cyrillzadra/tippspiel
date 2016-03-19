@@ -2,6 +2,7 @@
  * Created by tiezad on 15.02.2016.
  */
 export class Group {
+    public id:string;
     public name:string;
     public description:string;
     public shared:boolean;

@@ -3,7 +3,7 @@ import {ControlGroup, Validators, Control} from "angular2/common";
 import {Group} from "../../models/Group";
 import {FireBaseService} from "../fbConfig";
 import {appModel} from "../../models/appModel";
-import {Inject} from "angular2/core";
+import {User} from "../../models/User";
 
 @Page({
     templateUrl: 'build/pages/main/main.html',
@@ -33,7 +33,7 @@ class ListGroupContentPage {
         //TODO assign result to items
         console.log('load groups');
         this.groups = new Array<Group>();
-        new FireBaseService().getGroups(appModel.getAuthData(), this.groups);
+        new FireBaseService().getMyGroups(appModel.getAuthData(), this.groups);
     }
 
     openGroupDetails(event, group) {
@@ -47,11 +47,14 @@ class ListGroupContentPage {
 })
 class GroupDetailsPage {
     group:Group;
+    users:Array<User>;
 
     constructor(params: NavParams) {
         this.group = params.data.group;
+        this.users = new Array<User>();
         console.log(this.group);
 
+        new FireBaseService().getMembersOfGroup(appModel.getAuthData(), this.users, this.group);
     }
 }
 
