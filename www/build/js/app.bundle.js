@@ -3195,14 +3195,14 @@
 	};
 	var ionic_angular_1 = __webpack_require__(5);
 	var schedules_1 = __webpack_require__(370);
-	var settings_1 = __webpack_require__(375);
-	var main_1 = __webpack_require__(376);
+	var settings_1 = __webpack_require__(376);
+	var main_1 = __webpack_require__(377);
 	var login_1 = __webpack_require__(378);
 	var about_1 = __webpack_require__(380);
 	var rules_1 = __webpack_require__(381);
 	var de_1 = __webpack_require__(382);
 	var en_1 = __webpack_require__(383);
-	var appModel_1 = __webpack_require__(373);
+	var appModel_1 = __webpack_require__(374);
 	var MyApp = (function () {
 	    function MyApp(app, platform, trans) {
 	        this.app = app;
@@ -64519,7 +64519,7 @@
 	};
 	var ionic_angular_1 = __webpack_require__(5);
 	var fbConfig_1 = __webpack_require__(371);
-	var Firebase = __webpack_require__(374);
+	var Firebase = __webpack_require__(375);
 	var SchedulesPage = (function () {
 	    function SchedulesPage(nav, navParams) {
 	        this.nav = nav;
@@ -64570,8 +64570,8 @@
 
 	"use strict";
 	var User_1 = __webpack_require__(372);
-	var Group_1 = __webpack_require__(377);
-	var appModel_1 = __webpack_require__(373);
+	var Group_1 = __webpack_require__(373);
+	var appModel_1 = __webpack_require__(374);
 	/**
 	 * Created by tiezad on 30.01.2016.
 	 */
@@ -64580,7 +64580,7 @@
 	exports.FB_SCHEDULES = exports.fbName + 'schedules/';
 	exports.FB_GROUPS = exports.fbName + 'groups/';
 	exports.FB_TIPS = exports.fbName + 'tips/';
-	var Firebase = __webpack_require__(374);
+	var Firebase = __webpack_require__(375);
 	var FireBaseService = (function () {
 	    function FireBaseService() {
 	    }
@@ -64775,6 +64775,28 @@
 
 	"use strict";
 	/**
+	 * Created by tiezad on 15.02.2016.
+	 */
+	var Group = (function () {
+	    function Group(name, description, shared, password, worldRanking, admin) {
+	        this.name = name;
+	        this.description = description;
+	        this.shared = shared;
+	        this.password = password;
+	        this.worldRanking = worldRanking;
+	        this.admin = admin;
+	    }
+	    return Group;
+	}());
+	exports.Group = Group;
+	//# sourceMappingURL=Group.js.map
+
+/***/ },
+/* 374 */
+/***/ function(module, exports) {
+
+	"use strict";
+	/**
 	 * Created by tiezad on 06.02.2016.
 	 */
 	var AppModel = (function () {
@@ -64832,7 +64854,7 @@
 	//# sourceMappingURL=appModel.js.map
 
 /***/ },
-/* 374 */
+/* 375 */
 /***/ function(module, exports) {
 
 	/*! @license Firebase v2.4.1
@@ -65117,7 +65139,7 @@
 
 
 /***/ },
-/* 375 */
+/* 376 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -65132,13 +65154,18 @@
 	};
 	var ionic_angular_1 = __webpack_require__(5);
 	var common_1 = __webpack_require__(176);
-	var appModel_1 = __webpack_require__(373);
+	var appModel_1 = __webpack_require__(374);
 	var fbConfig_1 = __webpack_require__(371);
-	var Firebase = __webpack_require__(374);
+	var Firebase = __webpack_require__(375);
 	var SettingsPage = (function () {
 	    function SettingsPage(nav, navParams) {
 	        this.nav = nav;
 	        this.user = appModel_1.appModel.getUser();
+	        this.countries = [
+	            'FRA', 'ROU', 'SUI', 'ALB', 'WAL', 'SVK',
+	            'RUS', 'ENG', 'POL', 'NIR', 'UKR', 'GER',
+	            'TUR', 'ESP', 'CZE', 'CRO', 'IRL', 'BEL',
+	            'SWE', 'ITA', 'AUT', 'HUN', 'ISL', 'POR'];
 	        this.form = new common_1.ControlGroup({
 	            name: new common_1.Control("", common_1.Validators.required),
 	            email: new common_1.Control("", common_1.Validators.required),
@@ -65162,7 +65189,7 @@
 	//# sourceMappingURL=settings.js.map
 
 /***/ },
-/* 376 */
+/* 377 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -65177,9 +65204,9 @@
 	};
 	var ionic_angular_1 = __webpack_require__(5);
 	var common_1 = __webpack_require__(176);
-	var Group_1 = __webpack_require__(377);
+	var Group_1 = __webpack_require__(373);
 	var fbConfig_1 = __webpack_require__(371);
-	var appModel_1 = __webpack_require__(373);
+	var appModel_1 = __webpack_require__(374);
 	var MainPage = (function () {
 	    function MainPage(nav, navParams) {
 	        this.tab1 = ListGroupContentPage;
@@ -65266,28 +65293,6 @@
 	//# sourceMappingURL=main.js.map
 
 /***/ },
-/* 377 */
-/***/ function(module, exports) {
-
-	"use strict";
-	/**
-	 * Created by tiezad on 15.02.2016.
-	 */
-	var Group = (function () {
-	    function Group(name, description, shared, password, worldRanking, admin) {
-	        this.name = name;
-	        this.description = description;
-	        this.shared = shared;
-	        this.password = password;
-	        this.worldRanking = worldRanking;
-	        this.admin = admin;
-	    }
-	    return Group;
-	}());
-	exports.Group = Group;
-	//# sourceMappingURL=Group.js.map
-
-/***/ },
 /* 378 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -65302,13 +65307,13 @@
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	var ionic_angular_1 = __webpack_require__(5);
-	var appModel_1 = __webpack_require__(373);
+	var appModel_1 = __webpack_require__(374);
 	var fbConfig_1 = __webpack_require__(371);
 	var signup_1 = __webpack_require__(379);
 	var common_1 = __webpack_require__(176);
-	var main_1 = __webpack_require__(376);
+	var main_1 = __webpack_require__(377);
 	var User_1 = __webpack_require__(372);
-	var Firebase = __webpack_require__(374);
+	var Firebase = __webpack_require__(375);
 	var LoginPage = (function () {
 	    function LoginPage(nav) {
 	        this.nav = nav;
@@ -65472,8 +65477,8 @@
 	var ionic_angular_1 = __webpack_require__(5);
 	var fbConfig_1 = __webpack_require__(371);
 	var common_1 = __webpack_require__(176);
-	var main_1 = __webpack_require__(376);
-	var Firebase = __webpack_require__(374);
+	var main_1 = __webpack_require__(377);
+	var Firebase = __webpack_require__(375);
 	var SignupPage = (function () {
 	    function SignupPage(nav) {
 	        this.nav = nav;

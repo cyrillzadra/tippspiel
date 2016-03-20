@@ -16,9 +16,16 @@ export class SettingsPage {
 
     user:User = appModel.getUser();
 
+    countries:Array<string> = [
+        'FRA', 'ROU', 'SUI', 'ALB', 'WAL', 'SVK',
+        'RUS', 'ENG', 'POL', 'NIR', 'UKR', 'GER',
+        'TUR', 'ESP', 'CZE', 'CRO', 'IRL', 'BEL',
+        'SWE', 'ITA', 'AUT', 'HUN', 'ISL', 'POR'];
+
+
     constructor(private nav:NavController, navParams:NavParams) {
         this.form = new ControlGroup({
-            name: new Control("", Validators.required), 
+            name: new Control("", Validators.required),
             email: new Control("", Validators.required),
             country: new Control("", Validators.required)
         });

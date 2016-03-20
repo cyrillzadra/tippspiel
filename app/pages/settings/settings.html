@@ -16,7 +16,9 @@
 
         <ion-item>
             <ion-label fixed>{{ 'page.settings.country' | translate }}</ion-label>
-            <ion-input [(ngModel)]="user.country" type="text"></ion-input>
+            <ion-select [(ngModel)]="user.country">
+                <ion-option *ngFor="#country of countries" value="{{country}}">{{ country | translate }}</ion-option>
+            </ion-select>
         </ion-item>
 
         <div padding>
