@@ -16,7 +16,7 @@
   "devDependencies": {
     "awesome-typescript-loader": "^0.15.9",
     "strip-sourcemap-loader": "0.0.1",
-    "typescript": "^1.8.0"
+    "typescript": "^1.8.9"
   },
   "name": "Euro2016Tip",
   "description": "Euro 2016 Tip",
