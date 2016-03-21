@@ -49,20 +49,20 @@ export var team_de = {
   'page.schedules.title' : "Spielzeiten",
 
   'page.settings.title' : 'Einstellung',
-  'page.settings.savebutton' : 'Save',
+  'page.settings.savebutton' : 'Speichern',
   'page.settings.name' : 'Name',
-  'page.settings.country' : 'Country',
+  'page.settings.country' : 'Land',
 
   'page.rules.title' : 'Rules',
 
   'page.signin.title' : 'Login',
   'page.signin.email' : 'Email',
-  'page.signin.password' : 'Password',
+  'page.signin.password' : 'Passwort',
   'page.signin.signinbtn' : 'SignIn',
 
   'page.signup.title' : 'SignUp',
   'page.signup.email' : 'Email',
-  'page.signup.password' : 'Password',
+  'page.signup.password' : 'Passwort',
   'page.signup.signupbtn' : 'SignUp',
 
   'page.about.title' : 'About'

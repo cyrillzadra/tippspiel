@@ -97,13 +97,19 @@ class SearchGroupDetailsPage {
     group:Group;
     users:Array<User>;
 
-    constructor(params: NavParams) {
+    constructor(private nav:NavController, params: NavParams) {
         this.group = params.data.group;
         this.users = new Array<User>();
         console.log(this.group);
 
         new FireBaseService().getMembersOfGroup(appModel.getAuthData(), this.users, this.group);
     }
+
+    joinGroup(event) {
+        new FireBaseService().joinGroup(appModel.getAuthData(), this.group);
+        this.nav.push(ListGroupContentPage);
+    }
+    
 }
 
 

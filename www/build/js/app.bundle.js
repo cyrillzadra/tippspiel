@@ -64730,12 +64730,19 @@
 	            }
 	        });
 	    };
-	    FireBaseService.prototype.joinGroup = function (group, authData) {
-	        var ref = new Firebase(exports.FB_GROUPS);
-	        ref.onAuth(function (authData) {
+	    FireBaseService.prototype.joinGroup = function (authData, group) {
+	        var groupBaseRef = new Firebase(exports.FB_GROUPS);
+	        groupBaseRef.onAuth(function (authData) {
 	            if (authData) {
-	                var groupRef = ref.child(group.id);
-	                groupRef.child('members').child(authData.uid).set(true);
+	                var groupRef = groupBaseRef.child(group.id);
+	                groupRef.child('members').child(authData.uid).set(appModel_1.appModel.getUser());
+	            }
+	        });
+	        var userBaseRef = new Firebase(exports.FB_USERS);
+	        userBaseRef.onAuth(function (authData) {
+	            if (authData) {
+	                var userRef = userBaseRef.child(authData.uid);
+	                userRef.child('mygroups').child(group.id).set(group);
 	            }
 	        });
 	    };
@@ -65307,18 +65314,23 @@
 	    return JoinGroupContentPage;
 	}());
 	var SearchGroupDetailsPage = (function () {
-	    function SearchGroupDetailsPage(params) {
+	    function SearchGroupDetailsPage(nav, params) {
+	        this.nav = nav;
 	        this.group = params.data.group;
 	        this.users = new Array();
 	        console.log(this.group);
 	        new fbConfig_1.FireBaseService().getMembersOfGroup(appModel_1.appModel.getAuthData(), this.users, this.group);
 	    }
+	    SearchGroupDetailsPage.prototype.joinGroup = function (event) {
+	        new fbConfig_1.FireBaseService().joinGroup(appModel_1.appModel.getAuthData(), this.group);
+	        this.nav.push(ListGroupContentPage);
+	    };
 	    SearchGroupDetailsPage = __decorate([
 	        ionic_angular_1.Page({
 	            templateUrl: 'build/pages/main/searchgroupdetails.html',
 	            pipes: [ionic_angular_1.TranslatePipe]
 	        }), 
-	        __metadata('design:paramtypes', [ionic_angular_1.NavParams])
+	        __metadata('design:paramtypes', [ionic_angular_1.NavController, ionic_angular_1.NavParams])
 	    ], SearchGroupDetailsPage);
 	    return SearchGroupDetailsPage;
 	}());
@@ -65704,17 +65716,17 @@
 	    'page.main.searchgroupdetails.join': 'Beitreten',
 	    'page.schedules.title': "Spielzeiten",
 	    'page.settings.title': 'Einstellung',
-	    'page.settings.savebutton': 'Save',
+	    'page.settings.savebutton': 'Speichern',
 	    'page.settings.name': 'Name',
-	    'page.settings.country': 'Country',
+	    'page.settings.country': 'Land',
 	    'page.rules.title': 'Rules',
 	    'page.signin.title': 'Login',
 	    'page.signin.email': 'Email',
-	    'page.signin.password': 'Password',
+	    'page.signin.password': 'Passwort',
 	    'page.signin.signinbtn': 'SignIn',
 	    'page.signup.title': 'SignUp',
 	    'page.signup.email': 'Email',
-	    'page.signup.password': 'Password',
+	    'page.signup.password': 'Passwort',
 	    'page.signup.signupbtn': 'SignUp',
 	    'page.about.title': 'About'
 	};

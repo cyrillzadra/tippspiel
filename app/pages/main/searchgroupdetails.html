@@ -14,7 +14,7 @@
         </ion-card-content>
     </ion-card>
 
-    <button primary block (click)="join()">{{ 'page.main.searchgroupdetails.join' | translate }}</button>
+    <button primary block (click)="joinGroup($event)">{{ 'page.main.searchgroupdetails.join' | translate }}</button>
 
     <ion-list>
         <ion-item *ngFor="#user of users">

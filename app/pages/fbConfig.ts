@@ -178,12 +178,20 @@ export class FireBaseService {
         });
     }
 
-    joinGroup(group: Group, authData:any):void {
-        var ref = new Firebase(FB_GROUPS);
-        ref.onAuth(function (authData) {
+    joinGroup(authData:any, group: Group):void {
+        var groupBaseRef = new Firebase(FB_GROUPS);
+        groupBaseRef.onAuth(function (authData) {
             if (authData) {
-                var groupRef = ref.child(group.id)
-                groupRef.child('members').child(authData.uid).set(true);
+                var groupRef = groupBaseRef.child(group.id)
+                groupRef.child('members').child(authData.uid).set( appModel.getUser() );
+            }
+        });
+
+        var userBaseRef = new Firebase(FB_USERS);
+        userBaseRef.onAuth(function (authData) {
+            if (authData) {
+                var userRef = userBaseRef.child(authData.uid);
+                userRef.child('mygroups').child(group.id).set(group);
             }
         });
     }
