@@ -131,6 +131,32 @@ export class FireBaseService {
         });
     }
 
+    searchGroup(authData:any, searchTerm:string, groups:Array<Group>) : void {
+        console.log('searchGroup: ', authData);
+        console.log('searchTerm', searchTerm);
+        var ref = new Firebase(FB_GROUPS);
+        var myGroups: Array<Group> = groups;
+        var searchT : string = searchTerm;
+
+        ref.onAuth(function (authData) {
+            var myMyGroups = myGroups;
+            var searchT2 : string = searchT;
+            if (authData) {
+                ref.orderByChild("name").startAt(searchT2).limitToFirst(50).once('value', function(list) {
+                    console.log('list ', list.val());
+                    list.forEach( function(groupData) {
+                        var g : Group = new Group(groupData.val().name, groupData.val().description,
+                            groupData.val().shared, groupData.val().password, groupData.val().wordlRanking, groupData.val().admin);
+                        g.id = groupData.key();
+                        myMyGroups.push(g);
+                    });
+                }, function(error) {
+                    console.log("read failed", error);
+                });
+            }
+        });
+    }
+
     createGroup(group: Group, authData:any):void {
         var ref = new Firebase(FB_GROUPS);
         ref.onAuth(function (authData) {
@@ -174,7 +200,7 @@ export class FireBaseService {
     }
 
     getMembersOfGroup(authData:any, members:Array<User>, group:Group) : void {
-        console.log('getMyGroups: ', authData);
+        console.log('getMembersOfGroup: ', authData);
         var ref = new Firebase(FB_GROUPS);
         var membersOfGroup: Array<User> = members;
 

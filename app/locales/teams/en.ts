@@ -40,6 +40,12 @@ export var team_en = {
   'page.main.addgroup.description' : "Description",
   'page.main.addgroup.savebtn' : 'Save',
 
+  'page.main.joingroup.name' : 'Name',
+  'page.main.joingroup.password' : 'Password',
+  'page.main.joingroup.savebtn' : 'Search',
+
+  'page.main.searchgroupdetails.join' : 'Join',
+
   'page.schedules.title' : "Schedules",
 
   'page.settings.title' : 'Settings',

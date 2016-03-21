@@ -12,11 +12,13 @@ import {User} from "../../models/User";
 export class MainPage {
 
     tab1:ListGroupContentPage;
-    tab2:AddGroupContentPage;
+    tab2:JoinGroupContentPage;
+    tab3:AddGroupContentPage;
 
     constructor(nav:NavController, navParams:NavParams) {
         this.tab1 = ListGroupContentPage;
-        this.tab2 = AddGroupContentPage;
+        this.tab2 = JoinGroupContentPage;
+        this.tab3 = AddGroupContentPage;
     }
 
 }
@@ -58,6 +60,53 @@ class GroupDetailsPage {
     }
 }
 
+
+@Page({
+    templateUrl: 'build/pages/main/joingroup.html',
+    pipes: [TranslatePipe]
+})
+class JoinGroupContentPage {
+
+    form:ControlGroup;
+
+    groups:Array<Group> = new Array<Group>();
+
+
+    constructor(private nav:NavController, navParams:NavParams) {
+        this.form = new ControlGroup({
+            name: new Control("", Validators.required)
+        });
+    }
+
+    searchGroup(event):void {
+        var searchTerm:string = this.form.value.name;
+        new FireBaseService().searchGroup(appModel.getAuthData(), searchTerm, this.groups);
+    }
+
+    openGroupDetails(event, group) {
+        this.nav.push(SearchGroupDetailsPage, { group: group });
+    }
+    
+}
+
+@Page({
+    templateUrl: 'build/pages/main/searchgroupdetails.html',
+    pipes: [TranslatePipe]
+})
+class SearchGroupDetailsPage {
+    group:Group;
+    users:Array<User>;
+
+    constructor(params: NavParams) {
+        this.group = params.data.group;
+        this.users = new Array<User>();
+        console.log(this.group);
+
+        new FireBaseService().getMembersOfGroup(appModel.getAuthData(), this.users, this.group);
+    }
+}
+
+
 @Page({
     templateUrl: 'build/pages/main/addgroup.html',
     pipes: [TranslatePipe]
@@ -82,7 +131,6 @@ class AddGroupContentPage {
         var password:string = this.form.value.password;
         var worldRanking:boolean = this.form.value.worldRanking;
         var description:string = this.form.value.description;
-
 
         console.log('save name=', name);
 

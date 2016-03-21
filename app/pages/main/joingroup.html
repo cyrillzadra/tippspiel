@@ -1,0 +1,26 @@
+<ion-content>
+
+    <form (submit)="searchGroup($event)" [ngFormModel]="form">
+
+        <ion-item>
+            <ion-label fixed>{{ 'page.main.joingroup.name' | translate }}</ion-label>
+            <ion-input ngControl="name" type="text"></ion-input>
+        </ion-item>
+
+        <div padding>
+            <button block type="submit">{{ 'page.main.joingroup.savebtn' | translate }}</button>
+        </div>
+    </form>
+
+
+    <ion-list>
+        <ion-item-sliding *ngFor="#group of groups">
+            <button ion-item (click)="openGroupDetails($event, group)">
+                <div class="item-note" item-left>
+                    {{ group.name }}
+                </div>
+            </button>
+        </ion-item-sliding>
+    </ion-list>
+
+</ion-content>

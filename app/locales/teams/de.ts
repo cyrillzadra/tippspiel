@@ -40,6 +40,12 @@ export var team_de = {
   'page.main.addgroup.description' : "Beschreibung",
   'page.main.addgroup.savebtn' : 'Speichern',
 
+  'page.main.joingroup.name' : 'Name',
+  'page.main.joingroup.password' : 'Passwort',
+  'page.main.joingroup.savebtn' : 'Suchen',
+
+  'page.main.searchgroupdetails.join' : 'Beitreten',
+
   'page.schedules.title' : "Spielzeiten",
 
   'page.settings.title' : 'Einstellung',

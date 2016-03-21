@@ -64688,6 +64688,29 @@
 	            }
 	        });
 	    };
+	    FireBaseService.prototype.searchGroup = function (authData, searchTerm, groups) {
+	        console.log('searchGroup: ', authData);
+	        console.log('searchTerm', searchTerm);
+	        var ref = new Firebase(exports.FB_GROUPS);
+	        var myGroups = groups;
+	        var searchT = searchTerm;
+	        ref.onAuth(function (authData) {
+	            var myMyGroups = myGroups;
+	            var searchT2 = searchT;
+	            if (authData) {
+	                ref.orderByChild("name").startAt(searchT2).limitToFirst(50).once('value', function (list) {
+	                    console.log('list ', list.val());
+	                    list.forEach(function (groupData) {
+	                        var g = new Group_1.Group(groupData.val().name, groupData.val().description, groupData.val().shared, groupData.val().password, groupData.val().wordlRanking, groupData.val().admin);
+	                        g.id = groupData.key();
+	                        myMyGroups.push(g);
+	                    });
+	                }, function (error) {
+	                    console.log("read failed", error);
+	                });
+	            }
+	        });
+	    };
 	    FireBaseService.prototype.createGroup = function (group, authData) {
 	        var ref = new Firebase(exports.FB_GROUPS);
 	        ref.onAuth(function (authData) {
@@ -64727,7 +64750,7 @@
 	        });
 	    };
 	    FireBaseService.prototype.getMembersOfGroup = function (authData, members, group) {
-	        console.log('getMyGroups: ', authData);
+	        console.log('getMembersOfGroup: ', authData);
 	        var ref = new Firebase(exports.FB_GROUPS);
 	        var membersOfGroup = members;
 	        ref.onAuth(function (authData) {
@@ -65210,7 +65233,8 @@
 	var MainPage = (function () {
 	    function MainPage(nav, navParams) {
 	        this.tab1 = ListGroupContentPage;
-	        this.tab2 = AddGroupContentPage;
+	        this.tab2 = JoinGroupContentPage;
+	        this.tab3 = AddGroupContentPage;
 	    }
 	    MainPage = __decorate([
 	        ionic_angular_1.Page({
@@ -65257,6 +65281,46 @@
 	        __metadata('design:paramtypes', [ionic_angular_1.NavParams])
 	    ], GroupDetailsPage);
 	    return GroupDetailsPage;
+	}());
+	var JoinGroupContentPage = (function () {
+	    function JoinGroupContentPage(nav, navParams) {
+	        this.nav = nav;
+	        this.groups = new Array();
+	        this.form = new common_1.ControlGroup({
+	            name: new common_1.Control("", common_1.Validators.required)
+	        });
+	    }
+	    JoinGroupContentPage.prototype.searchGroup = function (event) {
+	        var searchTerm = this.form.value.name;
+	        new fbConfig_1.FireBaseService().searchGroup(appModel_1.appModel.getAuthData(), searchTerm, this.groups);
+	    };
+	    JoinGroupContentPage.prototype.openGroupDetails = function (event, group) {
+	        this.nav.push(SearchGroupDetailsPage, { group: group });
+	    };
+	    JoinGroupContentPage = __decorate([
+	        ionic_angular_1.Page({
+	            templateUrl: 'build/pages/main/joingroup.html',
+	            pipes: [ionic_angular_1.TranslatePipe]
+	        }), 
+	        __metadata('design:paramtypes', [ionic_angular_1.NavController, ionic_angular_1.NavParams])
+	    ], JoinGroupContentPage);
+	    return JoinGroupContentPage;
+	}());
+	var SearchGroupDetailsPage = (function () {
+	    function SearchGroupDetailsPage(params) {
+	        this.group = params.data.group;
+	        this.users = new Array();
+	        console.log(this.group);
+	        new fbConfig_1.FireBaseService().getMembersOfGroup(appModel_1.appModel.getAuthData(), this.users, this.group);
+	    }
+	    SearchGroupDetailsPage = __decorate([
+	        ionic_angular_1.Page({
+	            templateUrl: 'build/pages/main/searchgroupdetails.html',
+	            pipes: [ionic_angular_1.TranslatePipe]
+	        }), 
+	        __metadata('design:paramtypes', [ionic_angular_1.NavParams])
+	    ], SearchGroupDetailsPage);
+	    return SearchGroupDetailsPage;
 	}());
 	var AddGroupContentPage = (function () {
 	    function AddGroupContentPage(nav, navParams) {
@@ -65634,6 +65698,10 @@
 	    'page.main.addgroup.worldRanking': 'Weltrangliste',
 	    'page.main.addgroup.description': "Beschreibung",
 	    'page.main.addgroup.savebtn': 'Speichern',
+	    'page.main.joingroup.name': 'Name',
+	    'page.main.joingroup.password': 'Passwort',
+	    'page.main.joingroup.savebtn': 'Suchen',
+	    'page.main.searchgroupdetails.join': 'Beitreten',
 	    'page.schedules.title': "Spielzeiten",
 	    'page.settings.title': 'Einstellung',
 	    'page.settings.savebutton': 'Save',
@@ -65694,6 +65762,10 @@
 	    'page.main.addgroup.worldRanking': 'Worldranking',
 	    'page.main.addgroup.description': "Description",
 	    'page.main.addgroup.savebtn': 'Save',
+	    'page.main.joingroup.name': 'Name',
+	    'page.main.joingroup.password': 'Password',
+	    'page.main.joingroup.savebtn': 'Search',
+	    'page.main.searchgroupdetails.join': 'Join',
 	    'page.schedules.title': "Schedules",
 	    'page.settings.title': 'Settings',
 	    'page.settings.savebutton': 'Save',
