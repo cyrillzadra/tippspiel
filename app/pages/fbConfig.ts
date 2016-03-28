@@ -137,6 +137,7 @@ export class FireBaseService {
         var ref = new Firebase(FB_GROUPS);
         var myGroups: Array<Group> = groups;
         var searchT : string = searchTerm;
+        //asdf
 
         ref.onAuth(function (authData) {
             var myMyGroups = myGroups;
@@ -146,7 +147,7 @@ export class FireBaseService {
                     console.log('list ', list.val());
                     list.forEach( function(groupData) {
                         var g : Group = new Group(groupData.val().name, groupData.val().description,
-                            groupData.val().shared, groupData.val().password, groupData.val().wordlRanking, groupData.val().admin);
+                            groupData.val().shared, groupData.val().password, groupData.val().worldRanking, groupData.val().admin);
                         g.id = groupData.key();
                         myMyGroups.push(g);
                     });
@@ -191,7 +192,7 @@ export class FireBaseService {
         userBaseRef.onAuth(function (authData) {
             if (authData) {
                 var userRef = userBaseRef.child(authData.uid);
-                userRef.child('mygroups').child(group.id).set(group);
+                    userRef.child('mygroups').child(group.id).set(group);
             }
         });
     }
