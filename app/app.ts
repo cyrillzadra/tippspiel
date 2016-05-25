@@ -8,7 +8,7 @@ import {AboutPage} from './pages/about/about';
 import {RulesPage} from './pages/rules/rules';
 
 // https://angular.io/docs/ts/latest/api/core/Type-interface.html
-import {Type} from 'angular2/core';
+import {Type} from '@angular/core';
 
 import {team_de} from "./locales/teams/de";
 import {team_en} from "./locales/teams/en";

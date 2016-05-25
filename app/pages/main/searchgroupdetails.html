@@ -17,7 +17,7 @@
     <button primary block (click)="joinGroup($event)">{{ 'page.main.searchgroupdetails.join' | translate }}</button>
 
     <ion-list>
-        <ion-item *ngFor="#user of users">
+        <ion-item *ngFor="let user of users">
             {{ user.name }}
         </ion-item>
     </ion-list>

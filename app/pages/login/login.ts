@@ -3,7 +3,7 @@ import {Page, NavController, IONIC_DIRECTIVES, TranslatePipe} from 'ionic-angula
 import {appModel, AppModel} from "../../models/appModel"
 import {fbName} from "../fbConfig";
 import {SignupPage} from "../signup/signup";
-import {ControlGroup, Validators, Control} from "angular2/common";
+import {ControlGroup, Validators, Control} from '@angular/common';
 import {MainPage} from "../main/main";
 import {User} from "../../models/User";
 

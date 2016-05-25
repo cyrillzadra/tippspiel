@@ -13,7 +13,7 @@
 
 
     <ion-list>
-        <ion-item-sliding *ngFor="#user of users">
+        <ion-item-sliding *ngFor="let user of users">
             <button ion-item (click)="openGroupDetails($event, group)">
                 <div class="item-note" item-left>
                     {{ user.name }}

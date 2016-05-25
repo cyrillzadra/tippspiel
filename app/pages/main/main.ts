@@ -1,5 +1,5 @@
 import {Page, NavController, NavParams, TranslatePipe} from 'ionic-angular';
-import {ControlGroup, Validators, Control} from "angular2/common";
+import {ControlGroup, Validators, Control} from '@angular/common';
 import {Group} from "../../models/Group";
 import {FireBaseService} from "../fbConfig";
 import {appModel} from "../../models/appModel";

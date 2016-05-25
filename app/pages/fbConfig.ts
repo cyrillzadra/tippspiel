@@ -12,6 +12,15 @@ export const FB_TIPS = fbName + 'tips/';
 
 var Firebase = require('firebase');
 
+// Initialize Firebase
+var config = {
+    apiKey: "AIzaSyCoUwSmTf4YNfgEK6cDp70VeoJCxE8ksZU",
+    authDomain: "resplendent-torch-9631.firebaseapp.com",
+    databaseURL: "https://resplendent-torch-9631.firebaseio.com",
+    storageBucket: "resplendent-torch-9631.appspot.com",
+};
+firebase.initializeApp(config);
+
 export class FireBaseService {
 
     getUser(userId:string):User {

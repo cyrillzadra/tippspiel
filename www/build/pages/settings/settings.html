@@ -17,7 +17,7 @@
         <ion-item>
             <ion-label fixed>{{ 'page.settings.country' | translate }}</ion-label>
             <ion-select [(ngModel)]="user.country">
-                <ion-option *ngFor="#country of countries" value="{{country}}">{{ country | translate }}</ion-option>
+                <ion-option *ngFor="let country of countries" value="{{country}}">{{ country | translate }}</ion-option>
             </ion-select>
         </ion-item>
 

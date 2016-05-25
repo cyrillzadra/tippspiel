@@ -14,7 +14,22 @@
   <ion-app></ion-app>
 
   <script src="cordova.js"></script>
-  <script src="build/js/angular2-polyfills.js"></script>
+
+  <script src="build/js/firebase.js"></script>
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyCoUwSmTf4YNfgEK6cDp70VeoJCxE8ksZU",
+      authDomain: "resplendent-torch-9631.firebaseapp.com",
+      databaseURL: "https://resplendent-torch-9631.firebaseio.com",
+      storageBucket: "resplendent-torch-9631.appspot.com",
+    };
+    firebase.initializeApp(config);
+  </script>
+
+  <script src="build/js/es6-shim.min.js"></script>
+  <script src="build/js/zone.js"></script>
+  <script src="build/js/Reflect.js"></script>
   <script src="build/js/app.bundle.js"></script>
 </body>
 </html>

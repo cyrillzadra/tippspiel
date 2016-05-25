@@ -1,7 +1,7 @@
 import {Page, TranslatePipe, NavController} from 'ionic-angular';
 
 import {fbName, FireBaseService} from "../fbConfig";
-import {ControlGroup, Control, Validators} from "angular2/common";
+import {ControlGroup, Control, Validators} from '@angular/common';
 import {MainPage} from "../main/main";
 
 var Firebase = require('firebase');

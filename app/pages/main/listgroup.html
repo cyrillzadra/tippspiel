@@ -1,6 +1,6 @@
 <ion-content>
   <ion-list>
-    <ion-item-sliding *ngFor="#group of groups">
+    <ion-item-sliding *ngFor="let group of groups">
       <button ion-item (click)="openGroupDetails($event, group)">
         <div class="item-note" item-left>
           {{ group.name }}
